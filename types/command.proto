@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option java_package = "cauchy.miner";
+option objc_class_prefix = "CHY";
+
+package cauchy;
+
+message CommandRequest {
+  enum Miner {
+    XMR_CPU = 0;
+    XMR_CUDA = 1;
+    XMR_AMD = 2;
+    ETH = 3;
+  }
+
+  Miner miner = 1;
+  Config config = 2;
+}
+
+message CommandStatusReply {
+  string message = 1;
+}
+
+message Config {
+  string config_str = 1;
+}
+
+message SystemStatusRequest {
+  int32 id = 1;
+}
+
+message SystemStatusReply {
+  bool running = 1;
+
+  enum Miner {
+    XMR_CPU = 0;
+    XMR_CUDA = 1;
+    XMR_AMD = 2;
+    ETH = 3;
+  }
+  
+  Miner miner = 2;
+}

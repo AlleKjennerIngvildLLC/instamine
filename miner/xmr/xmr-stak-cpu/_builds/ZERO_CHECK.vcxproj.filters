@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\k\Desktop\projects\xmr\xmr-stak-cpu\_builds\CMakeFiles\f305d3406a0fcfc235e5c64eb40f48eb\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A422D83E-6527-3EDF-87F8-FBD78289EC08}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

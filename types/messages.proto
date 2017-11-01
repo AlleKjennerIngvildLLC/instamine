@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+option java_package = "cauchy.miner";
+option objc_class_prefix = "CHY";
+
+package cauchy;
+
+import "xmr.proto";
+import "command.proto";
+import "google/protobuf/timestamp.proto";
+
+message Event {
+  oneof type {
+    Connection connection = 1;
+    StatusReply reply = 2;
+    Error error = 3;
+    End end = 4;
+    Empty empty = 5;
+    MiningResult result = 6;
+    Job job = 7;
+  };
+
+  google.protobuf.Timestamp timestamp = 8;
+  SystemStatus status = 9;
+}
+
+message Connection {
+  string pool = 1;
+}
+
+message MiningResult {
+  enum Result {
+    REJECTED = 0;
+    ACCEPTED = 1;
+    UNAUTHENTICATED = 3;
+  }
+  Result result = 1;
+}
+
+message Job {
+   uint64 diff = 1;
+}
+
+message DifficultyChange {}
+
+
+message Error {
+  string message = 1;
+}
+
+message End {
+  string status = 1;
+}
+
+message Empty {
+  string status = 1;
+}
+
+message StatusRequest {
+  string message = 1;
+}
+
+message StatusReply {
+  enum Miner {
+    XMR_CPU = 0;
+    XMR_CUDA = 1;
+    XMR_AMD = 2;
+    ETH = 3;
+  }
+
+  Miner miner = 1;
+  Statistics stats = 2;
+}
+
+message SystemStatus {
+
+  enum Miner {
+    XMR_CPU = 0;
+    XMR_CUDA = 1;
+    XMR_AMD = 2;
+    ETH_CPU = 3;
+    ETH_CUDA = 4;
+  }
+  
+  bool running = 1;
+  Miner miner = 2;
+}

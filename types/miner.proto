@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "cauchy.miner";
+option objc_class_prefix = "CHY";
+
+package cauchy;
+
+import "messages.proto";
+import "command.proto";
+
+service MinerStatus {
+  rpc ReportStatus (StatusRequest) returns (Event) {}
+  rpc StartMiner (CommandRequest) returns (CommandStatusReply) {}
+  rpc StopMiner  (CommandRequest) returns (CommandStatusReply) {}
+
+  rpc SystemStatus (SystemStatusRequest) returns (SystemStatusReply) {}
+}
+

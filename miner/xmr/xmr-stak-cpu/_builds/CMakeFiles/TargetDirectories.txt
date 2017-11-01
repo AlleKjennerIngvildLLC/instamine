@@ -1,0 +1,6 @@
+C:/Users/k/Desktop/projects/xmr/xmr-stak-cpu/_builds/CMakeFiles/xmr-stak-c.dir
+C:/Users/k/Desktop/projects/xmr/xmr-stak-cpu/_builds/CMakeFiles/xmr-stak-cpu-lib.dir
+C:/Users/k/Desktop/projects/xmr/xmr-stak-cpu/_builds/CMakeFiles/xmr-stak-cpu.dir
+C:/Users/k/Desktop/projects/xmr/xmr-stak-cpu/_builds/CMakeFiles/INSTALL.dir
+C:/Users/k/Desktop/projects/xmr/xmr-stak-cpu/_builds/CMakeFiles/ALL_BUILD.dir
+C:/Users/k/Desktop/projects/xmr/xmr-stak-cpu/_builds/CMakeFiles/ZERO_CHECK.dir

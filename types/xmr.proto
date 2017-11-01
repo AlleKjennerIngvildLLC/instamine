@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+
+option java_package = "cauchy.miner";
+option objc_class_prefix = "CHY";
+
+package cauchy;
+
+message Statistics {
+  string pool_address = 1;
+  string connection_est = 2;
+  string error_log = 3;
+
+  uint32 ping = 4;
+  uint32 n_threads = 5;
+
+  repeated Hashrate hashrate = 6;
+
+  bool connected = 7;
+  bool running = 8;
+  bool logged_in = 9;
+
+  ResultReport report = 10;
+}
+
+message ResultReport {
+  uint64 diff = 1;
+  uint64 good_results = 2;
+  uint64 total_results = 3;
+
+
+  double average_result_time = 4;
+  double ratio = 5;
+}
+
+message Hashrate {
+  double hashrate = 1;
+}
