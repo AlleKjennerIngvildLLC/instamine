@@ -110,14 +110,11 @@ export default handleActions({
 
       stateUpdate = {
         ...stateUpdate,
-        eventHistory: [...state.eventHistory, event.toObject()]
+        eventHistory:
+          [...state.eventHistory, event.toObject()].slice(-10000)
       };
 
 
-
-      // for(var e of stateUpdate.eventHistory) {
-      //   console.log(e.toObject());
-      // }
 
     }
     return { ...state, ...stateUpdate };

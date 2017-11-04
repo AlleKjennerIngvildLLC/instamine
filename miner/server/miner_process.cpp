@@ -5,24 +5,20 @@
 #include <condition_variable>
 
 
-#include "shared.h"
-#include "miners/xmr.h"
 
-#include "reporter.h"
+#include "miners/xmr_cpu.h"
+#include "miners/xmr_nvidia.h"
+
 #include "thdq.hpp"
+#include "shared.h"
 #include "ipc_message.h"
 
-#define CONF_NO_TLS
 using cauchy::Event;
-
-
-using namespace std::chrono_literals;
-
 
 int main(int argc, char** argv) {
 
   thdq<IPC_Message> ipc_event_queue;
-	XMR miner(&ipc_event_queue);
+	XMR_CPU miner(&ipc_event_queue);
 
   miner.start_miner();
 

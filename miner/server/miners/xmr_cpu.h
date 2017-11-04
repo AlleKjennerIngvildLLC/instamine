@@ -2,14 +2,14 @@
 
 #include "miner.h"
 
-#include "executor.h"
-#include "minethd.h"
-#include "jconf.h"
-#include "console.h"
-#include "donate-level.h"
-#include "autoAdjust.hpp"
-#include "reporter.h"
-#include "fs.h"
+#include "xmr-stak-cpu/executor.h"
+#include "xmr-stak-cpu/minethd.h"
+#include "xmr-stak-cpu/jconf.h"
+#include "xmr-stak-cpu/console.h"
+#include "xmr-stak-cpu/donate-level.h"
+#include "xmr-stak-cpu/autoAdjust.hpp"
+#include "xmr-stak-cpu/reporter.h"
+#include "xmr-stak-cpu/fs.h"
 
 #include <cstdlib>
 #include <cstdio>
@@ -24,11 +24,11 @@
 #include "ipc_message.h"
 
 
-class XMR: public Miner {
+class XMR_CPU: public Miner {
 public:
 
   thdq<IPC_Message> *event_queue;
-  XMR(thdq<IPC_Message> *event_queue) : event_queue(event_queue) {
+  XMR_CPU(thdq<IPC_Message> *event_queue) : event_queue(event_queue) {
     #ifndef CONF_NO_TLS
       SSL_library_init();
       SSL_load_error_strings();

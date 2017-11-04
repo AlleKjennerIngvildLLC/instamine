@@ -49,7 +49,10 @@ target_link_libraries(
 )
  
 add_subdirectory(../xmr/xmr-stak-cpu ${CMAKE_CURRENT_BINARY_DIR}/xmr-stak-cpu)
-include_directories(SYSTEM "../xmr/xmr-stak-cpu")
+add_subdirectory(../xmr/xmr-stak-nvidia ${CMAKE_CURRENT_BINARY_DIR}/xmr-stak-nvidia)
+
+include_directories(SYSTEM "../xmr/")
+
 
 add_executable(miner_process miner_process.cpp)
 target_link_libraries(miner_process
@@ -57,5 +60,8 @@ target_link_libraries(miner_process
     Boost::system
     Boost::filesystem 
     xmr-stak-cpu-lib    
+    xmr-stak-nvidia-lib    
+
     OpenSSL::SSL OpenSSL::Crypto
+
     )

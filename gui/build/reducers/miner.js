@@ -116,12 +116,8 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {
     }
 
     stateUpdate = (0, _extends3.default)({}, stateUpdate, {
-      eventHistory: [].concat((0, _toConsumableArray3.default)(state.eventHistory), [event.toObject()])
+      eventHistory: [].concat((0, _toConsumableArray3.default)(state.eventHistory), [event.toObject()]).slice(-10000)
     });
-
-    // for(var e of stateUpdate.eventHistory) {
-    //   console.log(e.toObject());
-    // }
   }
   return (0, _extends3.default)({}, state, stateUpdate);
 }), _handleActions), {
