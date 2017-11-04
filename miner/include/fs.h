@@ -2,8 +2,6 @@
 #include <streambuf>
 #include <string>
 
-#include "fs.h"
-
 using namespace std;
 
 string read(const string& filename) {

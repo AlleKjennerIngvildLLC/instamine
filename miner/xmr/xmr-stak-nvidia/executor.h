@@ -7,6 +7,9 @@
 #include <list>
 #include <future>
 
+#include "messages.pb.h"
+#include "ipc_message.h"
+
 class jpsock;
 class minethd;
 class telemetry;
@@ -14,14 +17,23 @@ class telemetry;
 class executor
 {
 public:
+
+	thdq<IPC_Message> *ipc_event_queue = nullptr;
+	
 	static executor* inst()
 	{
 		if (oInst == nullptr) oInst = new executor;
 		return oInst;
 	};
 
-	void ex_start() { my_thd = new std::thread(&executor::ex_main, this); }
 	void ex_main();
+	
+	void ex_start() { my_thd = new std::thread(&executor::ex_main, this); }
+	void ex_start(thdq<IPC_Message> *q) {
+		ipc_event_queue = q;
+		ex_start();
+	}
+	
 
 	void get_http_report(ex_event_name ev_id, std::string& data);
 

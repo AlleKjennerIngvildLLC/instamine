@@ -12,6 +12,9 @@ public:
 	};
 
 	bool parse_config(const char* sFilename);
+	bool parse(std::string contents) {
+		return true;
+	}
 
 	struct thd_cfg {
 		uint32_t id;
@@ -44,6 +47,8 @@ public:
 	uint64_t GetGiveUpLimit();
 
 	uint16_t GetHttpdPort();
+
+	bool DaemonMode();
 
 	bool PreferIpv4();
 

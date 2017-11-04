@@ -2,14 +2,14 @@
 
 #include "miner.h"
 
-#include "xmr-stak-cpu/executor.h"
-#include "xmr-stak-cpu/minethd.h"
-#include "xmr-stak-cpu/jconf.h"
-#include "xmr-stak-cpu/console.h"
-#include "xmr-stak-cpu/donate-level.h"
-#include "xmr-stak-cpu/autoAdjust.hpp"
-#include "xmr-stak-cpu/reporter.h"
-#include "xmr-stak-cpu/fs.h"
+#include "executor.h"
+#include "minethd.h"
+#include "jconf.h"
+#include "console.h"
+#include "donate-level.h"
+#include "autoAdjust.hpp"
+#include "reporter.h"
+#include "fs.h"
 
 #include <cstdlib>
 #include <cstdio>

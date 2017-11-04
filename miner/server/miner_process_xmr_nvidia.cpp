@@ -1,12 +1,3 @@
-#include <iostream>
-#include <memory>
-#include <thread>
-#include <string>
-#include <condition_variable>
-
-
-
-#include "miners/xmr_cpu.h"
 #include "miners/xmr_nvidia.h"
 
 #include "thdq.hpp"
@@ -18,7 +9,7 @@ using cauchy::Event;
 int main(int argc, char** argv) {
 
   thdq<IPC_Message> ipc_event_queue;
-	XMR_CPU miner(&ipc_event_queue);
+	XMR_NVIDIA miner(&ipc_event_queue);
 
   miner.start_miner();
 

@@ -245,7 +245,7 @@ set_property(TARGET xmr-stak-nvidiaCrypto PROPERTY C_STANDARD 99)
 
 add_library(xmr-stak-nvidia-lib
     STATIC
-    ${SRCFILES_CPP}
+    ${SRCFILES}
     ${PROTO_SRCS}
 )
 

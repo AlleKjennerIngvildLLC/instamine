@@ -2,14 +2,17 @@
 
 #include "miner.h"
 
-#include "xmr-stak-nvidia/executor.h"
-#include "xmr-stak-nvidia/minethd.h"
-#include "xmr-stak-nvidia/jconf.h"
-#include "xmr-stak-nvidia/console.h"
-#include "xmr-stak-nvidia/donate-level.h"
-#include "xmr-stak-nvidia/autoAdjust.hpp"
-#include "xmr-stak-nvidia/reporter.h"
-#include "xmr-stak-nvidia/fs.h"
+#include "executor.h"
+#include "minethd.h"
+#include "jconf.h"
+#include "console.h"
+#include "donate-level.h"
+#include "autoAdjust.hpp"
+
+
+#include "reporter.h"
+#include "fs.h"
+
 
 #include <cstdlib>
 #include <cstdio>
@@ -44,21 +47,23 @@ public:
     string filename =  "config.txt";
     string contents = read(string(filename));
 
-    if (!jconf::inst()->parse(contents)) {
-      cout << "Failed parsing configuration file!" << endl;
-      return false;
+    if(!jconf::inst()->parse_config(filename.c_str())) {
+
     }
+    
 
-    if(strlen(jconf::inst()->GetOutputFile()) != 0)
-      printer::inst()->open_logfile(jconf::inst()->GetOutputFile());
+    // if (!jconf::inst()->parse(contents)) {
+    //   cout << "Failed parsing configuration file!" << endl;
+    //   return false;
+    // }
 
-    executor::inst()->ex_start(event_queue);
+    // if(strlen(jconf::inst()->GetOutputFile()) != 0)
+    //   printer::inst()->open_logfile(jconf::inst()->GetOutputFile());
+
+    // executor::inst()->ex_start(event_queue);
 
     return true;
   }
 
-  Report get_report() {
-    return *Report::inst();
-  }
 
 };
