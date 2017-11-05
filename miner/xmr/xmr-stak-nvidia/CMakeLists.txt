@@ -251,6 +251,7 @@ add_library(xmr-stak-nvidia-lib
 
 add_executable(xmr-stak-nvidia
     ${SRCFILES}
+    ${PROTO_SRCS}
 )
 
 

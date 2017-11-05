@@ -89,6 +89,8 @@ const requestStatus = () => async(dispatch) => {
     
     let event = await client.getMiningStatus();
 
+    console.log(event.toObject());
+
     dispatch(startSuccess(event));
 
     switch (event.getTypeCase()) {

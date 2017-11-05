@@ -41,6 +41,9 @@
 #include "messages.pb.h"
 #include "xmr.pb.h"
 
+using std::vector;
+using std::array;
+
 
 #ifdef _WIN32
 #define strncasecmp _strnicmp
@@ -49,7 +52,7 @@
 #define REPORT_RATE 3
 executor* executor::oInst = NULL;
 
-using namespace std;
+
 
 executor::executor()
 {
@@ -614,7 +617,7 @@ void executor::multiple_report() {
 	char date[32];
 
 	if (reporter->running &&  reporter->logged_in) {
-		reporter->connection_est = string(time_format(date, sizeof(date), tPoolConnTime));
+		reporter->connection_est = std::string(time_format(date, sizeof(date), tPoolConnTime));
 	} else {
 		reporter->connection_est  = "not connected";
 	}

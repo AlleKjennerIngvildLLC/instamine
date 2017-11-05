@@ -12,9 +12,7 @@ public:
 	};
 
 	bool parse_config(const char* sFilename);
-	bool parse(std::string contents) {
-		return true;
-	}
+	bool parse(std::string contents);
 
 	struct thd_cfg {
 		uint32_t id;

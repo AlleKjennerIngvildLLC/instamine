@@ -7,7 +7,6 @@
 
 namespace bp = boost::process;
 
-using namespace std;
 class process_manager {
 public:
   bp::ipstream is;

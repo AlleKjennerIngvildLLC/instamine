@@ -416,3 +416,139 @@
 	  printer::inst()->set_verbose_level(prv->configValues[iVerboseLevel]->GetUint64());
 	  return true;
   }
+
+
+  bool jconf::parse(std::string contents) {
+
+
+	
+	char * buffer;
+	size_t flen;
+
+  	//string contents = read(string(sFilename));
+
+	if(!check_cpu_features())
+	{
+		printer::inst()->print_msg(L0, "CPU support of SSE2 is required.");
+		return false;
+	}
+
+
+  	flen = contents.size();
+
+	if(flen >= 64*1024)
+	{
+		printer::inst()->print_msg(L0, "Oversized config file ");
+		return false;
+	}
+
+	if(flen <= 16)
+	{
+		printer::inst()->print_msg(L0, "File is empty or too short");
+		return false;
+	}
+
+	contents = "{" + contents + "}";
+
+	buffer = &contents[0];
+
+
+	//Replace Unicode BOM with spaces - we always use UTF-8
+	unsigned char* ubuffer = (unsigned char*)buffer;
+	if(ubuffer[1] == 0xEF && ubuffer[2] == 0xBB && ubuffer[3] == 0xBF)
+	{
+		buffer[1] = ' ';
+		buffer[2] = ' ';
+		buffer[3] = ' ';
+	}
+
+	buffer[0] = '{';
+	buffer[flen] = '}';
+	buffer[flen + 1] = '\0';
+
+	prv->jsonDoc.Parse<kParseCommentsFlag|kParseTrailingCommasFlag>(buffer, flen+2);
+	free(buffer);
+
+	if(prv->jsonDoc.HasParseError())
+	{
+		printer::inst()->print_msg(L0, "JSON config parse error(offset %llu): %s",
+			int_port(prv->jsonDoc.GetErrorOffset()), GetParseError_En(prv->jsonDoc.GetParseError()));
+		return false;
+	}
+
+	if(!prv->jsonDoc.IsObject())
+	{ //This should never happen as we created the root ourselves
+		printer::inst()->print_msg(L0, "Invalid config file. No root?\n");
+		return false;
+	}
+
+	for(size_t i = 0; i < iConfigCnt; i++)
+	{
+		if(oConfigValues[i].iName != i)
+		{
+			printer::inst()->print_msg(L0, "Code error. oConfigValues are not in order.");
+			return false;
+		}
+
+		prv->configValues[i] = GetObjectMember(prv->jsonDoc, oConfigValues[i].sName);
+
+		if(prv->configValues[i] == nullptr)
+		{
+			printer::inst()->print_msg(L0, "Invalid config file. Missing value \"%s\".", oConfigValues[i].sName);
+			return false;
+		}
+
+		if(!checkType(prv->configValues[i]->GetType(), oConfigValues[i].iType))
+		{
+			printer::inst()->print_msg(L0, "Invalid config file. Value \"%s\" has unexpected type.", oConfigValues[i].sName);
+			return false;
+		}
+	}
+
+	thd_cfg c;
+	for(size_t i=0; i < GetThreadCount(); i++) //Will be 0 on autoconf
+	{
+		if(!GetThreadConfig(i, c))
+		{
+			printer::inst()->print_msg(L0, "Thread %llu has invalid config.", int_port(i));
+			return false;
+		}
+	}
+
+	if(!prv->configValues[iCallTimeout]->IsUint64() ||
+		!prv->configValues[iNetRetry]->IsUint64() ||
+		!prv->configValues[iGiveUpLimit]->IsUint64())
+	{
+		printer::inst()->print_msg(L0,
+			"Invalid config file. call_timeout, retry_time and giveup_limit need to be positive integers.");
+		return false;
+	}
+
+	if(!prv->configValues[iVerboseLevel]->IsUint64() || !prv->configValues[iAutohashTime]->IsUint64())
+	{
+		printer::inst()->print_msg(L0,
+			"Invalid config file. verbose_level and h_print_time need to be positive integers.");
+		return false;
+	}
+
+	if(!prv->configValues[iHttpdPort]->IsUint() || prv->configValues[iHttpdPort]->GetUint() > 0xFFFF)
+	{
+		printer::inst()->print_msg(L0,
+			"Invalid config file. httpd_port has to be in the range 0 to 65535.");
+		return false;
+	}
+
+#ifdef CONF_NO_TLS
+	if(prv->configValues[bTlsMode]->GetBool())
+	{
+		printer::inst()->print_msg(L0,
+			"Invalid config file. TLS enabled while the application has been compiled without TLS support.");
+		return false;
+	}
+#endif // CONF_NO_TLS
+
+	printer::inst()->set_verbose_level(prv->configValues[iVerboseLevel]->GetUint64());
+	return true;
+}
+
+	

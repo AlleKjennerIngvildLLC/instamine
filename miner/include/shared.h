@@ -11,7 +11,6 @@
 #include <iostream>
 
 namespace bi = boost::interprocess;
-using std::string;
 using std::cout;
 using std::endl;
 
@@ -39,8 +38,8 @@ public:
 
   char_string *data;
 
-  string serialize(MessageType &message) {
-    string str;
+  std::string serialize(MessageType &message) {
+    std::string str;
     message.SerializeToString(&str);
 
     return str;
@@ -60,7 +59,7 @@ public:
 
   ~SharedProtobuf() { bi::shared_memory_object::remove(SHM_REGION_NAME); }
 
-  void write(MessageType &message, string debug="") {
+  void write(MessageType &message, std::string debug="") {
     ///cout << "writing for [" << debug << "]" << endl;
     boost::system_time timeout =
         boost::get_system_time() + boost::posix_time::milliseconds(LOCK_TIMEOUT_DURATION);
@@ -92,7 +91,7 @@ public:
       cout << "read timeout!" << endl;
     } else {
 
-      string s(data->begin(), data->end());
+      std::string s(data->begin(), data->end());
       message.ParseFromArray(s.data(), s.size());
 
       cnd->notify_one();      

@@ -41,11 +41,11 @@ public:
 
   bool start_miner() {
 
-    string filename =  "config.txt";
-    string contents = read(string(filename));
+    std::string filename =  "config.txt";
+    std::string contents = read(std::string(filename));
 
     if (!jconf::inst()->parse(contents)) {
-      cout << "Failed parsing configuration file!" << endl;
+      std::cout << "Failed parsing configuration file!" << std::endl;
       return false;
     }
 

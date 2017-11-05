@@ -57,16 +57,15 @@ target_link_libraries(miner_process_xmr_cpu
     Boost::system
     Boost::filesystem 
     xmr-stak-cpu-lib    
-    OpenSSL::SSL OpenSSL::Crypto
+    OpenSSL::SSL 
+    OpenSSL::Crypto
 )
 
 
 add_subdirectory(../xmr/xmr-stak-nvidia ${CMAKE_CURRENT_BINARY_DIR}/xmr-stak-nvidia)
 
-
 add_executable(miner_process_xmr_nvidia miner_process_xmr_nvidia.cpp)
 target_include_directories(miner_process_xmr_nvidia PUBLIC "../xmr/xmr-stak-nvidia")
-
 target_link_libraries(miner_process_xmr_nvidia
     Boost::boost 
     Boost::system
@@ -75,3 +74,23 @@ target_link_libraries(miner_process_xmr_nvidia
     OpenSSL::SSL 
     OpenSSL::Crypto
 )
+
+
+add_executable(test1 test1.cpp ${PROTO_SRCS})
+target_link_libraries(test1 
+    Boost::boost 
+    Boost::system
+    Boost::filesystem 
+    ${PROTOBUF}
+)
+
+
+add_executable(test2 test2.cpp ${PROTO_SRCS})
+target_link_libraries(test2 
+    Boost::boost 
+    Boost::system
+    Boost::filesystem 
+    ${PROTOBUF}
+)
+
+

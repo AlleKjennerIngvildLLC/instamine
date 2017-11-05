@@ -14,7 +14,9 @@ using cauchy::Hashrate;
 using cauchy::SystemStatusReply;
 
 using namespace cauchy;
-using namespace std;
+
+using std::cout;
+using std::endl;
 
 void set_timestamp(google::protobuf::Timestamp* timestamp) {
   

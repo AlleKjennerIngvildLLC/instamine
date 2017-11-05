@@ -14,6 +14,7 @@ class jpsock;
 class minethd;
 class telemetry;
 
+using namespace std;
 class executor
 {
 public:
@@ -88,6 +89,9 @@ private:
 	void hashrate_report(std::string& out);
 	void result_report(std::string& out);
 	void connection_report(std::string& out);
+	void multiple_report();
+	void result(cauchy::ResultReport* res);
+	
 
 	void http_hashrate_report(std::string& out);
 	void http_result_report(std::string& out);

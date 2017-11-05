@@ -9,6 +9,10 @@
 #include "messages.pb.h"
 #include "ipc_message.h"
 
+
+using std::vector;
+using std::array;
+
 class jpsock;
 class minethd;
 class telemetry;

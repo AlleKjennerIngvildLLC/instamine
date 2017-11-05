@@ -44,23 +44,18 @@ public:
 
   bool start_miner() {
 
-    string filename =  "config.txt";
-    string contents = read(string(filename));
+    std::string filename =  "config.txt";
+    std::string contents = read(std::string(filename));
 
-    if(!jconf::inst()->parse_config(filename.c_str())) {
-
+    if (!jconf::inst()->parse(contents)) {
+      std::cout << "Failed parsing configuration file!" << std::endl;
+      return false;
     }
-    
 
-    // if (!jconf::inst()->parse(contents)) {
-    //   cout << "Failed parsing configuration file!" << endl;
-    //   return false;
-    // }
+    if(strlen(jconf::inst()->GetOutputFile()) != 0)
+      printer::inst()->open_logfile(jconf::inst()->GetOutputFile());
 
-    // if(strlen(jconf::inst()->GetOutputFile()) != 0)
-    //   printer::inst()->open_logfile(jconf::inst()->GetOutputFile());
-
-    // executor::inst()->ex_start(event_queue);
+    executor::inst()->ex_start(event_queue);
 
     return true;
   }

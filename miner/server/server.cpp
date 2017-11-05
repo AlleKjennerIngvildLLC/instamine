@@ -15,12 +15,11 @@
 
 #include "process_manager.h"
 #include "shared.h"
+#include "helper.h"
 
 #include "miner.grpc.pb.h"
 #include "miner.pb.h"
 #include "messages.pb.h"
-
-
 
 using grpc::Server;
 using grpc::ServerWriter;
@@ -29,48 +28,47 @@ using grpc::ServerContext;
 using grpc::Status;
 
 using namespace cauchy;
-using namespace std;
 
-void write(const string& filename, const string& content) {
-  ofstream out(filename);
+using std::cout;
+using std::endl; 
+
+void write(const std::string &filename, const std::string &content)
+{
+  std::ofstream out(filename);
   out << content;
   out.close();
 }
 
-class MinerStatusServiceImpl final : public MinerStatus::Service {
+class MinerStatusServiceImpl final : public MinerStatus::Service
+{
 public:
   process_manager process;
-  SharedProtobuf<Event> *status_channel = nullptr;
+  SharedProtobufMessageQueue<Event> status_channel;
   bool terminate = false;
-  string exec;
+  std::string exec;
 
-  MinerStatusServiceImpl(string exec) : MinerStatus::Service(), exec(exec) {
-    clean_up_and_prepare();
-  }
-
-  void clean_up_and_prepare() {
-    force_remove();
-
-    if (status_channel != nullptr) {
-      delete status_channel;
-      status_channel = nullptr;
-    }
-
-    status_channel = new SharedProtobuf<Event>();
-  }
-
+  MinerStatusServiceImpl(std::string exec) : MinerStatus::Service(), exec(exec)
+  {}
 
   // Is the managed miner process running?
-  bool miner_running() {
+  bool miner_running()
+  {
     return process.started();
   }
 
   Status ReportStatus(ServerContext *context, const StatusRequest *request,
-                           Event *event) override {
+                      Event *event) override
+  {
 
-    if (process.running()) {
-      *event = status_channel->read();
-    } else {
+    if (process.running())
+    {
+      std::cout << "got something on the server side" << std::endl;
+     
+      // need a check here
+      *event = status_channel.pop();
+    }
+    else
+    {
       auto e = event->mutable_empty();
     }
 
@@ -80,37 +78,38 @@ public:
     return Status::OK;
   }
 
-  
   Status SystemStatus(ServerContext *context, const SystemStatusRequest *request,
-    SystemStatusReply *reply) override {
+                      SystemStatusReply *reply) override
+  {
 
-      reply->set_running(miner_running());
+    reply->set_running(miner_running());
 
-      return Status::OK;
+    return Status::OK;
   }
 
-
   Status StartMiner(ServerContext *context, const CommandRequest *request,
-                    CommandStatusReply *reply) override {
+                    CommandStatusReply *reply) override
+  {
 
     // SharedProtobuf should be part of process!
-    string message;
+    std::string message;
 
     auto config = request->config().config_str();
 
     cout << "trying to start server!" << endl;
-    if (!process.started()) {
+    if (!process.started())
+    {
 
       write("config.txt", config);
-
-      clean_up_and_prepare();
 
       terminate = false;
       process.open_process(exec);
 
       message = "Server started";
       cout << "starting the server" << endl;
-    } else {
+    }
+    else
+    {
       message = "Server is running.";
       cout << "server is already running" << endl;
     }
@@ -120,15 +119,19 @@ public:
   }
 
   Status StopMiner(ServerContext *context, const CommandRequest *request,
-                   CommandStatusReply *reply) override {
+                   CommandStatusReply *reply) override
+  {
 
-    string message;
-    if (process.started()) {
+    std::string message;
+    if (process.started())
+    {
       terminate = true;
       process.terminate();
       message = "server stopped";
       cout << "stopping server." << endl;
-    } else {
+    }
+    else
+    {
       message = "server not running";
       cout << "server is not running" << endl;
     }
@@ -138,7 +141,8 @@ public:
   }
 };
 
-void RunServer(string exec, string address="0.0.0.0:50051") {
+void RunServer(std::string exec, std::string address = "0.0.0.0:50051")
+{
   std::string server_address(address);
   MinerStatusServiceImpl service(exec);
 
@@ -160,13 +164,15 @@ void RunServer(string exec, string address="0.0.0.0:50051") {
   server->Wait();
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
 
-  if (argc < 2) {
+  if (argc < 2)
+  {
     return 1;
-  } 
+  }
 
-  string exec = argv[1];
+  std::string exec = argv[1];
 
   // exec = "c:\\users\\k\\desktop\\projects\\asuka\\_builds\\release\\t.exe";
   RunServer(exec);

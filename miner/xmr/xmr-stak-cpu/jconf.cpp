@@ -41,7 +41,6 @@
 #include "console.h"
 
 
-using namespace std;
 using namespace rapidjson;
 
 /*
@@ -467,7 +466,7 @@ bool jconf::parse_config(const char* sFilename)
 	return true;
 }
 
-bool jconf::parse(string contents)
+bool jconf::parse(std::string contents)
 {
 	char * buffer;
 	size_t flen;

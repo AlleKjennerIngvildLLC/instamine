@@ -7,23 +7,41 @@
 #include "miners/xmr_cpu.h"
 
 #include "thdq.hpp"
-#include "shared.h"
+#include "helper.h"
 #include "ipc_message.h"
+#include "messages.pb.h"
 
-using cauchy::Event;
+
 
 int main(int argc, char** argv) {
 
-  thdq<IPC_Message> ipc_event_queue;
+  thdq<cauchy::Event> ipc_event_queue;
 	XMR_CPU miner(&ipc_event_queue);
 
   miner.start_miner();
 
-  SharedProtobuf<Event> channel;
+  SharedProtobufMessageQueue<cauchy::Event> channel;
 
   for (int counter = 0;; ++counter) {
-    auto status = ipc_event_queue.pop();
+    cauchy::Event status = ipc_event_queue.pop();
 
-    channel.write(status);
+    std::cout << "got event from miner!" << std::endl;
+
+    std::cout << "real size = " << status.ByteSizeLong() << std::endl; 
+    // cauchy::Event event;
+    
+    std::cout << "has reply: " << status.has_reply() << std::endl;
+
+    // auto reply = event.mutable_reply();
+    // reply->set_miner(cauchy::StatusReply::XMR_CPU);
+    
+    // cauchy::Statistics *stats = new cauchy::Statistics();
+    // stats->set_n_threads(50);
+
+    // stats->set_ping(10);
+    // stats->set_connection_est("iue");
+
+
+    channel.push(status);
   }
 }

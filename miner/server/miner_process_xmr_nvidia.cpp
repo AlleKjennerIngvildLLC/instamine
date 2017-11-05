@@ -1,7 +1,7 @@
 #include "miners/xmr_nvidia.h"
 
 #include "thdq.hpp"
-#include "shared.h"
+#include "helper.h"
 #include "ipc_message.h"
 
 using cauchy::Event;
@@ -13,11 +13,12 @@ int main(int argc, char** argv) {
 
   miner.start_miner();
 
-  SharedProtobuf<Event> channel;
-
+  SharedProtobufMessageQueue<IPC_Message> channel;
+  
   for (int counter = 0;; ++counter) {
-    auto status = ipc_event_queue.pop();
+    IPC_Message status = ipc_event_queue.pop();
 
-    channel.write(status);
+    channel.push(status);
+    
   }
 }

@@ -173,34 +173,36 @@ var requestStatus = function requestStatus() {
               event = _context3.sent;
 
 
+              console.log(event.toObject());
+
               dispatch(startSuccess(event));
 
               _context3.t0 = event.getTypeCase();
-              _context3.next = _context3.t0 === Event.TypeCase['CONNECTION'] ? 13 : 14;
+              _context3.next = _context3.t0 === Event.TypeCase['CONNECTION'] ? 14 : 15;
               break;
-
-            case 13:
-              return _context3.abrupt('break', 15);
 
             case 14:
-              return _context3.abrupt('break', 15);
+              return _context3.abrupt('break', 16);
 
             case 15:
-              _context3.next = 20;
+              return _context3.abrupt('break', 16);
+
+            case 16:
+              _context3.next = 21;
               break;
 
-            case 17:
-              _context3.prev = 17;
+            case 18:
+              _context3.prev = 18;
               _context3.t1 = _context3['catch'](5);
 
               dispatch(startFailure(_context3.t1));
 
-            case 20:
+            case 21:
             case 'end':
               return _context3.stop();
           }
         }
-      }, _callee3, undefined, [[5, 17]]);
+      }, _callee3, undefined, [[5, 18]]);
     }));
 
     return function (_x2) {

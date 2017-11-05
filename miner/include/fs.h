@@ -2,17 +2,16 @@
 #include <streambuf>
 #include <string>
 
-using namespace std;
 
-string read(const string& filename) {
-  ifstream t(filename);
-  string str((istreambuf_iterator<char>(t)), istreambuf_iterator<char>());
+std::string read(const std::string& filename) {
+  std::ifstream t(filename);
+  std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
 
   return str;
 }
 
-void write(const string& filename, const string& content) {
-  ofstream out(filename);
+void write(const std::string& filename, const std::string& content) {
+  std::ofstream out(filename);
   out << content;
   out.close();
 }

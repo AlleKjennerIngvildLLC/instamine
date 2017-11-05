@@ -41,9 +41,20 @@
 #include <malloc.h>
 #endif // __GNUC__
 
+#include "ipc_message.h"
+#include "utils.h"
+
+#include "messages.pb.h"
+#include "xmr.pb.h"
+
+
+using namespace std;
+
 #ifdef _WIN32
 #define strncasecmp _strnicmp
 #endif // _WIN32
+
+#define REPORT_RATE 3
 
 executor* executor::oInst = NULL;
 
@@ -404,8 +415,13 @@ void executor::ex_main()
 	vMineResults.emplace_back();
 
 	// If the user requested it, start the autohash printer
-	if(jconf::inst()->GetVerboseLevel() >= 4)
+	if(jconf::inst()->GetVerboseLevel() >= 4) {
 		push_timed_event(ex_event(EV_HASHRATE_LOOP), jconf::inst()->GetAutohashTime());
+	}
+
+	push_timed_event(ex_event(EV_MULTIPLE), REPORT_RATE);
+	
+
 
 	size_t cnt = 0, i;
 	while (true)
@@ -486,6 +502,11 @@ void executor::ex_main()
 		case EV_HASHRATE_LOOP:
 			print_report(EV_USR_HASHRATE);
 			push_timed_event(ex_event(EV_HASHRATE_LOOP), jconf::inst()->GetAutohashTime());
+			break;
+
+		case EV_MULTIPLE:
+			multiple_report();
+			push_timed_event(ex_event(EV_MULTIPLE), REPORT_RATE);
 			break;
 
 		case EV_INVALID_VAL:
@@ -885,4 +906,94 @@ void executor::get_http_report(ex_event_name ev_id, std::string& data)
 
 	ready.wait();
 	pHttpString = nullptr;
+}
+
+
+void executor::result(cauchy::ResultReport* res) {
+	
+		size_t iGoodRes = vMineResults[0].count, iTotalRes = iGoodRes;
+		size_t ln = vMineResults.size();
+	
+		for(size_t i=1; i < ln; i++) {
+			iTotalRes += vMineResults[i].count;
+		}
+	
+		res->set_total_results(iTotalRes);
+		
+		if (iTotalRes == 0) {
+			return;
+		}
+	
+		double dConnSec;
+		{
+			using namespace std::chrono;
+			dConnSec = (double)duration_cast<seconds>(system_clock::now() - tPoolConnTime).count();
+		}
+	
+		auto num = 100.0 * iGoodRes / iTotalRes;
+	
+		res->set_diff(iPoolDiff);
+		res->set_good_results(iGoodRes);
+		res->set_total_results(iTotalRes);
+		res->set_ratio(num);
+	
+		// some error reports here?
+	}
+
+void executor::multiple_report() {
+
+	size_t nthd = pvThreads->size();
+	Report *reporter = Report::inst();
+	reporter->n_threads = nthd;
+
+	// hash stats
+	vector<array<double, 3>> hash_rates;
+
+	for (size_t i = 0; i < nthd; ++i) {
+		array<double, 3> rates = {
+			telem->calc_telemetry_data(2500, i),
+			telem->calc_telemetry_data(60000, i),
+			telem->calc_telemetry_data(900000, i)
+		};
+
+		hash_rates.push_back(rates);
+	}
+
+	reporter->hash_rates = hash_rates;
+
+	// connection details
+	jpsock* pool = pick_pool_by_id(dev_pool_id + 1);
+	reporter->pool_address = jconf::inst()->GetPoolAddress();
+
+	reporter->running = pool->is_running();
+	reporter->logged_in = pool->is_logged_in();
+
+	char num[128];
+	char date[32];
+
+	if (reporter->running &&  reporter->logged_in) {
+		reporter->connection_est = string(time_format(date, sizeof(date), tPoolConnTime));
+	} else {
+		reporter->connection_est  = "not connected";
+	}
+
+	// compute median latency
+	size_t n_calls = iPoolCallTimes.size();
+	if (n_calls > 1) {
+		std::nth_element(iPoolCallTimes.begin(),
+							iPoolCallTimes.begin() + n_calls/2,
+							iPoolCallTimes.end());
+		reporter->ping = iPoolCallTimes[n_calls/2];
+	}
+
+	cauchy::Event event = from_report(*reporter);
+
+	// add ResultReport information
+	result(
+		event.mutable_reply()
+				->mutable_stats()
+				->mutable_report()
+	);
+
+	ipc_event_queue->push(from_report(*reporter));
 }
