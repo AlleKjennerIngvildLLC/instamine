@@ -24,24 +24,6 @@ int main(int argc, char** argv) {
 
   for (int counter = 0;; ++counter) {
     cauchy::Event status = ipc_event_queue.pop();
-
-    std::cout << "got event from miner!" << std::endl;
-
-    std::cout << "real size = " << status.ByteSizeLong() << std::endl; 
-    // cauchy::Event event;
-    
-    std::cout << "has reply: " << status.has_reply() << std::endl;
-
-    // auto reply = event.mutable_reply();
-    // reply->set_miner(cauchy::StatusReply::XMR_CPU);
-    
-    // cauchy::Statistics *stats = new cauchy::Statistics();
-    // stats->set_n_threads(50);
-
-    // stats->set_ping(10);
-    // stats->set_connection_est("iue");
-
-
     channel.push(status);
   }
 }

@@ -127,4 +127,3 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {
   eventHistory: [],
   hashrates: []
 });
-//# sourceMappingURL=miner.js.map

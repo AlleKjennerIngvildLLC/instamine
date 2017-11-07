@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.default = undefined;
 
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
@@ -31,6 +30,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _rebass = require('rebass');
 
+var _reactRouterRedux = require('react-router-redux');
+
+var _reactRouterDom = require('react-router-dom');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var MinerItem = function (_Component) {
@@ -49,7 +52,12 @@ var MinerItem = function (_Component) {
             var startButton = _react2.default.createElement(
                 _rebass.Button,
                 { disabled: this.props.disabled, onClick: function onClick() {
-                        _this2.props.startMiner(_this2.props.settings.config);
+
+                        if (_this2.props.settings.walletAddress === "") {
+                            _this2.props.history.push('/settings');
+                        } else {
+                            _this2.props.startMiner(_this2.props.settings.config);
+                        }
                     } },
                 'Start'
             );
@@ -114,6 +122,6 @@ var MinerItem = function (_Component) {
     return MinerItem;
 }(_react.Component);
 
-exports.default = MinerItem;
 ;
-//# sourceMappingURL=MinerItem.js.map
+
+exports.default = (0, _reactRouterDom.withRouter)(MinerItem);

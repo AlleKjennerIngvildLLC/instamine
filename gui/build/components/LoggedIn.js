@@ -58,4 +58,3 @@ var LoggedIn = function (_Component) {
 }(_react.Component);
 
 exports.default = LoggedIn;
-//# sourceMappingURL=LoggedIn.js.map

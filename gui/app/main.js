@@ -2,6 +2,9 @@ import path from 'path';
 import url from 'url';
 import {app, crashReporter, BrowserWindow, Menu} from 'electron';
 
+const cp = require('child_process');
+const os = require('os');
+
 const isDevelopment = (process.env.NODE_ENV === 'development');
 
 let mainWindow = null;
@@ -23,6 +26,17 @@ const installExtensions = async () => {
   }
 };
 
+let child;
+
+// start server!
+if (isDevelopment) {
+  child = cp.spawn('exec\\server.exe', ['exec\\miner_process_xmr_cpu.exe']);
+  
+} else {
+  child = cp.spawn('server.exe', ['miner_process_xmr_cpu.exe']);
+}
+
+console.log("process pid: " + child.pid);
 crashReporter.start({
   productName: 'Instamine',
   companyName: 'Alle Kjenner Ingvild LLC',
@@ -31,6 +45,11 @@ crashReporter.start({
 });
 
 app.on('window-all-closed', () => {
+
+  console.log('killing  ' + child.pid);
+
+  cp.exec('taskkill.exe /F /T /PID ' + child.pid);
+  
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {

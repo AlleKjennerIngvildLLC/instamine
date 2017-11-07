@@ -30,7 +30,7 @@ using grpc::Status;
 using namespace cauchy;
 
 using std::cout;
-using std::endl; 
+using std::endl;
 
 void write(const std::string &filename, const std::string &content)
 {
@@ -43,12 +43,25 @@ class MinerStatusServiceImpl final : public MinerStatus::Service
 {
 public:
   process_manager process;
-  SharedProtobufMessageQueue<Event> status_channel;
+  SharedProtobufMessageQueue<Event>* status_channel;
   bool terminate = false;
   std::string exec;
 
   MinerStatusServiceImpl(std::string exec) : MinerStatus::Service(), exec(exec)
-  {}
+  {
+    // this needs to be handled better!
+    SharedProtobufMessageQueue<Event>::remove("test");
+    status_channel = new SharedProtobufMessageQueue<Event>();
+  }
+
+  ~MinerStatusServiceImpl() {
+    SharedProtobufMessageQueue<Event>::remove("test");    
+    delete status_channel;
+
+    if (process.running()) {
+      process.terminate();
+    }
+  }
 
   // Is the managed miner process running?
   bool miner_running()
@@ -62,10 +75,17 @@ public:
 
     if (process.running())
     {
-      std::cout << "got something on the server side" << std::endl;
-     
-      // need a check here
-      *event = status_channel.pop();
+      if (status_channel->empty())
+      {
+        cauchy::Event empty_event;
+        auto empty = empty_event.mutable_empty();
+        empty->set_status("Message queue is empty.");
+        *event = empty_event;
+      }
+      else
+      {
+        *event = status_channel->pop();
+      }
     }
     else
     {
@@ -91,12 +111,9 @@ public:
                     CommandStatusReply *reply) override
   {
 
-    // SharedProtobuf should be part of process!
     std::string message;
-
     auto config = request->config().config_str();
 
-    cout << "trying to start server!" << endl;
     if (!process.started())
     {
 
@@ -106,19 +123,19 @@ public:
       process.open_process(exec);
 
       message = "Server started";
-      cout << "starting the server" << endl;
     }
     else
     {
       message = "Server is running.";
-      cout << "server is already running" << endl;
     }
 
+    cout << message << endl;
     reply->set_message(message);
     return Status::OK;
   }
 
-  Status StopMiner(ServerContext *context, const CommandRequest *request,
+  Status StopMiner(ServerContext *context,
+                   const CommandRequest *request,
                    CommandStatusReply *reply) override
   {
 
@@ -128,13 +145,13 @@ public:
       terminate = true;
       process.terminate();
       message = "server stopped";
-      cout << "stopping server." << endl;
     }
     else
     {
       message = "server not running";
-      cout << "server is not running" << endl;
     }
+
+    cout << "server is not running" << endl;
 
     reply->set_message(message);
     return Status::OK;
@@ -148,20 +165,19 @@ void RunServer(std::string exec, std::string address = "0.0.0.0:50051")
 
   ServerBuilder builder;
 
-  // Listen on the given address without any authentication mechanism.
+  // Do not use any authentication mechanism.
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
 
-  // Register "service" as the instance through which we'll communicate with
-  // clients. In this case it corresponds to an *synchronous* service.
   builder.RegisterService(&service);
 
-  // Finally assemble the server.
   std::unique_ptr<Server> server(builder.BuildAndStart());
   std::cout << "Server listening on " << server_address << std::endl;
 
   // Wait for the server to shutdown. Note that some other thread must be
   // responsible for shutting down the server for this call to ever return.
   server->Wait();
+
+  std::cout << "Shutting down the server" << std::endl;
 }
 
 int main(int argc, char **argv)
@@ -173,8 +189,8 @@ int main(int argc, char **argv)
   }
 
   std::string exec = argv[1];
-
-  // exec = "c:\\users\\k\\desktop\\projects\\asuka\\_builds\\release\\t.exe";
   RunServer(exec);
+
+  std::cout << "exiting main " << std::endl;
   return 0;
 }

@@ -34,12 +34,10 @@
     "rebass": "^1.0.4",
     "redux": "^3.0.0",
     "redux-actions": "^2.2.1",
-    "redux-localstorage": "^0.4.1",
+    "redux-localstorage": "^1.0.0-rc5",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
-    "redux-thunk-actions": "^1.1.6",
-    "tree-kill": "^1.2.0",
-    "treekill": "^1.0.0"
+    "redux-thunk-actions": "^1.1.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

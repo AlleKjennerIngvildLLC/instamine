@@ -4,8 +4,8 @@
 #include <boost/interprocess/ipc/message_queue.hpp>
 
 
-#define MQ_NAME "CauchyMemoryRegion5d01-2"
-#define MAX_SIZE 200
+const size_t MAX_SIZE = 200;
+
 template <class MessageType>
 class SharedProtobufMessageQueue
 {
@@ -13,8 +13,13 @@ class SharedProtobufMessageQueue
   public:
     boost::interprocess::message_queue mq;
 
-    SharedProtobufMessageQueue()
-        : mq( boost::interprocess::open_or_create, MQ_NAME, 2000, MAX_SIZE)
+
+    static bool remove(std::string name) {
+        return boost::interprocess::message_queue::remove(name.c_str());
+        
+    }
+    SharedProtobufMessageQueue(std::string name="test")
+        : mq( boost::interprocess::open_or_create, name.c_str(), 2000, MAX_SIZE)
     {
     }
 
@@ -37,6 +42,10 @@ class SharedProtobufMessageQueue
 
     size_t size() {
         return mq.get_num_msg();
+    }
+
+    bool empty() {
+        return size() == 0;
     }
 
     std::string serialize(MessageType &message)

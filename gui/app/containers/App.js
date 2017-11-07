@@ -22,6 +22,9 @@ const mapDispatchToProps = (dispatch) => {
     systemStatus: () => {
       miner.systemStatus();
     },
+    stopMiner: () => {
+      miner.stop();
+    }
   };
 };
 
@@ -40,6 +43,8 @@ class App extends Component {
   }
 
   close = () => {
+
+    this.props.stopMiner();
     remote
       .getCurrentWindow()
       .close();
@@ -82,6 +87,7 @@ class App extends Component {
     };
 
 
+    console.log(this.props)
     return (
       <Provider theme={theme}>
         <div className="window">

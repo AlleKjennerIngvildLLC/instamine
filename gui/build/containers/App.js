@@ -65,6 +65,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     systemStatus: function systemStatus() {
       miner.systemStatus();
+    },
+    stopMiner: function stopMiner() {
+      miner.stop();
     }
   };
 };
@@ -78,6 +81,8 @@ var App = function (_Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (App.__proto__ || (0, _getPrototypeOf2.default)(App)).call(this, props));
 
     _this.close = function () {
+
+      _this.props.stopMiner();
       _electron.remote.getCurrentWindow().close();
     };
 
@@ -129,6 +134,7 @@ var App = function (_Component) {
         }
       };
 
+      console.log(this.props);
       return _react2.default.createElement(
         _rebass.Provider,
         { theme: _theme2.default },
@@ -162,4 +168,3 @@ var App = function (_Component) {
 }(_react.Component);
 
 exports.default = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App));
-//# sourceMappingURL=App.js.map

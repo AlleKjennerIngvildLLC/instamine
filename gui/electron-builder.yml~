@@ -14,11 +14,6 @@ files:
   - build/
   - node_modules/
 
-extraResources:
-  - from: exec/server.exe
-    to: ../server.exe
-  - from: exec/miner_process_xmr_cpu.exe
-    to: ../miner_process_xmr_cpu.exe  
 dmg:
   contents:
     - type: link
@@ -41,5 +36,3 @@ linux:
   target:
     - deb
     - AppImage
-
-

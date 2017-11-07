@@ -20,4 +20,3 @@ function buildConfiguration(cpu_threads_conf, walletAddress) {
 }
 
 exports.default = buildConfiguration;
-//# sourceMappingURL=config.js.map

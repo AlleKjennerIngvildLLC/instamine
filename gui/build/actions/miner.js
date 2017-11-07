@@ -291,4 +291,3 @@ exports.default = {
   updateSettings: updateSettings,
   minerSaga: minerSaga
 };
-//# sourceMappingURL=miner.js.map

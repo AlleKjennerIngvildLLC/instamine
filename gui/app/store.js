@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
 import miner from './reducers/miner';
 import minerActions from './actions/miner';
 
+
 export default function configureStore(initialState, routerHistory) {
   const router = routerMiddleware(routerHistory);
 
@@ -34,8 +35,15 @@ export default function configureStore(initialState, routerHistory) {
     }
     return compose;
   })();
+  
 
-  const enhancer = composeEnhancers(applyMiddleware(...middlewares), persistState());
+  var storageName = 'instamine-production-main-storage';
+  if (process.env.NODE_ENV === 'development') {
+    storageName = 'instamine-development-main-storage';
+  }
+
+  const enhancer = composeEnhancers(applyMiddleware(...middlewares), 
+  persistState('miner', storageName));
   const rootReducer = combineReducers(reducers);
 
   const store = createStore(rootReducer, initialState, enhancer);

@@ -24,6 +24,9 @@ var _electron = require('electron');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var cp = require('child_process');
+var os = require('os');
+
 var isDevelopment = process.env.NODE_ENV === 'development';
 
 var mainWindow = null;
@@ -119,6 +122,16 @@ var installExtensions = function () {
   };
 }();
 
+var child = void 0;
+
+// start server!
+if (isDevelopment) {
+  child = cp.spawn('exec\\server.exe', ['exec\\miner_process_xmr_cpu.exe']);
+} else {
+  child = cp.spawn('server.exe', ['miner_process_xmr_cpu.exe']);
+}
+
+console.log("process pid: " + child.pid);
 _electron.crashReporter.start({
   productName: 'Instamine',
   companyName: 'Alle Kjenner Ingvild LLC',
@@ -127,6 +140,11 @@ _electron.crashReporter.start({
 });
 
 _electron.app.on('window-all-closed', function () {
+
+  console.log('killing  ' + child.pid);
+
+  cp.exec('taskkill.exe /F /T /PID ' + child.pid);
+
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
@@ -221,4 +239,3 @@ _electron.app.on('ready', (0, _asyncToGenerator3.default)(_regenerator2.default.
     }
   }, _callee2, undefined);
 })));
-//# sourceMappingURL=main.js.map
