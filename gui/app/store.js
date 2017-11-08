@@ -43,7 +43,7 @@ export default function configureStore(initialState, routerHistory) {
   }
 
   const enhancer = composeEnhancers(applyMiddleware(...middlewares), 
-  persistState('miner', storageName));
+  persistState());
   const rootReducer = combineReducers(reducers);
 
   const store = createStore(rootReducer, initialState, enhancer);

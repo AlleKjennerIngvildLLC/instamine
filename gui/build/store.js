@@ -68,7 +68,7 @@ function configureStore(initialState, routerHistory) {
     storageName = 'instamine-development-main-storage---';
   }
 
-  var enhancer = composeEnhancers(_redux.applyMiddleware.apply(undefined, middlewares), (0, _reduxLocalstorage2.default)('miner', storageName));
+  var enhancer = composeEnhancers(_redux.applyMiddleware.apply(undefined, middlewares), (0, _reduxLocalstorage2.default)());
   var rootReducer = (0, _redux.combineReducers)(reducers);
 
   var store = (0, _redux.createStore)(rootReducer, initialState, enhancer);
