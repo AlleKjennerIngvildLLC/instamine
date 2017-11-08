@@ -1,0 +1,2 @@
+# instamine
+multicurrency gui miner
