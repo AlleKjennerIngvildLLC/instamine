@@ -38,9 +38,8 @@ function handleReply(event, state) {
             poolAddress: reply.stats.poolAddress
         },
 
-        hashrates: [].concat((0, _toConsumableArray3.default)(state.hashrates), [newHashrates])
+        hashrates: [].concat((0, _toConsumableArray3.default)(state.hashrates), [newHashrates]).slice(-10000)
     };
 }
 
 exports.default = handleReply;
-//# sourceMappingURL=reply.js.map

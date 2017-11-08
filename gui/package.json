@@ -37,7 +37,9 @@
     "redux-localstorage": "^0.4.1",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
-    "redux-thunk-actions": "^1.1.6"
+    "redux-thunk-actions": "^1.1.6",
+    "tree-kill": "^1.2.0",
+    "treekill": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

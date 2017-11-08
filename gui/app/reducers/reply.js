@@ -1,5 +1,5 @@
-
 import timestamp_to_date from '../utils';
+
 function handleReply(event, state) {
 
     let reply = event.getReply().toObject();
@@ -28,7 +28,7 @@ function handleReply(event, state) {
         hashrates: [
             ...state.hashrates,
             newHashrates
-        ]
+        ].slice(-10000)
     }
 }
 

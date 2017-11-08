@@ -12,6 +12,8 @@ export default class MinerMenu extends Component {
 
     render() {
 
+        console.log(this.props);
+
 
         return (
             <div className='menu'>

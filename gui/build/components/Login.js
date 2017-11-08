@@ -88,4 +88,3 @@ var Login = (_temp2 = _class = function (_Component) {
   onLogin: _propTypes2.default.func.isRequired
 }, _temp2);
 exports.default = Login;
-//# sourceMappingURL=Login.js.map

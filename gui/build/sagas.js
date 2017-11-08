@@ -66,4 +66,3 @@ function minerSaga() {
 }
 
 exports.default = minerSaga;
-//# sourceMappingURL=sagas.js.map

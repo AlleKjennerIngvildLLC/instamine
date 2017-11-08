@@ -63,7 +63,12 @@ function configureStore(initialState, routerHistory) {
     return _redux.compose;
   }();
 
-  var enhancer = composeEnhancers(_redux.applyMiddleware.apply(undefined, middlewares), (0, _reduxLocalstorage2.default)());
+  var storageName = 'instamine-production-main-storage---';
+  if (process.env.NODE_ENV === 'development') {
+    storageName = 'instamine-development-main-storage---';
+  }
+
+  var enhancer = composeEnhancers(_redux.applyMiddleware.apply(undefined, middlewares), (0, _reduxLocalstorage2.default)('miner', storageName));
   var rootReducer = (0, _redux.combineReducers)(reducers);
 
   var store = (0, _redux.createStore)(rootReducer, initialState, enhancer);
@@ -71,4 +76,3 @@ function configureStore(initialState, routerHistory) {
 
   return store;
 }
-//# sourceMappingURL=store.js.map

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Avatar } from 'rebass';
 import { Text, Button, ButtonOutline } from 'rebass';
+import { push } from 'react-router-redux';
+import { withRouter } from 'react-router-dom';
 
-export default class MinerItem extends Component {
+
+class MinerItem extends Component {
 
     constructor(props) {
         super(props);
@@ -13,7 +16,12 @@ export default class MinerItem extends Component {
 
         let startButton = (
             <Button disabled={this.props.disabled} onClick={() => {
-                this.props.startMiner(this.props.settings.config);
+
+                if (this.props.settings.walletAddress === "") {
+                    this.props.history.push('/settings');
+                } else {
+                    this.props.startMiner(this.props.settings.config);
+                }
             }}>
                 Start
             </Button>
@@ -75,3 +83,5 @@ export default class MinerItem extends Component {
         )
     }
 };
+
+export default withRouter(MinerItem);
