@@ -37,9 +37,9 @@ export default function configureStore(initialState, routerHistory) {
   })();
   
 
-  var storageName = 'instamine-production-main-storage';
+  var storageName = 'instamine-production-main-storage---';
   if (process.env.NODE_ENV === 'development') {
-    storageName = 'instamine-development-main-storage';
+    storageName = 'instamine-development-main-storage---';
   }
 
   const enhancer = composeEnhancers(applyMiddleware(...middlewares), 

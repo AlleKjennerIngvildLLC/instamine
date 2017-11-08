@@ -63,9 +63,9 @@ function configureStore(initialState, routerHistory) {
     return _redux.compose;
   }();
 
-  var storageName = 'instamine-production-main-storage';
+  var storageName = 'instamine-production-main-storage---';
   if (process.env.NODE_ENV === 'development') {
-    storageName = 'instamine-development-main-storage';
+    storageName = 'instamine-development-main-storage---';
   }
 
   var enhancer = composeEnhancers(_redux.applyMiddleware.apply(undefined, middlewares), (0, _reduxLocalstorage2.default)('miner', storageName));
