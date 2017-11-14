@@ -205,6 +205,12 @@ void executor::on_sock_ready(size_t pool_id)
 
 	printer::inst()->print_msg(L1, "Connected. Logging in...");
 
+	
+	ipc_event_queue->push(
+		on_connect(jconf::inst()->GetPoolAddress())
+	);
+
+
 	if (!pool->cmd_login(jconf::inst()->GetWalletAddress(), jconf::inst()->GetPoolPwd()))
 	{
 		if(!pool->have_sock_error())
@@ -236,6 +242,10 @@ void executor::on_sock_error(size_t pool_id, std::string&& sError)
 		return;
 	}
 
+	ipc_event_queue->push(
+		cauchy::on_error(sError)
+	); 
+
 	log_socket_error(std::move(sError));
 	pool->disconnect();
 	sched_reconnect();
@@ -262,6 +272,10 @@ void executor::on_pool_have_job(size_t pool_id, pool_job& oPoolJob)
 		printer::inst()->print_msg(L2, "Difficulty changed. Now: %llu.", int_port(iPoolDiff));
 	}
 
+
+	ipc_event_queue->push(
+		cauchy::on_job(Result::REJECTED)
+	);
 	printer::inst()->print_msg(L3, "New block detected.");
 }
 
@@ -295,6 +309,11 @@ void executor::on_miner_result(size_t pool_id, job_result& oResult)
 
 	if (!pool->is_running() || !pool->is_logged_in())
 	{
+
+		ipc_event_queue->push(
+			cauchy::on_error("Network error.")
+		);
+
 		log_result_error("[NETWORK ERROR]");
 		return;
 	}
@@ -313,6 +332,10 @@ void executor::on_miner_result(size_t pool_id, job_result& oResult)
 		uint64_t* targets = (uint64_t*)oResult.bResult;
 		log_result_ok(jpsock::t64_to_diff(targets[3]));
 		printer::inst()->print_msg(L3, "Result accepted by the pool.");
+
+		ipc_event_queue->push(
+			cauchy::on_miner_result(Result::ACCEPTED)
+		);		
 	}
 	else
 	{
@@ -326,12 +349,22 @@ void executor::on_miner_result(size_t pool_id, job_result& oResult)
 			{
 				printer::inst()->print_msg(L2, "Your miner was unable to find a share in time. Either the pool difficulty is too high, or the pool timeout is too low.");
 				pool->disconnect();
+
+				
+				ipc_event_queue->push(
+					cauchy::on_miner_result(Result::UNAUTHENTICATED)
+				);
 			}
 
 			log_result_error(std::move(error));
 		}
 		else
+		{
+			ipc_event_queue->push(
+				cauchy::on_error("Network error.")
+			);
 			log_result_error("[NETWORK ERROR]");
+		}
 	}
 }
 
@@ -344,6 +377,10 @@ void executor::on_reconnect(size_t pool_id)
 		return;
 
 	printer::inst()->print_msg(L1, "Connecting to pool %s ...", jconf::inst()->GetPoolAddress());
+
+	ipc_event_queue->push(
+		on_connect(jconf::inst()->GetPoolAddress())
+	);
 
 	if(!pool->connect(jconf::inst()->GetPoolAddress(), error))
 	{

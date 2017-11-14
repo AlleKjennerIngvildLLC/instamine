@@ -58,7 +58,12 @@ void win_exit() { return; }
 
 void do_benchmark();
 
+#include "thdq.hpp"
+#include "ipc_message.h"
+
+
 int main(int argc, char *argv[])
+
 {
 #ifndef CONF_NO_TLS
 	SSL_library_init();
@@ -71,6 +76,8 @@ int main(int argc, char *argv[])
 
 	const char* sFilename = "config.txt";
 	bool benchmark_mode = false;
+
+	thdq<IPC_Message> ipc_event_queue;
 
 	if(argc >= 2)
 	{
@@ -148,7 +155,7 @@ int main(int argc, char *argv[])
 	if(strlen(jconf::inst()->GetOutputFile()) != 0)
 		printer::inst()->open_logfile(jconf::inst()->GetOutputFile());
 
-	executor::inst()->ex_start();
+	executor::inst()->ex_start(&ipc_event_queue);
 
 	int key;
 	while(true)

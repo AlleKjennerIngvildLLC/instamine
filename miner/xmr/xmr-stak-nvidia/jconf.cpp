@@ -462,12 +462,7 @@
 		buffer[3] = ' ';
 	}
 
-	buffer[0] = '{';
-	buffer[flen] = '}';
-	buffer[flen + 1] = '\0';
-
 	prv->jsonDoc.Parse<kParseCommentsFlag|kParseTrailingCommasFlag>(buffer, flen+2);
-	free(buffer);
 
 	if(prv->jsonDoc.HasParseError())
 	{
