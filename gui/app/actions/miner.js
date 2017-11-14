@@ -26,7 +26,7 @@ function send_notification(dispatch, title, message) {
   
 
 
-const startMiner = (config) => async(dispatch) => {
+const startMiner = (config, enableGPU) => async(dispatch) => {
 
   
   const startRequest = createAction('START_MINER_START');
@@ -37,7 +37,7 @@ const startMiner = (config) => async(dispatch) => {
   dispatch(startRequest());
 
   try {
-    var response = await client.startMiner(config);
+    var response = await client.startMiner(config, enableGPU);
 
     if (response.getMessage() == 'Server started') {
 
@@ -88,8 +88,6 @@ const requestStatus = () => async(dispatch) => {
   try {
     
     let event = await client.getMiningStatus();
-
-    console.log(event.toObject());
 
     dispatch(startSuccess(event));
 

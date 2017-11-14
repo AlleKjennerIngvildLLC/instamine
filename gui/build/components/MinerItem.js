@@ -49,14 +49,16 @@ var MinerItem = function (_Component) {
         value: function render() {
             var _this2 = this;
 
+            var settings = this.props.settings;
+
             var startButton = _react2.default.createElement(
                 _rebass.Button,
                 { disabled: this.props.disabled, onClick: function onClick() {
 
-                        if (_this2.props.settings.walletAddress === "") {
+                        if (settings.walletAddress === "") {
                             _this2.props.history.push('/settings');
                         } else {
-                            _this2.props.startMiner(_this2.props.settings.config);
+                            _this2.props.startMiner(settings.config, settings.enableGPU);
                         }
                     } },
                 'Start'

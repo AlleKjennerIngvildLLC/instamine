@@ -86,8 +86,6 @@ class App extends Component {
       }
     };
 
-
-    console.log(this.props)
     return (
       <Provider theme={theme}>
         <div className="window">

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Flex, Box, Heading, Input, Switch, Tooltip, Image } from 'rebass';
 import buildConfiguration from '../config.js';
+import buildGPUConfiguration from '../config_nvidia.js';
 import os from 'os';
 import _ from 'lodash';
+import { gunzip } from 'zlib';
 
 export default class Settings extends Component {
 
@@ -20,14 +22,27 @@ export default class Settings extends Component {
 
   handleSubmit = (event) => {
 
-    let cpu_threads_conf = this.buildCpuConfig(this.state.nThreads);
-    let config = buildConfiguration(cpu_threads_conf, this.state.walletAddress);
+
+
+    event.preventDefault();
+
+    let config;
+    if (this.state.enableGPU) {
+      let gpu_threads_conf = this.buildGPUConfig();
+      config = buildGPUConfiguration(
+          gpu_threads_conf, 
+          this.state.walletAddress
+      );
+
+    } else {
+      let cpu_threads_conf = this.buildCpuConfig(this.state.nThreads);
+      config = buildConfiguration(cpu_threads_conf, this.state.walletAddress);
+    }
 
     this.setState({ config: config }, () => {
       this.props.updateSettings(this.state);
     });
 
-    event.preventDefault();
   }
 
 
@@ -44,7 +59,24 @@ export default class Settings extends Component {
     return cpuSettings;
   }
 
+  buildGPUConfig = () => {
+    let gpuSettings = [{
+    'index': 0,
+    'threads': 5,
+    'blocks': 60,
+    'bfactor': 8,
+    'bsleep': 100,
+    'affine_to_cpu': false
+   }];
+
+    return gpuSettings;
+
+  }
+
   render() {
+
+
+    console.log(this.props.settings)
 
     let nCpus = os.cpus().length;
 
@@ -126,11 +158,13 @@ export default class Settings extends Component {
                   </div>
 
                   <div className="checkbox">
-                    <Tooltip text="Not yet supported.">
                       <label>
-                        <input disabled type="checkbox" /> Enable GPU
+                        <input 
+                        defaultChecked={this.state.enableGPU}
+                        type="checkbox" onChange={(event) => {
+                          this.setState({enableGPU: event.target.checked});
+                        }}/> Enable GPU
                       </label>
-                    </Tooltip>
                   </div>
 
                   <div className="form-actions">

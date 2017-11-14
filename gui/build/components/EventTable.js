@@ -54,7 +54,8 @@ var EventTable = function (_Component) {
     (0, _createClass3.default)(EventTable, [{
         key: 'render',
         value: function render() {
-            function transform(i, event) {
+
+            function getEventType(event) {
                 var types = ["connection", "reply", "error", "end", "empty", "result", "job"];
 
                 var eventType;
@@ -67,7 +68,7 @@ var EventTable = function (_Component) {
                         var type = _step.value;
 
                         if (event[type] !== undefined) {
-                            eventType = type.toUpperCase();
+                            eventType = type;
                             break;
                         }
                     }
@@ -86,12 +87,22 @@ var EventTable = function (_Component) {
                     }
                 }
 
-                var date = new Date(event.timestamp.seconds * 1000 + event.timestamp.nanos / 1000);
-
-                return { id: i, type: type, date: date };
+                return eventType;
             }
 
-            var events = this.props.events.map(function (i, event) {
+            function transform(i, event) {
+
+                var eventType = getEventType(event);
+
+                var date = new Date(event.timestamp.seconds * 1000 + event.timestamp.nanos / 1000);
+
+                return { id: i, type: eventType, date: date };
+            }
+
+            var events = this.props.events.filter(function (event) {
+                var type = getEventType(event);
+                return type !== "reply";
+            }).map(function (i, event) {
                 return transform(event, i);
             });
 

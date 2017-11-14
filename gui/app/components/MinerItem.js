@@ -5,6 +5,7 @@ import { push } from 'react-router-redux';
 import { withRouter } from 'react-router-dom';
 
 
+
 class MinerItem extends Component {
 
     constructor(props) {
@@ -14,13 +15,18 @@ class MinerItem extends Component {
     render() {
 
 
+        let settings = this.props.settings;
+
         let startButton = (
             <Button disabled={this.props.disabled} onClick={() => {
 
-                if (this.props.settings.walletAddress === "") {
+                if (settings.walletAddress === "") {
                     this.props.history.push('/settings');
                 } else {
-                    this.props.startMiner(this.props.settings.config);
+                    this.props.startMiner(
+                        settings.config, 
+                        settings.enableGPU
+                    );
                 }
             }}>
                 Start

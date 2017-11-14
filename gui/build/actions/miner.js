@@ -51,7 +51,7 @@ function send_notification(dispatch, title, message) {
   dispatch(_reactNotificationSystemRedux2.default.info(options));
 }
 
-var startMiner = function startMiner(config) {
+var startMiner = function startMiner(config, enableGPU) {
   return function () {
     var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(dispatch) {
       var startRequest, startSuccess, startFailure, startEnded, response, date;
@@ -69,7 +69,7 @@ var startMiner = function startMiner(config) {
 
               _context.prev = 5;
               _context.next = 8;
-              return client.startMiner(config);
+              return client.startMiner(config, enableGPU);
 
             case 8:
               response = _context.sent;
@@ -173,36 +173,34 @@ var requestStatus = function requestStatus() {
               event = _context3.sent;
 
 
-              console.log(event.toObject());
-
               dispatch(startSuccess(event));
 
               _context3.t0 = event.getTypeCase();
-              _context3.next = _context3.t0 === Event.TypeCase['CONNECTION'] ? 14 : 15;
+              _context3.next = _context3.t0 === Event.TypeCase['CONNECTION'] ? 13 : 14;
               break;
+
+            case 13:
+              return _context3.abrupt('break', 15);
 
             case 14:
-              return _context3.abrupt('break', 16);
+              return _context3.abrupt('break', 15);
 
             case 15:
-              return _context3.abrupt('break', 16);
-
-            case 16:
-              _context3.next = 21;
+              _context3.next = 20;
               break;
 
-            case 18:
-              _context3.prev = 18;
+            case 17:
+              _context3.prev = 17;
               _context3.t1 = _context3['catch'](5);
 
               dispatch(startFailure(_context3.t1));
 
-            case 21:
+            case 20:
             case 'end':
               return _context3.stop();
           }
         }
-      }, _callee3, undefined, [[5, 18]]);
+      }, _callee3, undefined, [[5, 17]]);
     }));
 
     return function (_x2) {

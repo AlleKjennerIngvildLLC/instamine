@@ -1,7 +1,8 @@
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <string>
-#include <fstream>
+
 
 #include <grpc++/grpc++.h>
 #include <grpc++/security/server_credentials.h>
@@ -13,18 +14,20 @@
 #include <boost/process.hpp>
 #include <boost/system/system_error.hpp>
 
+#include "helper.h"
 #include "process_manager.h"
 #include "shared.h"
-#include "helper.h"
 
+
+#include "messages.pb.h"
 #include "miner.grpc.pb.h"
 #include "miner.pb.h"
-#include "messages.pb.h"
+
 
 using grpc::Server;
-using grpc::ServerWriter;
 using grpc::ServerBuilder;
 using grpc::ServerContext;
+using grpc::ServerWriter;
 using grpc::Status;
 
 using namespace cauchy;
@@ -32,30 +35,28 @@ using namespace cauchy;
 using std::cout;
 using std::endl;
 
-void write(const std::string &filename, const std::string &content)
-{
+void write(const std::string &filename, const std::string &content) {
   std::ofstream out(filename);
   out << content;
   out.close();
 }
 
-class MinerStatusServiceImpl final : public MinerStatus::Service
-{
+class MinerStatusServiceImpl final : public MinerStatus::Service {
 public:
   process_manager process;
-  SharedProtobufMessageQueue<Event>* status_channel;
+  SharedProtobufMessageQueue<Event> *status_channel;
   bool terminate = false;
   std::string exec;
 
-  MinerStatusServiceImpl(std::string exec) : MinerStatus::Service(), exec(exec)
-  {
+  MinerStatusServiceImpl(std::string exec)
+      : MinerStatus::Service(), exec(exec) {
     // this needs to be handled better!
     SharedProtobufMessageQueue<Event>::remove("test");
     status_channel = new SharedProtobufMessageQueue<Event>();
   }
 
   ~MinerStatusServiceImpl() {
-    SharedProtobufMessageQueue<Event>::remove("test");    
+    SharedProtobufMessageQueue<Event>::remove("test");
     delete status_channel;
 
     if (process.running()) {
@@ -64,31 +65,21 @@ public:
   }
 
   // Is the managed miner process running?
-  bool miner_running()
-  {
-    return process.started();
-  }
+  bool miner_running() { return process.started(); }
 
   Status ReportStatus(ServerContext *context, const StatusRequest *request,
-                      Event *event) override
-  {
+                      Event *event) override {
 
-    if (process.running())
-    {
-      if (status_channel->empty())
-      {
+    if (process.running()) {
+      if (status_channel->empty()) {
         cauchy::Event empty_event;
         auto empty = empty_event.mutable_empty();
         empty->set_status("Message queue is empty.");
         *event = empty_event;
-      }
-      else
-      {
+      } else {
         *event = status_channel->pop();
       }
-    }
-    else
-    {
+    } else {
       auto e = event->mutable_empty();
     }
 
@@ -98,9 +89,9 @@ public:
     return Status::OK;
   }
 
-  Status SystemStatus(ServerContext *context, const SystemStatusRequest *request,
-                      SystemStatusReply *reply) override
-  {
+  Status SystemStatus(ServerContext *context,
+                      const SystemStatusRequest *request,
+                      SystemStatusReply *reply) override {
 
     reply->set_running(miner_running());
 
@@ -108,24 +99,36 @@ public:
   }
 
   Status StartMiner(ServerContext *context, const CommandRequest *request,
-                    CommandStatusReply *reply) override
-  {
+                    CommandStatusReply *reply) override {
 
     std::string message;
     auto config = request->config().config_str();
 
-    if (!process.started())
-    {
+
+    auto miner = request->miner();
+    std::string filename;
+    if (miner == CommandRequest::XMR_CPU) {
+      filename = "miner_process_xmr_cpu.exe";
+    }
+    else if (miner == CommandRequest::XMR_CUDA) {
+      filename = "miner_process_xmr_nvidia.exe";
+    }
+    else {
+      exit(1);
+    }
+
+    cout << "using miner exec: " << filename << endl;
+  
+
+    if (!process.started()) {
 
       write("config.txt", config);
 
       terminate = false;
-      process.open_process(exec);
+      process.open_process(filename);
 
       message = "Server started";
-    }
-    else
-    {
+    } else {
       message = "Server is running.";
     }
 
@@ -134,32 +137,26 @@ public:
     return Status::OK;
   }
 
-  Status StopMiner(ServerContext *context,
-                   const CommandRequest *request,
-                   CommandStatusReply *reply) override
-  {
+  Status StopMiner(ServerContext *context, const CommandRequest *request,
+                   CommandStatusReply *reply) override {
 
     std::string message;
-    if (process.started())
-    {
+    if (process.started()) {
       terminate = true;
       process.terminate();
       message = "server stopped";
-    }
-    else
-    {
+    } else {
       message = "server not running";
     }
 
-    cout << "server is not running" << endl;
+    cout << message << endl;
 
     reply->set_message(message);
     return Status::OK;
   }
 };
 
-void RunServer(std::string exec, std::string address = "0.0.0.0:50051")
-{
+void RunServer(std::string exec, std::string address = "0.0.0.0:50051") {
   std::string server_address(address);
   MinerStatusServiceImpl service(exec);
 
@@ -180,11 +177,9 @@ void RunServer(std::string exec, std::string address = "0.0.0.0:50051")
   std::cout << "Shutting down the server" << std::endl;
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 
-  if (argc < 2)
-  {
+  if (argc < 2) {
     return 1;
   }
 

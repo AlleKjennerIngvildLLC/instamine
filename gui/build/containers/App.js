@@ -134,7 +134,6 @@ var App = function (_Component) {
         }
       };
 
-      console.log(this.props);
       return _react2.default.createElement(
         _rebass.Provider,
         { theme: _theme2.default },

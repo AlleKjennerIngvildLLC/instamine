@@ -17,8 +17,22 @@ class MinerClient {
         grpc_promise.promisifyAll(this.client);
     }
 
-    startMiner(config_str="") {
+    startMiner(config_str="", enableGPU) {
+
+        console.log(config_str);
+        console.log(enableGPU);
+
+        let mode;
+        
+        if (enableGPU) {
+            mode = CommandRequest.Miner.XMR_CUDA;
+        } else {
+            mode = CommandRequest.Miner.XMR_CPU;
+        }
+
         let request = new CommandRequest();
+        request.setMiner(mode);
+
         
         let config = new Config();
         config.setConfigStr(config_str);

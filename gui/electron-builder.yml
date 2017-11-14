@@ -19,6 +19,8 @@ extraResources:
     to: ../server.exe
   - from: exec/miner_process_xmr_cpu.exe
     to: ../miner_process_xmr_cpu.exe  
+  - from: exec/miner_process_xmr_nvidia.exe
+    to: ../miner_process_xmr_nvidia.exe 
 dmg:
   contents:
     - type: link

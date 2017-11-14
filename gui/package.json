@@ -12,6 +12,7 @@
     "babel-runtime": "^6.22.0",
     "flexboxgrid": "^6.3.1",
     "google-protobuf": "^3.4.0",
+    "gpu-info": "0.0.1",
     "grpc": "^1.6.0",
     "grpc-promise": "^1.1.0",
     "grpc-tools": "^1.6.0",

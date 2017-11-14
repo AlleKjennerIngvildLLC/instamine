@@ -35,6 +35,10 @@ var _config = require('../config.js');
 
 var _config2 = _interopRequireDefault(_config);
 
+var _config_nvidia = require('../config_nvidia.js');
+
+var _config_nvidia2 = _interopRequireDefault(_config_nvidia);
+
 var _os = require('os');
 
 var _os2 = _interopRequireDefault(_os);
@@ -42,6 +46,8 @@ var _os2 = _interopRequireDefault(_os);
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
+
+var _zlib = require('zlib');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65,14 +71,20 @@ var Settings = function (_Component) {
       enableGPU: false
     }, _this.handleSubmit = function (event) {
 
-      var cpu_threads_conf = _this.buildCpuConfig(_this.state.nThreads);
-      var config = (0, _config2.default)(cpu_threads_conf, _this.state.walletAddress);
+      event.preventDefault();
+
+      var config = void 0;
+      if (_this.state.enableGPU) {
+        var gpu_threads_conf = _this.buildGPUConfig();
+        config = (0, _config_nvidia2.default)(gpu_threads_conf, _this.state.walletAddress);
+      } else {
+        var cpu_threads_conf = _this.buildCpuConfig(_this.state.nThreads);
+        config = (0, _config2.default)(cpu_threads_conf, _this.state.walletAddress);
+      }
 
       _this.setState({ config: config }, function () {
         _this.props.updateSettings(_this.state);
       });
-
-      event.preventDefault();
     }, _this.buildCpuConfig = function (n) {
       var cpuSettings = _lodash2.default.range(n).map(function (i) {
         return {
@@ -83,6 +95,17 @@ var Settings = function (_Component) {
       });
 
       return cpuSettings;
+    }, _this.buildGPUConfig = function () {
+      var gpuSettings = [{
+        'index': 0,
+        'threads': 5,
+        'blocks': 60,
+        'bfactor': 8,
+        'bsleep': 100,
+        'affine_to_cpu': false
+      }];
+
+      return gpuSettings;
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
@@ -95,6 +118,8 @@ var Settings = function (_Component) {
     key: 'render',
     value: function render() {
       var _this2 = this;
+
+      console.log(this.props.settings);
 
       var nCpus = _os2.default.cpus().length;
 
@@ -209,14 +234,14 @@ var Settings = function (_Component) {
                     'div',
                     { className: 'checkbox' },
                     _react2.default.createElement(
-                      _rebass.Tooltip,
-                      { text: 'Not yet supported.' },
-                      _react2.default.createElement(
-                        'label',
-                        null,
-                        _react2.default.createElement('input', { disabled: true, type: 'checkbox' }),
-                        ' Enable GPU'
-                      )
+                      'label',
+                      null,
+                      _react2.default.createElement('input', {
+                        defaultChecked: this.state.enableGPU,
+                        type: 'checkbox', onChange: function onChange(event) {
+                          _this2.setState({ enableGPU: event.target.checked });
+                        } }),
+                      ' Enable GPU'
                     )
                   ),
                   _react2.default.createElement(

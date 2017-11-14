@@ -27,8 +27,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
   var miner = (0, _redux.bindActionCreators)(_miner2.default, dispatch);
   return {
 
-    startMiner: function startMiner(config) {
-      miner.start(config);
+    startMiner: function startMiner(config, enableGPU) {
+      miner.start(config, enableGPU);
     },
 
     stopMiner: function stopMiner() {

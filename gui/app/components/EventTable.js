@@ -12,26 +12,44 @@ export default class EventTable extends Component {
     }
 
     render() {
-        function transform(i, event) {
-            let types = ["connection", "reply", "error", "end", "empty", "result", "job"];
+
+
+        function getEventType(event) {
+            let types = ["connection", "reply", "error", 
+                         "end", "empty", "result", "job"];
 
             var eventType;
             for (var type of types) {
                 if (event[type] !== undefined) {
-                    eventType = type.toUpperCase();
+                    eventType = type;
                     break;
                 }
             }
+
+            return eventType;
+        }
+
+        
+        function transform(i, event) {
+
+            var eventType = getEventType(event);
 
             let date = new Date(
                 event.timestamp.seconds * 1000
                 + event.timestamp.nanos / 1000
             );
 
-            return { id: i, type: type, date: date };
+            return { id: i, type: eventType, date: date };
         }
 
-        let events = this.props.events.map((i, event) => {
+        let events = this.props.events.filter(
+            event => {
+                let type = getEventType(event);
+                return type !== "reply";
+            }
+
+
+        ).map((i, event) => {
             return transform(event, i);
         });
 

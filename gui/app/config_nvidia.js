@@ -1,3 +1,9 @@
+import {buffers} from 'redux-saga';
+
+function buildConfiguration(gpu_threads_conf, walletAddress) {
+  gpu_threads_conf = JSON.stringify(gpu_threads_conf);
+
+  let config = `
 /*
  * GPU configuration. You should play around with threads and blocks as the fastest settings will vary.
  * index         - GPU index number usually starts from 0.
@@ -18,8 +24,7 @@
  *     { "index" : 0, "threads" : 17, "blocks" : 60, "bfactor" : 0, "bsleep" :  0, "affine_to_cpu" : false},
  * ],
  */
-"gpu_threads_conf" : [{ "index" : 0, "threads" : 17, "blocks" : 60, "bfactor"
-: 8, "bsleep" :  100, "affine_to_cpu" : false}],
+"gpu_threads_conf" : ${gpu_threads_conf},
 
 /*
  * TLS Settings
@@ -40,7 +45,7 @@
  * pool_password  - Can be empty in most cases or "x".
  */
 "pool_address" : "pool.usxmrpool.com:3333",
-"wallet_address" : "4581HhZkQHgZrZjKeCfCJxZff9E3xCgHGF25zABZz7oR71TnbbgiS7sK9jveE6Dx6uMs2LwszDuvQJgRZQotdpHt1fTdDhk",
+"wallet_address" : "${walletAddress}",
 "pool_password" : "",
 
 /*
@@ -108,3 +113,9 @@
  */
 "prefer_ipv4" : true,
 "daemon_mode": false
+`;
+
+  return config;
+}
+
+export default buildConfiguration;

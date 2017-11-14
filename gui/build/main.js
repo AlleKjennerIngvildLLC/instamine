@@ -131,6 +131,10 @@ if (isDevelopment) {
   child = cp.spawn('server.exe', ['miner_process_xmr_cpu.exe']);
 }
 
+child.stdout.on('data', function (data) {
+  console.log('stdout: ' + data);
+});
+
 console.log("process pid: " + child.pid);
 _electron.crashReporter.start({
   productName: 'Instamine',

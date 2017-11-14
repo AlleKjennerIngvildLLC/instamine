@@ -13,8 +13,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const miner = bindActionCreators(minerActions, dispatch);
   return {
 
-    startMiner: (config) => {
-      miner.start(config);
+    startMiner: (config, enableGPU) => {
+      miner.start(config, enableGPU);
     },
 
     stopMiner: () => {

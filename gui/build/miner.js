@@ -42,8 +42,22 @@ var MinerClient = function () {
         key: 'startMiner',
         value: function startMiner() {
             var config_str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+            var enableGPU = arguments[1];
+
+
+            console.log(config_str);
+            console.log(enableGPU);
+
+            var mode = void 0;
+
+            if (enableGPU) {
+                mode = CommandRequest.Miner.XMR_CUDA;
+            } else {
+                mode = CommandRequest.Miner.XMR_CPU;
+            }
 
             var request = new CommandRequest();
+            request.setMiner(mode);
 
             var config = new Config();
             config.setConfigStr(config_str);
