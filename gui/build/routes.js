@@ -20,6 +20,10 @@ var _SettingsPage = require('./containers/SettingsPage');
 
 var _SettingsPage2 = _interopRequireDefault(_SettingsPage);
 
+var _MoneroCPUSettingsPage = require('./containers/MoneroCPUSettingsPage');
+
+var _MoneroCPUSettingsPage2 = _interopRequireDefault(_MoneroCPUSettingsPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _react2.default.createElement(
@@ -31,5 +35,7 @@ exports.default = _react2.default.createElement(
     className: 'switch-wrapper'
   },
   _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/', component: _HomePage2.default }),
-  _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/settings', component: _SettingsPage2.default })
+  _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/settings', component: _SettingsPage2.default }),
+  _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/settings/MoneroCPU', component: _MoneroCPUSettingsPage2.default })
 );
+//# sourceMappingURL=routes.js.map

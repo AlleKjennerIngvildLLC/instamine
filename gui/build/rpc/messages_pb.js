@@ -1872,3 +1872,4 @@ proto.cauchy.SystemStatus.prototype.setMiner = function (value) {
 };
 
 goog.object.extend(exports, proto.cauchy);
+//# sourceMappingURL=messages_pb.js.map

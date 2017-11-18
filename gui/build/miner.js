@@ -88,3 +88,4 @@ var MinerClient = function () {
 }();
 
 exports.default = MinerClient;
+//# sourceMappingURL=miner.js.map

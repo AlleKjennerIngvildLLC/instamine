@@ -16,6 +16,8 @@ var _reactRouterRedux = require('react-router-redux');
 
 var _reactNotificationSystemRedux = require('react-notification-system-redux');
 
+var _reduxForm = require('redux-form');
+
 var _reduxSaga = require('redux-saga');
 
 var _reduxSaga2 = _interopRequireDefault(_reduxSaga);
@@ -48,7 +50,8 @@ function configureStore(initialState, routerHistory) {
   var reducers = {
     miner: _miner2.default,
     routing: _reactRouterRedux.routerReducer,
-    notifications: _reactNotificationSystemRedux.reducer
+    notifications: _reactNotificationSystemRedux.reducer,
+    form: _reduxForm.reducer
   };
 
   var sagaMiddleware = (0, _reduxSaga2.default)();
@@ -76,3 +79,4 @@ function configureStore(initialState, routerHistory) {
 
   return store;
 }
+//# sourceMappingURL=store.js.map

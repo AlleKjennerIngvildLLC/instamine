@@ -82,6 +82,7 @@ var MinerMenu = function (_Component) {
                     is: 'div',
                     className: 'row',
                     name: 'Monero (XMR)',
+                    settingsRoute: '/settings/MoneroCPU',
                     running: this.props.status.running,
                     image: './xmr.png'
                 }, this.props)),
@@ -126,3 +127,4 @@ var MinerMenu = function (_Component) {
 }(_react.Component);
 
 exports.default = MinerMenu;
+//# sourceMappingURL=MinerMenu.js.map

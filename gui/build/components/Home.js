@@ -79,7 +79,7 @@ var Home = function (_Component) {
               borderColor: 'rgb(14, 49, 105)',
               color: 'white',
               backgroundSize: 'cover',
-              backgroundImage: 'url("http://repositrak.com/wp-content/uploads/2015/09/RT-APPLICATION-BACKGROUND-01-04-1184x662.png")'
+              backgroundImage: 'url("./background.png")'
             } },
           _react2.default.createElement(_Statistics2.default, { miner: this.props.miner })
         )
@@ -90,3 +90,4 @@ var Home = function (_Component) {
 }(_react.Component);
 
 exports.default = Home;
+//# sourceMappingURL=Home.js.map

@@ -56,7 +56,8 @@ var MinerItem = function (_Component) {
                 { disabled: this.props.disabled, onClick: function onClick() {
 
                         if (settings.walletAddress === "") {
-                            _this2.props.history.push('/settings');
+                            console.log(_this2.props.settingsRoute);
+                            _this2.props.history.push(_this2.props.settingsRoute);
                         } else {
                             _this2.props.startMiner(settings.config, settings.enableGPU);
                         }
@@ -127,3 +128,4 @@ var MinerItem = function (_Component) {
 ;
 
 exports.default = (0, _reactRouterDom.withRouter)(MinerItem);
+//# sourceMappingURL=MinerItem.js.map

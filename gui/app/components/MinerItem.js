@@ -17,11 +17,13 @@ class MinerItem extends Component {
 
         let settings = this.props.settings;
 
+
         let startButton = (
             <Button disabled={this.props.disabled} onClick={() => {
 
                 if (settings.walletAddress === "") {
-                    this.props.history.push('/settings');
+                    console.log(this.props.settingsRoute);
+                    this.props.history.push(this.props.settingsRoute);
                 } else {
                     this.props.startMiner(
                         settings.config, 

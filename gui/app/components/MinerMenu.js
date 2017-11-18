@@ -33,6 +33,7 @@ export default class MinerMenu extends Component {
                     is='div'
                     className='row'
                     name='Monero (XMR)'
+                    settingsRoute='/settings/MoneroCPU'
                     running={this.props.status.running}
                     image='./xmr.png'
                     {...this.props} />

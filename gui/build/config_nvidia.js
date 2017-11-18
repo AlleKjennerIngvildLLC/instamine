@@ -21,3 +21,4 @@ function buildConfiguration(gpu_threads_conf, walletAddress) {
 }
 
 exports.default = buildConfiguration;
+//# sourceMappingURL=config_nvidia.js.map

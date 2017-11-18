@@ -94,7 +94,7 @@ export default class Settings extends Component {
           justify="center"
           style={{
             backgroundSize: 'cover',
-            backgroundImage: 'url("http://repositrak.com/wp-content/uploads/2015/09/RT-APPLICATION-BACKGROUND-01-04-1184x662.png")'
+            backgroundImage: 'url("./background.png")'
           }}>
 
           <Flex>

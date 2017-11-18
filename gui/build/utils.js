@@ -12,3 +12,4 @@ function timestamp_to_date(event) {
 }
 
 exports.default = timestamp_to_date;
+//# sourceMappingURL=utils.js.map

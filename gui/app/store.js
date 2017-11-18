@@ -1,6 +1,7 @@
 import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
 import {routerMiddleware, routerReducer as routing, push} from 'react-router-redux';
 import {reducer as notifications} from 'react-notification-system-redux';
+import { reducer as formReducer } from 'redux-form';
 
 import createSagaMiddleware from 'redux-saga';
 import persistState from 'redux-localstorage';
@@ -21,7 +22,8 @@ export default function configureStore(initialState, routerHistory) {
   const reducers = {
     miner,
     routing,
-    notifications
+    notifications,
+    form: formReducer
   };
 
   const sagaMiddleware = createSagaMiddleware();
