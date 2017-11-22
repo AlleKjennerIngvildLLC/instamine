@@ -1,6 +1,6 @@
 
 set(PROJECT_BASE
-    /users/k/desktop/instamine-public/miner
+    /users/kyrre/desktop/cauchylabs/instamine/miner
 )
 
 set(TYPES_INCLUDE_DIRECTORY ${PROJECT_BASE}/include/types)

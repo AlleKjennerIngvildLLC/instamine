@@ -33,7 +33,7 @@ var mainWindow = null;
 var forceQuit = false;
 
 var installExtensions = function () {
-  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
     var installer, extensions, forceDownload, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, name;
 
     return _regenerator2.default.wrap(function _callee$(_context) {
@@ -156,7 +156,7 @@ _electron.app.on('window-all-closed', function () {
   }
 });
 
-_electron.app.on('ready', (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
+_electron.app.on('ready', (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
   return _regenerator2.default.wrap(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {

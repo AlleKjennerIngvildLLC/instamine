@@ -35,7 +35,6 @@ exports.default = _react2.default.createElement(
     className: 'switch-wrapper'
   },
   _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/', component: _HomePage2.default }),
-  _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/settings', component: _SettingsPage2.default }),
   _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/settings/MoneroCPU', component: _MoneroCPUSettingsPage2.default })
 );
 //# sourceMappingURL=routes.js.map

@@ -1,86 +1,82 @@
 import React, {Component} from 'react';
-import {reduxForm} from 'redux-form';
-import {Heading} from 'rebass';
-
+import {Heading, Image} from 'rebass';
 
 import SystemInformationCPU from './SystemInformationCPU';
-import MoneroCPUSettingsWizardFirstPage from './MoneroCPU/MoneroCPUSettingsWizardFirstPage';
-import MoneroCPUSettingsWizardSecondPage from './MoneroCPU/MoneroCPUSettingsWizardSecondPage';
-
+import CompleteForm from './MoneroCPU/CompleteForm';
 
 class MoneroCPUSettings extends Component {
 
-    state = {
-        page: 1
-    }
-
-    constructor(props) {
-        super(props)
-        this.nextPage = this
-            .nextPage
-            .bind(this)
-        this.previousPage = this
-            .previousPage
-            .bind(this)
-    }
-
-    nextPage = () => {
-        this.setState({
-            page: this.state.page + 1
-        })
-    }
-
-    previousPage = () => {
-        this.setState({
-            page: this.state.page - 1
-        })
-    }
-
     render() {
-        const {handleSubmit} = this.props;
-        const {page} = this.state;
-
         return (
-
             <div className="pane-group">
                 <div
                     className="pane"
                     style={{
+                    overflow: 'hidden',
                     backgroundSize: 'cover',
                     color: 'black',
                     backgroundImage: 'url("./background.png")'
-
                 }}>
 
-                    <div className="row" style={{marginTop: "220px"}}>
+                    <div
+                        className="row"
+                        style={{
+                        marginTop: "100px"
+                    }}>
                         <div className="col-sm-offset-4">
-                            <Heading fontSize={24} style={{ color: 'white' }}>
-                                Monero (CPU) Settings 
+                            <Heading
+                                fontSize={24}
+                                style={{
+                                color: 'white'
+                            }}>
+                                Monero (CPU) Settings
                             </Heading>
                         </div>
                     </div>
 
-                    <div className="row" style={{marginTop: '30px'}}>
-                        <div className="col-sm-offset-3 col-sm-3" style={{background: 'rgba(0, 0, 0, 0.36)'}}>
-                            <SystemInformationCPU />
+                    <div
+                        className="row"
+                        style={{
+                        marginTop: '30px'
+                    }}>
+                        <div
+                            className="col-xs-offset-2 col-xs-3"
+                            style={{
+                            border: '1px solid #c2c0c2',
+                            minHeight: '300px',
+                            marginLeft: '200px',
+                            background: 'rgba(56, 29, 81, 0.36)'
+                        }}>
+                            <SystemInformationCPU settings={this.props.settings}/>
                         </div>
 
-                      
-                        <div style={{marginLeft: '20px'}} className="col-sm-3">
-                            {page === 1 && <MoneroCPUSettingsWizardFirstPage onSubmit={this.nextPage}/>}
-                            {page === 2 && <MoneroCPUSettingsWizardSecondPage onSubmit={this.nextPage}/>}
-
+                        <div
+                            style={{
+                            marginLeft: '20px',
+                            padding: '15px 15px 15px 15px',
+                            border: '1px solid #c2c0c2',
+                            background: 'rgba(0, 0, 0, 0.36)'
+                        }}
+                            className="col-xs-4">
+                            <CompleteForm settings={this.props.settings} 
+                            updateSettings={this.props.updateSettings}/>
                         </div>
-
-                     
-
-
                     </div>
 
+                    <div className="logo">
+                        <Image
+                            style={{
+                            marginLeft: "400px",
+                            marginTop: "-30px",
+                            height: '200px'
+                        }}
+                            src='./banner.png'/>
+
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-export default reduxForm({form: 'MoneroCPUSettingsForm'})(MoneroCPUSettings);
+export default MoneroCPUSettings;

@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { Avatar } from 'rebass';
-import { Text, Button, ButtonOutline } from 'rebass';
-import { push } from 'react-router-redux';
-import { withRouter } from 'react-router-dom';
-
-
+import React, {Component} from 'react';
+import {Avatar} from 'rebass';
+import {Text, Button, ButtonOutline} from 'rebass';
+import {push} from 'react-router-redux';
+import {withRouter} from 'react-router-dom';
 
 class MinerItem extends Component {
 
@@ -14,21 +12,25 @@ class MinerItem extends Component {
 
     render() {
 
+        console.log(this.props.disabled);
 
         let settings = this.props.settings;
 
-
         let startButton = (
-            <Button disabled={this.props.disabled} onClick={() => {
-
-                if (settings.walletAddress === "") {
-                    console.log(this.props.settingsRoute);
-                    this.props.history.push(this.props.settingsRoute);
+            <Button
+                bg='blue'
+                color='white'
+                disabled={this.props.disabled}
+                onClick={() => {
+                if (settings.walletAddress === '') {
+                    this
+                        .props
+                        .history
+                        .push(this.props.settingsRoute);
                 } else {
-                    this.props.startMiner(
-                        settings.config, 
-                        settings.enableGPU
-                    );
+                    this
+                        .props
+                        .startMiner(settings.config, settings.enableGPU);
                 }
             }}>
                 Start
@@ -41,6 +43,22 @@ class MinerItem extends Component {
             </Button>
         );
 
+        let settingsButton = (
+            <ButtonOutline
+                bg='blue'
+                color='white'
+                disabled={this.props.disabled}
+                onClick={() => 
+                this
+                    .props
+                    .history
+                    .push(this.props.settingsRoute)
+            }>
+            Settings
+            </ButtonOutline>
+
+        );
+
         let button = startButton;
 
         if (this.props.running) {
@@ -50,38 +68,49 @@ class MinerItem extends Component {
         return (
             <div
                 style={{
-                    background: 'rgb(57, 73, 109)'
-                }}
-
+                background: 'rgb(57, 73, 109)'
+            }}
                 className="row">
                 <div
                     style={{
-                        marginTop: '3px',
-                        marginLeft: '8px'
+                    marginTop: '3px'
+                }}
+                    className="col-xs-2">
+                    <Avatar
+                        size={32}
+                        style={{
+                        marginLeft: '20px',
+                        background: 'white'
                     }}
-                    className="col-sm-2">
-                    <Avatar size={32} style={{
-                        background: 'white',
-                    }} src={this.props.image} />
+                        src={this.props.image}/>
 
                 </div>
 
-                <div
-                    style={{
-                        marginLeft: '5px',
+                <div style={{}} className="col-xs-3">
+                    <Text
+                        style={{
+                        marginLeft: '10px'
                     }}
-                    className="col-sm-4">
-                    <Text fontSize={14}>
+                        fontSize={14}>
                         {this.props.name}
                     </Text>
                 </div>
 
                 <div
                     style={{
-                        marginTop: '5px'
-                    }}
-                    className="col-sm-2">
+                    marginTop: '5px'
+                }}
+                    className="col-xs-3">
 
+                    {settingsButton}
+                </div>
+
+                <div
+                    style={{
+                    marginTop: '5px',
+                    marginLeft: '15px'
+                }}
+                    className="col-xs-2">
                     {button}
 
                 </div>

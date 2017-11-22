@@ -85,15 +85,6 @@ var Header = function (_Component) {
                                 { className: 'btn btn-default' },
                                 _react2.default.createElement('span', { className: 'icon icon-home' })
                             )
-                        ),
-                        _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/settings' },
-                            _react2.default.createElement(
-                                'button',
-                                { className: 'btn btn-default' },
-                                _react2.default.createElement('span', { className: 'icon icon-folder' })
-                            )
                         )
                     ),
                     _react2.default.createElement(

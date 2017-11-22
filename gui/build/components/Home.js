@@ -60,7 +60,8 @@ var Home = function (_Component) {
             className: 'pane-sm',
             style: {
               color: 'white',
-              width: '100%',
+              maxWidth: '300px',
+              minWidth: '300px',
               background: '#426397'
             } },
           _react2.default.createElement(_MinerMenu2.default, {

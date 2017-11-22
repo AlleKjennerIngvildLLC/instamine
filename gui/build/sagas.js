@@ -16,7 +16,8 @@ var _miner2 = _interopRequireDefault(_miner);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [requestResponse, minerSaga].map(_regenerator2.default.mark);
+var _marked = /*#__PURE__*/_regenerator2.default.mark(requestResponse),
+    _marked2 = /*#__PURE__*/_regenerator2.default.mark(minerSaga);
 
 function requestResponse(action) {
     return _regenerator2.default.wrap(function requestResponse$(_context) {
@@ -46,7 +47,7 @@ function requestResponse(action) {
                     return _context.stop();
             }
         }
-    }, _marked[0], this, [[0, 7]]);
+    }, _marked, this, [[0, 7]]);
 }
 
 function minerSaga() {
@@ -62,7 +63,7 @@ function minerSaga() {
                     return _context2.stop();
             }
         }
-    }, _marked[1], this);
+    }, _marked2, this);
 }
 
 exports.default = minerSaga;

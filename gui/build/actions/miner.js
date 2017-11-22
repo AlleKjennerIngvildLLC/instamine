@@ -28,7 +28,8 @@ var _miner2 = _interopRequireDefault(_miner);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [requestResponse, minerSaga].map(_regenerator2.default.mark);
+var _marked = /*#__PURE__*/_regenerator2.default.mark(requestResponse),
+    _marked2 = /*#__PURE__*/_regenerator2.default.mark(minerSaga);
 
 var _require = require('../rpc/messages_pb'),
     Event = _require.Event;
@@ -53,7 +54,7 @@ function send_notification(dispatch, title, message) {
 
 var startMiner = function startMiner(config, enableGPU) {
   return function () {
-    var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(dispatch) {
+    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
       var startRequest, startSuccess, startFailure, startEnded, response, date;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
@@ -121,7 +122,7 @@ var startMiner = function startMiner(config, enableGPU) {
   }();
 };
 
-var stopMiner = (0, _reduxThunkActions.createActionThunk)('STOP_MINER', (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
+var stopMiner = (0, _reduxThunkActions.createActionThunk)('STOP_MINER', (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
   var response;
   return _regenerator2.default.wrap(function _callee2$(_context2) {
     while (1) {
@@ -151,7 +152,7 @@ var stopMiner = (0, _reduxThunkActions.createActionThunk)('STOP_MINER', (0, _asy
 
 var requestStatus = function requestStatus() {
   return function () {
-    var _ref3 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(dispatch) {
+    var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch) {
       var startRequest, startSuccess, startFailure, startEnded, event;
       return _regenerator2.default.wrap(function _callee3$(_context3) {
         while (1) {
@@ -209,7 +210,7 @@ var requestStatus = function requestStatus() {
   }();
 };
 
-var requestSystemStatus = (0, _reduxThunkActions.createActionThunk)('FETCH_SYSTEM_STATUS', (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4() {
+var requestSystemStatus = (0, _reduxThunkActions.createActionThunk)('FETCH_SYSTEM_STATUS', (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
   var response;
   return _regenerator2.default.wrap(function _callee4$(_context4) {
     while (1) {
@@ -262,7 +263,7 @@ function requestResponse(action) {
           return _context5.stop();
       }
     }
-  }, _marked[0], this, [[0, 7]]);
+  }, _marked, this, [[0, 7]]);
 }
 
 function minerSaga() {
@@ -278,7 +279,7 @@ function minerSaga() {
           return _context6.stop();
       }
     }
-  }, _marked[1], this);
+  }, _marked2, this);
 }
 
 exports.default = {

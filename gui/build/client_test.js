@@ -17,7 +17,7 @@ var _promise = require('babel-runtime/core-js/promise');
 var _promise2 = _interopRequireDefault(_promise);
 
 var main = function () {
-    var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
         var event, timestamp, newState;
         return _regenerator2.default.wrap(function _callee$(_context) {
             while (1) {
@@ -67,7 +67,7 @@ var main = function () {
 }();
 
 var test = function () {
-    var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
+    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
         var config_str;
         return _regenerator2.default.wrap(function _callee2$(_context2) {
             while (1) {

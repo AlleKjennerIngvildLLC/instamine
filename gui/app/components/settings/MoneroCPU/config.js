@@ -1,4 +1,13 @@
 
+function buildConfiguration (
+    cpu_threads_conf,
+    walletAddress
+    
+) {
+
+    cpu_threads_conf = JSON.stringify(cpu_threads_conf);
+
+    let config = `
     /*
     * Thread configuration for each thread. Make sure it matches the number above.
     * low_power_mode - This mode will double the cache usage, and double the single thread performance. It will 
@@ -23,7 +32,7 @@
     *      { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 1 },
     * ],
     */
-    "cpu_threads_conf" :  [{"low_power_mode":false,"no_prefetch":true,"affine_to_cpu":0},{"low_power_mode":false,"no_prefetch":true,"affine_to_cpu":1},{"low_power_mode":false,"no_prefetch":true,"affine_to_cpu":2}],
+    "cpu_threads_conf" :  ${cpu_threads_conf},
     /*
     * LARGE PAGE SUPPORT
     * Lare pages need a properly set up OS. It can be difficult if you are not used to systems administation,
@@ -106,7 +115,7 @@
     * We feature pools up to 1MH/s. For a more complete list see M5M400's pool list at www.moneropools.com
     */
     "pool_address" : "pool.usxmrpool.com:3333",
-    "wallet_address" : "ueou",
+    "wallet_address" : "${walletAddress}",
     "pool_password" : "",
 
     /*
@@ -181,4 +190,9 @@
     *               This setting will only be needed in 2020's. No need to worry about it now.
     */
     "prefer_ipv4" : true,
-    
+    `;
+
+    return config;
+}
+
+export default buildConfiguration;

@@ -15,7 +15,6 @@ export default (
     className="switch-wrapper"
   >
       <Route exact path="/" component={HomePage} />
-      <Route exact path="/settings" component={SettingsPage} />
       <Route exact path="/settings/MoneroCPU" component={MoneroCPUSettingsPage} />
   </AnimatedSwitch>
 );

@@ -49,14 +49,18 @@ var MinerItem = function (_Component) {
         value: function render() {
             var _this2 = this;
 
+            console.log(this.props.disabled);
+
             var settings = this.props.settings;
 
             var startButton = _react2.default.createElement(
                 _rebass.Button,
-                { disabled: this.props.disabled, onClick: function onClick() {
-
-                        if (settings.walletAddress === "") {
-                            console.log(_this2.props.settingsRoute);
+                {
+                    bg: 'blue',
+                    color: 'white',
+                    disabled: this.props.disabled,
+                    onClick: function onClick() {
+                        if (settings.walletAddress === '') {
                             _this2.props.history.push(_this2.props.settingsRoute);
                         } else {
                             _this2.props.startMiner(settings.config, settings.enableGPU);
@@ -71,6 +75,18 @@ var MinerItem = function (_Component) {
                 'Stop'
             );
 
+            var settingsButton = _react2.default.createElement(
+                _rebass.ButtonOutline,
+                {
+                    bg: 'blue',
+                    color: 'white',
+                    disabled: this.props.disabled,
+                    onClick: function onClick() {
+                        return _this2.props.history.push(_this2.props.settingsRoute);
+                    } },
+                'Settings'
+            );
+
             var button = startButton;
 
             if (this.props.running) {
@@ -83,30 +99,32 @@ var MinerItem = function (_Component) {
                     style: {
                         background: 'rgb(57, 73, 109)'
                     },
-
                     className: 'row' },
                 _react2.default.createElement(
                     'div',
                     {
                         style: {
-                            marginTop: '3px',
-                            marginLeft: '8px'
+                            marginTop: '3px'
                         },
-                        className: 'col-sm-2' },
-                    _react2.default.createElement(_rebass.Avatar, { size: 32, style: {
+                        className: 'col-xs-2' },
+                    _react2.default.createElement(_rebass.Avatar, {
+                        size: 32,
+                        style: {
+                            marginLeft: '20px',
                             background: 'white'
-                        }, src: this.props.image })
+                        },
+                        src: this.props.image })
                 ),
                 _react2.default.createElement(
                     'div',
-                    {
-                        style: {
-                            marginLeft: '5px'
-                        },
-                        className: 'col-sm-4' },
+                    { style: {}, className: 'col-xs-3' },
                     _react2.default.createElement(
                         _rebass.Text,
-                        { fontSize: 14 },
+                        {
+                            style: {
+                                marginLeft: '10px'
+                            },
+                            fontSize: 14 },
                         this.props.name
                     )
                 ),
@@ -116,7 +134,17 @@ var MinerItem = function (_Component) {
                         style: {
                             marginTop: '5px'
                         },
-                        className: 'col-sm-2' },
+                        className: 'col-xs-3' },
+                    settingsButton
+                ),
+                _react2.default.createElement(
+                    'div',
+                    {
+                        style: {
+                            marginTop: '5px',
+                            marginLeft: '15px'
+                        },
+                        className: 'col-xs-2' },
                     button
                 )
             );

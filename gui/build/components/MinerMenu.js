@@ -86,28 +86,20 @@ var MinerMenu = function (_Component) {
                     running: this.props.status.running,
                     image: './xmr.png'
                 }, this.props)),
-                _react2.default.createElement(
-                    _rebass.Tooltip,
-                    { text: 'BTC mining not yet supported.' },
-                    _react2.default.createElement(_MinerItem2.default, (0, _extends3.default)({
-                        is: 'div',
-                        className: 'row',
-                        name: 'Bitcoin (BTC)',
-                        disabled: true,
-                        image: './bitcoin.png'
-                    }, this.props))
-                ),
-                _react2.default.createElement(
-                    _rebass.Tooltip,
-                    { text: 'ETH mining not yet supported.' },
-                    _react2.default.createElement(_MinerItem2.default, (0, _extends3.default)({
-                        is: 'div',
-                        className: 'row',
-                        name: 'Ethereum (ETH)',
-                        disabled: true,
-                        image: './eth.png'
-                    }, this.props))
-                ),
+                _react2.default.createElement(_MinerItem2.default, (0, _extends3.default)({
+                    is: 'div',
+                    className: 'row',
+                    name: 'Bitcoin (BTC)',
+                    disabled: true,
+                    image: './bitcoin.png'
+                }, this.props)),
+                _react2.default.createElement(_MinerItem2.default, (0, _extends3.default)({
+                    is: 'div',
+                    className: 'row',
+                    name: 'Ethereum (ETH)',
+                    disabled: true,
+                    image: './eth.png'
+                }, this.props)),
                 _react2.default.createElement(
                     'div',
                     { style: { marginTop: '440px', height: '400px' }, className: 'logo' },

@@ -38,7 +38,6 @@ export default class MinerMenu extends Component {
                     image='./xmr.png'
                     {...this.props} />
 
-                <Tooltip text="BTC mining not yet supported.">
                     <MinerItem
                         is='div'
                         className='row'
@@ -46,9 +45,7 @@ export default class MinerMenu extends Component {
                         disabled
                         image='./bitcoin.png'
                         {...this.props} />
-                </Tooltip>
 
-                <Tooltip text="ETH mining not yet supported.">
                     <MinerItem
                         is='div'
                         className='row'
@@ -56,7 +53,6 @@ export default class MinerMenu extends Component {
                         disabled
                         image='./eth.png'
                         {...this.props} />
-                </Tooltip>
 
                 
 

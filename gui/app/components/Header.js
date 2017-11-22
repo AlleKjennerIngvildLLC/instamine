@@ -35,11 +35,7 @@ class Header extends Component {
                                 <span className="icon icon-home"></span>
                             </button>
                         </Link>
-                        <Link to="/settings">
-                            <button className="btn btn-default">
-                                <span className="icon icon-folder"></span>
-                            </button>
-                        </Link>
+                       
                     </div>
                     <button className="btn btn-default btn-dropdown pull-right">
                         <span className="icon icon-megaphone"></span>
