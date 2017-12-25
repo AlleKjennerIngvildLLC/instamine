@@ -80,6 +80,8 @@ class CompleteForm extends Component {
             walletAddress: values.walletAddress,
             numberCores: values.numberCores
         }, () => {
+
+            console.log(this.state)
             this
                 .props
                 .updateSettings(this.state);

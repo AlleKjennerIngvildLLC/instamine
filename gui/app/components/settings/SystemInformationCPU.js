@@ -19,6 +19,8 @@ export default class SystemInformationCPU extends Component {
     }
 
     render() {
+
+
         return (
             <div
                 style={{
@@ -76,13 +78,14 @@ export default class SystemInformationCPU extends Component {
 
                         Wallet Address:
                         <Textarea
-                        disabled
+                        
                             style={{
-                            border:  '0.5px solid gray'
+                            resize: 'none',
+                            border:  '2.5px solid gray'
                         }}
-                            rows={4}>
-                            {this.props.settings.walletAddress}
-                        </Textarea>
+                            rows={4}
+                            value={this.props.settings.walletAddress} />
+                        
                     </div>
                 </div>
                 <div className="row">

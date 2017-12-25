@@ -81,7 +81,16 @@ var MinerMenu = function (_Component) {
                 _react2.default.createElement(_MinerItem2.default, (0, _extends3.default)({
                     is: 'div',
                     className: 'row',
-                    name: 'Monero (XMR)',
+                    name: 'Monero (CPU)',
+                    settingsRoute: '/settings/MoneroCPU',
+                    running: this.props.status.running,
+                    image: './xmr.png'
+                }, this.props)),
+                _react2.default.createElement(_MinerItem2.default, (0, _extends3.default)({
+                    is: 'div',
+                    disabled: true,
+                    className: 'row',
+                    name: 'Monero (NVIDIA)',
                     settingsRoute: '/settings/MoneroCPU',
                     running: this.props.status.running,
                     image: './xmr.png'
@@ -102,15 +111,19 @@ var MinerMenu = function (_Component) {
                 }, this.props)),
                 _react2.default.createElement(
                     'div',
-                    { style: { marginTop: '440px', height: '400px' }, className: 'logo' },
+                    {
+                        style: {
+                            marginTop: '440px',
+                            height: '400px'
+                        },
+                        className: 'logo' },
                     _react2.default.createElement(_rebass.Image, {
                         style: {
                             marginTop: '200px',
                             marginLeft: '35%',
                             height: '80px'
                         },
-                        src: './logo.png'
-                    })
+                        src: './logo.png' })
                 )
             );
         }
