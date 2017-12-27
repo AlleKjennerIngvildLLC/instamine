@@ -82,16 +82,14 @@ var Settings = function (_Component) {
         config = (0, _config2.default)(cpu_threads_conf, _this.state.walletAddress);
       }
 
-      _this.setState({ config: config }, function () {
+      _this.setState({
+        config: config
+      }, function () {
         _this.props.updateSettings(_this.state);
       });
     }, _this.buildCpuConfig = function (n) {
       var cpuSettings = _lodash2.default.range(n).map(function (i) {
-        return {
-          'low_power_mode': false,
-          'no_prefetch': true,
-          'affine_to_cpu': i
-        };
+        return { 'low_power_mode': false, 'no_prefetch': true, 'affine_to_cpu': i };
       });
 
       return cpuSettings;
@@ -147,8 +145,10 @@ var Settings = function (_Component) {
             null,
             _react2.default.createElement(
               _rebass.Heading,
-              { fontSize: 24, style: { color: 'white' } },
-              'Monero (XMR) Settings '
+              { fontSize: 24, style: {
+                  color: 'white'
+                } },
+              'Monero (XMR) Settings'
             )
           ),
           _react2.default.createElement(
@@ -238,10 +238,11 @@ var Settings = function (_Component) {
                       null,
                       _react2.default.createElement('input', {
                         defaultChecked: this.state.enableGPU,
-                        type: 'checkbox', onChange: function onChange(event) {
+                        type: 'checkbox',
+                        onChange: function onChange(event) {
                           _this2.setState({ enableGPU: event.target.checked });
                         } }),
-                      ' Enable GPU'
+                      'Enable GPU'
                     )
                   ),
                   _react2.default.createElement(
@@ -264,13 +265,11 @@ var Settings = function (_Component) {
               _rebass.Box,
               null,
               _react2.default.createElement(_rebass.Image, {
-
                 style: {
                   marginTop: "-50px",
                   height: '200px'
                 },
-                src: './banner.png'
-              })
+                src: './banner.png' })
             )
           )
         )

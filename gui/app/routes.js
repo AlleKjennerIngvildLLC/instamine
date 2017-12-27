@@ -5,6 +5,7 @@ import { AnimatedSwitch } from 'react-router-transition';
 import HomePage from './containers/HomePage';
 import SettingsPage from './containers/SettingsPage';
 import MoneroCPUSettingsPage from './containers/MoneroCPUSettingsPage';
+import MoneroNVIDIASettingsPage from './containers/MoneroNVIDIASettingsPage';
 
 export default (
 
@@ -16,5 +17,7 @@ export default (
   >
       <Route exact path="/" component={HomePage} />
       <Route exact path="/settings/MoneroCPU" component={MoneroCPUSettingsPage} />
+      <Route exact path="/settings/MoneroNVIDIA" component={MoneroNVIDIASettingsPage} />
+
   </AnimatedSwitch>
 );
