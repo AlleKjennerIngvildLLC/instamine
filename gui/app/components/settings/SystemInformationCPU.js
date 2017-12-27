@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import {Border, TabItem, Text, Textarea, Truncate} from 'rebass';
+import {Border, Text, Textarea} from 'rebass';
 
+
+const gpuInfo = require('gpu-info');
 const si = require('systeminformation');
 
 export default class SystemInformationCPU extends Component {
@@ -15,7 +17,15 @@ export default class SystemInformationCPU extends Component {
         si
             .cpu()
             .then(data => this.setState(data))
-            .catch(error => console.error(error));
+            .catch(error => console.error(error))
+            .then(gpuInfo)
+            .then(gpus => {
+                let info = gpus.map(gpu => 
+
+                        {'name': gpu.Name}
+                    
+                )
+            });
     }
 
     render() {

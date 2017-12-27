@@ -88,10 +88,9 @@ var MinerMenu = function (_Component) {
                 }, this.props)),
                 _react2.default.createElement(_MinerItem2.default, (0, _extends3.default)({
                     is: 'div',
-                    disabled: true,
                     className: 'row',
                     name: 'Monero (NVIDIA)',
-                    settingsRoute: '/settings/MoneroCPU',
+                    settingsRoute: '/settings/MoneroNVIDIA',
                     running: this.props.status.running,
                     image: './xmr.png'
                 }, this.props)),

@@ -29,7 +29,7 @@ class MoneroNVIDIASettings extends Component {
                                 style={{
                                 color: 'white'
                             }}>
-                                Monero (CPU) Settings
+                                Monero (NVIDIA) Settings
                             </Heading>
                         </div>
                     </div>
