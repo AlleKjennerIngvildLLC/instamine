@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Heading, Image} from 'rebass';
 
 import SystemInformationCPU from './SystemInformationCPU';
-import CompleteForm from './MoneroCPU/CompleteForm';
+import CompleteForm from './MoneroNVIDIA/CompleteForm';
 
 class MoneroNVIDIASettings extends Component {
 

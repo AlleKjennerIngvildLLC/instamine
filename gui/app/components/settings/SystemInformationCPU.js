@@ -20,15 +20,35 @@ export default class SystemInformationCPU extends Component {
             .catch(error => console.error(error))
             .then(gpuInfo)
             .then(gpus => {
-                let info = gpus.map(gpu => 
+                let info = gpus.map(gpu => {
+                    return {
+                        brand: gpu.AdapterCompatibility,
+                        name: gpu.Name,                    
+                    };
+                });
 
-                        {'name': gpu.Name}
-                    
-                )
+                this.setState({gpu: info});
             });
     }
 
     render() {
+
+
+        let gpus;
+        if (this.state.gpu !== undefined) {
+            gpus = this.state.gpu.map((gpu, i) => {
+                return (
+                    <div key={`gpu-${i}`} className="row">
+                        <div className='col-xs-3'> 
+                            {`GPU-${i}:`}
+                        </div>
+                        <div className='col-xs-8'>
+                            {gpu.name}
+                        </div>
+                    </div>
+                );
+            });
+        }
 
 
         return (
@@ -70,6 +90,8 @@ export default class SystemInformationCPU extends Component {
                         Cores: {this.state.cores}
                     </div>
                 </div>
+
+                {gpus}
 
                 <div
                     style={{
