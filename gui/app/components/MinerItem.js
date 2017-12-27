@@ -12,8 +12,6 @@ class MinerItem extends Component {
 
     render() {
 
-        console.log(this.props.disabled);
-
         let settings = this.props.settings;
 
         let startButton = (
@@ -117,8 +115,8 @@ class MinerItem extends Component {
 
             </div>
 
-        )
+        );
     }
-};
+}
 
 export default withRouter(MinerItem);

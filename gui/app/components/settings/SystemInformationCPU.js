@@ -84,7 +84,15 @@ export default class SystemInformationCPU extends Component {
                             border:  '2.5px solid gray'
                         }}
                             rows={4}
-                            value={this.props.settings.walletAddress} />
+                            defaultValue={this.props.settings.walletAddress} />
+                        
+                    </div>
+                </div>
+                <div className="row">
+                    <div className='col-xs-12'>
+
+                        Worker Name:
+                        {this.props.settings.workerName}
                         
                     </div>
                 </div>

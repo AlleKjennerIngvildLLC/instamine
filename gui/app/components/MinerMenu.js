@@ -65,7 +65,7 @@ export default class MinerMenu extends Component {
 
                 <div
                     style={{
-                    marginTop: '440px',
+                    marginTop: '380px',
                     height: '400px'
                 }}
                     className="logo">

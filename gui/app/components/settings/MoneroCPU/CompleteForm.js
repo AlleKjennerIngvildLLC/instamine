@@ -40,6 +40,9 @@ const validate = values => {
     if (!values.numberCores) {
         errors.numberCores = 'Must assign atleast one core!';
     }
+    if (!values.workerName) {
+        errors.workerName = 'Worker name cannot be empty!';
+    }
 
     return errors;
 };
@@ -51,7 +54,8 @@ class CompleteForm extends Component {
         speedmax: '',
         cores: 1,
         walletAddress: '',
-        numberCores: 1
+        numberCores: 1,
+        workerName: ''
     }
 
     buildCpuConfig = (n) => {
@@ -67,18 +71,20 @@ class CompleteForm extends Component {
 
     onSubmit = (values) => {
 
-
         console.log(values);
 
         let numberCores = parseInt(values.numberCores);
 
         let cpu_threads_conf = this.buildCpuConfig(numberCores);
-        let config = buildConfiguration(cpu_threads_conf, values.walletAddress);
+        let config = buildConfiguration(cpu_threads_conf, 
+                                        values.walletAddress, 
+                                        values.workerName);
 
         this.setState({
             config: config,
             walletAddress: values.walletAddress,
-            numberCores: values.numberCores
+            numberCores: values.numberCores,
+            workerName: values.workerName
         }, () => {
 
             console.log(this.state)
@@ -105,7 +111,6 @@ class CompleteForm extends Component {
     render() {
 
         const {handleSubmit, pristine, reset, submitting} = this.props;
-
 
         console.log(this.state)
         return (
@@ -134,6 +139,27 @@ class CompleteForm extends Component {
                             component={renderField}
                             type="text"
                             placeholder="Wallet address"/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div
+                        style={{
+                        marginTop: '5px'
+                    }}
+                        className="col-xs-4">
+                        <label
+                            style={{
+                            marginLeft: '10px'
+                        }}>
+                            Worker Name
+                        </label>
+                    </div>
+                    <div className="col-xs-8">
+                        <Field
+                            name="workerName"
+                            component={renderField}
+                            type="text"
+                            placeholder="Worker-1"/>
                     </div>
                 </div>
                 <div

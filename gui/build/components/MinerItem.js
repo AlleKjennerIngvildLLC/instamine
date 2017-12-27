@@ -49,8 +49,6 @@ var MinerItem = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            console.log(this.props.disabled);
-
             var settings = this.props.settings;
 
             var startButton = _react2.default.createElement(
@@ -152,8 +150,6 @@ var MinerItem = function (_Component) {
     }]);
     return MinerItem;
 }(_react.Component);
-
-;
 
 exports.default = (0, _reactRouterDom.withRouter)(MinerItem);
 //# sourceMappingURL=MinerItem.js.map

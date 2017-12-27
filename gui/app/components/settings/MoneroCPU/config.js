@@ -1,8 +1,8 @@
 
 function buildConfiguration (
     cpu_threads_conf,
-    walletAddress
-    
+    walletAddress,
+    workerName
 ) {
 
     cpu_threads_conf = JSON.stringify(cpu_threads_conf);
@@ -116,7 +116,7 @@ function buildConfiguration (
     */
     "pool_address" : "pool.usxmrpool.com:3333",
     "wallet_address" : "${walletAddress}",
-    "pool_password" : "",
+    "pool_password" : "${workerName}",
 
     /*
     * Network timeouts.
