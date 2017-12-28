@@ -61,7 +61,15 @@ var MinerItem = function (_Component) {
                         if (settings.walletAddress === '') {
                             _this2.props.history.push(_this2.props.settingsRoute);
                         } else {
-                            _this2.props.startMiner(settings.config, settings.enableGPU);
+
+                            var enableGPU = false;
+                            if (name == 'Monero (NVIDIA)') {
+                                enableGPU = true;
+                            } else {
+                                enableGPU = false;
+                            }
+
+                            _this2.props.startMiner(settings.config, enableGPU);
                         }
                     } },
                 'Start'

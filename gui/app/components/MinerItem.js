@@ -26,9 +26,17 @@ class MinerItem extends Component {
                         .history
                         .push(this.props.settingsRoute);
                 } else {
+
+                    let enableGPU = false;
+                    if (name == 'Monero (NVIDIA)') {
+                       enableGPU = true; 
+                    } else {
+                        enableGPU = false;
+                    }
+
                     this
                         .props
-                        .startMiner(settings.config, settings.enableGPU);
+                        .startMiner(settings.config, enableGPU);
                 }
             }}>
                 Start

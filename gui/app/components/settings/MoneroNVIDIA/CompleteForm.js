@@ -4,6 +4,7 @@ import {Input, Button} from 'rebass';
 import _ from 'lodash';
 
 import buildConfiguration from './config.js';
+import { buffers } from 'redux-saga';
 
 const si = require('systeminformation');
 const gpuInfo = require('gpu-info');
@@ -52,12 +53,12 @@ const validate = values => {
 class CompleteForm extends Component {
 
     state = {
-        brand: '',
-        speedmax: '',
-        cores: 1,
         walletAddress: '',
-        numberCores: 1,
-        workerName: ''
+        workerName: '',
+        threads: 5,
+        blocks: 60,
+        bfactor: 8,
+        bsleep: 100
     }
 
     constructor(props) {
@@ -65,14 +66,14 @@ class CompleteForm extends Component {
 
     }
 
-    buildGPUConfig = () => {
+    buildGPUConfig = ({threads, blocks, bfactor, bsleep}) => {
         let gpuSettings = [
             {
                 'index': 0,
-                'threads': 5,
-                'blocks': 60,
-                'bfactor': 8,
-                'bsleep': 100,
+                'threads': threads,
+                'blocks': blocks,
+                'bfactor': bfactor,
+                'bsleep': bsleep,
                 'affine_to_cpu': false
             }
         ];
@@ -87,8 +88,8 @@ class CompleteForm extends Component {
 
         let numberCores = parseInt(values.numberCores);
 
-        let cpu_threads_conf = this.buildCpuConfig(numberCores);
-        let config = buildConfiguration(cpu_threads_conf, values.walletAddress, values.workerName);
+        let gpu_config = this.buildGPUConfig(values);
+        let config = buildConfiguration(gpu_config, values.walletAddress, values.workerName); 
 
         this.setState({
             config: config,
@@ -96,8 +97,6 @@ class CompleteForm extends Component {
             numberCores: values.numberCores,
             workerName: values.workerName
         }, () => {
-
-            console.log(this.state)
             this
                 .props
                 .updateSettings(this.state);
@@ -133,22 +132,29 @@ class CompleteForm extends Component {
                         <div key={`gpu-${i}`} className="row">
 
                             <div className="row" name="gpu-threads">
-                                <div className="col-xs-4">
-                                    Threads
+                                <div
+                                    style={{
+                                    marginTop: '5px'
+                                }}
+                                    className="col-xs-4">
+                                    <label
+                                        style={{
+                                        marginLeft: '10px'
+                                    }}>
+                                        Number of CPUs
+                                    </label>
                                 </div>
-
                                 <div className="col-xs-offset-2 col-xs-6">
                                     <Field
-                                        name="threads"
+                                        name="numberCores"
                                         component={renderField}
                                         min={1}
                                         max={this.state.cores}
                                         type="number"
-                                        placeholder=""/>
+                                        placeholder="Number of CPUs"/>
                                 </div>
-                            </div>
 
-                            
+                            </div>
                         </div>
                     );
                 });
@@ -204,12 +210,146 @@ class CompleteForm extends Component {
                             placeholder="Worker-1"/>
                     </div>
                 </div>
+                <div
+                    style={{
+                    marginTop: '10px'
+                }}
+                    className="row">
+                    <div
+                        style={{
+                        marginTop: '5px'
+                    }}
+                        className="col-xs-4">
+                        <label
+                            style={{
+                            marginLeft: '10px'
+                        }}>
+                            Number of GPU Threads
+                        </label>
+                    </div>
+                    <div className="col-xs-offset-2 col-xs-6">
+                        <Field
+                            name="threads"
+                            component={renderField}
+                            min={1}
+                            type="number"
+                            placeholder=""/>
+                    </div>
+                </div>
 
-                {gpus}
+                 <div
+                    style={{
+                    marginTop: '10px'
+                }}
+                    className="row">
+                    <div
+                        style={{
+                        marginTop: '5px'
+                    }}
+                        className="col-xs-4">
+                        <label
+                            style={{
+                            marginLeft: '10px'
+                        }}>
+                            Bfactor
+                        </label>
+                    </div>
+                    <div className="col-xs-offset-2 col-xs-6">
+                        <Field
+                            name="bfactor"
+                            component={renderField}
+                            min={1}
+                            type="number"
+                            placeholder=""/>
+                    </div>
+                </div>
+
+                 <div
+                    style={{
+                    marginTop: '10px'
+                }}
+                    className="row">
+                    <div
+                        style={{
+                        marginTop: '5px'
+                    }}
+                        className="col-xs-4">
+                        <label
+                            style={{
+                            marginLeft: '10px'
+                        }}>
+                            Number of blocks
+                        </label>
+                    </div>
+                    <div className="col-xs-offset-2 col-xs-6">
+                        <Field
+                            name="blocks"
+                            component={renderField}
+                            min={1}
+                            type="number"
+                            placeholder=""/>
+                    </div>
+                </div>
+
+
+                    
+
+
+                 <div
+                    style={{
+                    marginTop: '10px'
+                }}
+                    className="row">
+                    <div
+                        style={{
+                        marginTop: '5px'
+                    }}
+                        className="col-xs-4">
+                        <label
+                            style={{
+                            marginLeft: '10px'
+                        }}>
+                            Delay
+                        </label>
+                    </div>
+                    <div className="col-xs-offset-2 col-xs-6">
+                        <Field
+                            name="bsleep"
+                            component={renderField}
+                            min={1}
+                            type="number"
+                            placeholder=""/>
+                    </div>
+                </div>
+
+                
+
+                <div
+                    style={{
+                    marginTop: '10px'
+                }}
+                    className="row">
+                    <div className="col-xs-offset-9 col-xs-3">
+                        <Button type="submit" disabled={pristine && submitting}>
+                            Save
+                        </Button>
+                    </div>
+
+                </div>
+
             </form>
 
         );
     }
 }
 
-export default reduxForm({form: 'MoneroNVIDIACompleteForm', validate})(CompleteForm);
+export default reduxForm({
+    form: 'MoneroNVIDIACompleteForm', 
+    validate,
+    initialValues: {
+        bsleep: 100,
+        threads: 5,
+        blocks: 60,
+        bfactor: 8,
+      }
+})(CompleteForm);
