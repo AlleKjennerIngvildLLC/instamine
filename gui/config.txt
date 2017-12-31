@@ -19,7 +19,7 @@
  *     { "index" : 0, "threads" : 17, "blocks" : 60, "bfactor" : 0, "bsleep" :  0, "affine_to_cpu" : false},
  * ],
  */
-"gpu_threads_conf" : [{"index":0,"threads":5,"blocks":60,"bfactor":8,"bsleep":100,"affine_to_cpu":false}],
+"gpu_threads_conf" : [{"index":0,"threads":6,"blocks":555,"bfactor":11,"bsleep":141,"affine_to_cpu":false}],
 
 /*
  * TLS Settings
@@ -41,7 +41,7 @@
  */
 "pool_address" : "pool.usxmrpool.com:3333",
 "wallet_address" : "4581HhZkQHgZrZjKeCfCJxZff9E3xCgHGF25zABZz7oR71TnbbgiS7sK9jveE6Dx6uMs2LwszDuvQJgRZQotdpHt1fTdDhk",
-"pool_password" : "Worker-1",
+"pool_password" : "XMR_CUDA_WORKER-1",
 
 /*
  * Network timeouts.

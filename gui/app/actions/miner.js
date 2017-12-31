@@ -5,6 +5,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 
 import MinerClient from '../miner';
 const { Event } = require('../rpc/messages_pb');
+const { CommandRequest, Config, SystemStatusRequest } = require('../rpc/command_pb');
 
 
 // The connection should be triggered by an action!
@@ -25,8 +26,8 @@ function send_notification(dispatch, title, message) {
   }
   
 
-
-const startMiner = (config, enableGPU) => async(dispatch) => {
+// here the miner has to be specified!
+const startMiner = (config, mode) => async(dispatch) => {
 
   
   const startRequest = createAction('START_MINER_START');
@@ -37,7 +38,7 @@ const startMiner = (config, enableGPU) => async(dispatch) => {
   dispatch(startRequest());
 
   try {
-    var response = await client.startMiner(config, enableGPU);
+    var response = await client.startMiner(config, mode);
 
     if (response.getMessage() == 'Server started') {
 
@@ -47,7 +48,7 @@ const startMiner = (config, enableGPU) => async(dispatch) => {
       send_notification(
         dispatch, 'Miner started.', `Started mining XMR [${date}]`);
 
-      dispatch(startSuccess());
+      dispatch(startSuccess({mode: mode}));
 
       console.log(handle);
       if (handle === undefined) {

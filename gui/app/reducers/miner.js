@@ -4,8 +4,10 @@ import actions from '../actions/miner';
 
 import handleReply from './reply';
 import on_connect from './connected';
+import { effects } from 'redux-saga';
 
 const { Event } = require('../rpc/messages_pb');
+const { CommandRequest, Config, SystemStatusRequest } = require('../rpc/command_pb');
 
 
 export default handleActions({
@@ -16,7 +18,9 @@ export default handleActions({
 
 
   'START_MINER_SUCCEEDED': (state, action) => {
-    return { ...state, isStarting: false, status: { running: true } };
+    console.log(action);
+    console.log('started!')
+    return { ...state, isStarting: false, status: { mode: action.payload.mode, running: true } };
   },
 
 
@@ -32,14 +36,18 @@ export default handleActions({
 
   [actions.updateSettings]: (state, action) => {
 
-    return { ...state, settings: action.payload };
+
+    let newState = {...state};
+    newState.settings[action.payload.name] = action.payload;
+
+    return newState;
   },
 
   [actions.systemStatus.SUCCEEDED]: (state, action) => {
 
     console.log(action.payload.toObject())
     let running = action.payload.getRunning()
-    return { ...state, status: { running: running } }
+    return { ...state, status: {...state.status, running: running } }
     x;
   },
 
@@ -49,7 +57,7 @@ export default handleActions({
 
   [actions.stop.SUCCEEDED]: (state, action) => {
 
-    return { ...state, isStarting: false, status: { running: false } };
+    return { ...state, isStarting: false, status: { mode: undefined, running: false } };
   },
 
 
@@ -120,7 +128,7 @@ export default handleActions({
     return { ...state, ...stateUpdate };
   },
 }, {
-    status: { running: false }, isStarting: false,
+    status: { mode: undefined, running: false }, isStarting: false,
     settings: { config: '', walletAddress: '', enableGPU: false, nThreads: 1 },
     running: false,
     eventHistory: [],

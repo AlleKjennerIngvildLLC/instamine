@@ -12,7 +12,10 @@ class MinerItem extends Component {
 
     render() {
 
-        let settings = this.props.settings;
+        let name = `config-${this.props.mode}`;
+        let settings = this.props.settings[name];
+
+        console.log(settings);
 
         let startButton = (
             <Button
@@ -20,23 +23,15 @@ class MinerItem extends Component {
                 color='white'
                 disabled={this.props.disabled}
                 onClick={() => {
-                if (settings.walletAddress === '') {
+                if (settings === undefined || settings.walletAddress === '') {
                     this
                         .props
                         .history
                         .push(this.props.settingsRoute);
                 } else {
-
-                    let enableGPU = false;
-                    if (name == 'Monero (NVIDIA)') {
-                       enableGPU = true; 
-                    } else {
-                        enableGPU = false;
-                    }
-
                     this
                         .props
-                        .startMiner(settings.config, enableGPU);
+                        .startMiner(settings.config, this.props.mode);
                 }
             }}>
                 Start
@@ -54,20 +49,17 @@ class MinerItem extends Component {
                 bg='blue'
                 color='white'
                 disabled={this.props.disabled}
-                onClick={() => 
-                this
-                    .props
-                    .history
-                    .push(this.props.settingsRoute)
-            }>
-            Settings
+                onClick={() => this.props.history.push(this.props.settingsRoute)}>
+                Settings
             </ButtonOutline>
-
         );
 
         let button = startButton;
 
-        if (this.props.running) {
+        console.log(`status.mode = ${this.props.status.mode}`);
+        console.log(`mode = ${this.props.mode}`);
+
+        if (this.props.running && this.props.status.mode == this.props.mode) {
             button = stopButton;
         }
 

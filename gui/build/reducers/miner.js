@@ -32,10 +32,17 @@ var _connected = require('./connected');
 
 var _connected2 = _interopRequireDefault(_connected);
 
+var _reduxSaga = require('redux-saga');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _require = require('../rpc/messages_pb'),
     Event = _require.Event;
+
+var _require2 = require('../rpc/command_pb'),
+    CommandRequest = _require2.CommandRequest,
+    Config = _require2.Config,
+    SystemStatusRequest = _require2.SystemStatusRequest;
 
 exports.default = (0, _reduxActions.handleActions)((_handleActions = {
 
@@ -44,7 +51,9 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {
   },
 
   'START_MINER_SUCCEEDED': function START_MINER_SUCCEEDED(state, action) {
-    return (0, _extends3.default)({}, state, { isStarting: false, status: { running: true } });
+    console.log(action);
+    console.log('started!');
+    return (0, _extends3.default)({}, state, { isStarting: false, status: { mode: action.payload.mode, running: true } });
   },
 
   'START_MINER_FAILED': function START_MINER_FAILED(state, action) {
@@ -57,18 +66,21 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {
 
 }, (0, _defineProperty3.default)(_handleActions, _miner2.default.updateSettings, function (state, action) {
 
-  return (0, _extends3.default)({}, state, { settings: action.payload });
+  var newState = (0, _extends3.default)({}, state);
+  newState.settings[action.payload.name] = action.payload;
+
+  return newState;
 }), (0, _defineProperty3.default)(_handleActions, _miner2.default.systemStatus.SUCCEEDED, function (state, action) {
 
   console.log(action.payload.toObject());
   var running = action.payload.getRunning();
-  return (0, _extends3.default)({}, state, { status: { running: running } });
+  return (0, _extends3.default)({}, state, { status: (0, _extends3.default)({}, state.status, { running: running }) });
   x;
 }), (0, _defineProperty3.default)(_handleActions, _miner2.default.stop.START, function (state, action) {
   return (0, _extends3.default)({}, state);
 }), (0, _defineProperty3.default)(_handleActions, _miner2.default.stop.SUCCEEDED, function (state, action) {
 
-  return (0, _extends3.default)({}, state, { isStarting: false, status: { running: false } });
+  return (0, _extends3.default)({}, state, { isStarting: false, status: { mode: undefined, running: false } });
 }), (0, _defineProperty3.default)(_handleActions, 'FETCH_STATUS_START', function FETCH_STATUS_START(state, action) {
   console.log('handling miner fetch action!');
   return (0, _extends3.default)({}, state);
@@ -121,7 +133,7 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {
   }
   return (0, _extends3.default)({}, state, stateUpdate);
 }), _handleActions), {
-  status: { running: false }, isStarting: false,
+  status: { mode: undefined, running: false }, isStarting: false,
   settings: { config: '', walletAddress: '', enableGPU: false, nThreads: 1 },
   running: false,
   eventHistory: [],

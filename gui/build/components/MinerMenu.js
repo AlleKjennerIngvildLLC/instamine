@@ -29,6 +29,10 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -39,11 +43,12 @@ var _MinerItem = require('./MinerItem');
 
 var _MinerItem2 = _interopRequireDefault(_MinerItem);
 
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _require = require('../rpc/command_pb'),
+    CommandRequest = _require.CommandRequest,
+    Config = _require.Config,
+    SystemStatusRequest = _require.SystemStatusRequest;
 
 var MinerMenu = function (_Component) {
     (0, _inherits3.default)(MinerMenu, _Component);
@@ -84,6 +89,7 @@ var MinerMenu = function (_Component) {
                     name: 'Monero (CPU)',
                     settingsRoute: '/settings/MoneroCPU',
                     running: this.props.status.running,
+                    mode: CommandRequest.Miner.XMR_CPU,
                     image: './xmr.png'
                 }, this.props)),
                 _react2.default.createElement(_MinerItem2.default, (0, _extends3.default)({
@@ -92,6 +98,7 @@ var MinerMenu = function (_Component) {
                     name: 'Monero (NVIDIA)',
                     settingsRoute: '/settings/MoneroNVIDIA',
                     running: this.props.status.running,
+                    mode: CommandRequest.Miner.XMR_CUDA,
                     image: './xmr.png'
                 }, this.props)),
                 _react2.default.createElement(_MinerItem2.default, (0, _extends3.default)({

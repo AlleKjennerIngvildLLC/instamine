@@ -6,6 +6,8 @@ import _ from 'lodash';
 import buildConfiguration from './config.js';
 
 const si = require('systeminformation');
+const {CommandRequest, Config, SystemStatusRequest} = require('../../../rpc/command_pb');
+
 const renderField = (field) => {
     return (
         <div className="input-row">
@@ -55,7 +57,8 @@ class CompleteForm extends Component {
         cores: 1,
         walletAddress: '',
         numberCores: 1,
-        workerName: ''
+        workerName: '',
+        mode: CommandRequest.Miner.XMR_CPU
     }
 
     buildCpuConfig = (n) => {
@@ -76,25 +79,25 @@ class CompleteForm extends Component {
         let numberCores = parseInt(values.numberCores);
 
         let cpu_threads_conf = this.buildCpuConfig(numberCores);
-        let config = buildConfiguration(cpu_threads_conf, 
-                                        values.walletAddress, 
-                                        values.workerName);
+        let config = buildConfiguration(cpu_threads_conf, values.walletAddress, values.workerName);
 
         this.setState({
             config: config,
             walletAddress: values.walletAddress,
             numberCores: values.numberCores,
+            name: `config-${this.state.mode}`,
             workerName: values.workerName
         }, () => {
-
-            console.log(this.state)
             this
                 .props
-                .updateSettings(this.state);
-
-            console.log('calling upudate settings!');
+                .updateSettings({
+                    config: this.state.config,
+                    walletAddress: this.state.walletAddress,
+                    numberCores: this.state.numberCores,
+                    name: this.state.name,
+                    workerName: this.state.workerName
+                });
         });
-
     }
 
     componentWillMount() {
@@ -105,14 +108,13 @@ class CompleteForm extends Component {
                 ...this.props.settings
             }))
             .catch(error => console.error(error));
-
     }
 
     render() {
 
         const {handleSubmit, pristine, reset, submitting} = this.props;
+        let mode = CommandRequest.Miner.XMR_CPU;
 
-        console.log(this.state)
         return (
             <form
                 style={{
@@ -208,4 +210,12 @@ class CompleteForm extends Component {
     }
 }
 
-export default reduxForm({form: 'MoneroCPUCompleteForm', validate})(CompleteForm);
+export default reduxForm({form: 'MoneroCPUCompleteForm', validate,
+
+   initialValues: {
+        workerName: 'XMR_CPU_WORKER',
+        numberCores: 1,
+
+    }
+
+})(CompleteForm);

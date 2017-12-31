@@ -4,10 +4,11 @@ import {Input, Button} from 'rebass';
 import _ from 'lodash';
 
 import buildConfiguration from './config.js';
-import { buffers } from 'redux-saga';
+import {buffers} from 'redux-saga';
 
 const si = require('systeminformation');
 const gpuInfo = require('gpu-info');
+const {CommandRequest, Config, SystemStatusRequest} = require('../../../rpc/command_pb');
 
 const renderField = (field) => {
     return (
@@ -58,7 +59,8 @@ class CompleteForm extends Component {
         threads: 5,
         blocks: 60,
         bfactor: 8,
-        bsleep: 100
+        bsleep: 100,
+        mode: CommandRequest.Miner.XMR_CUDA
     }
 
     constructor(props) {
@@ -70,10 +72,10 @@ class CompleteForm extends Component {
         let gpuSettings = [
             {
                 'index': 0,
-                'threads': threads,
-                'blocks': blocks,
-                'bfactor': bfactor,
-                'bsleep': bsleep,
+                'threads': parseInt(threads),
+                'blocks': parseInt(blocks),
+                'bfactor': parseInt(bfactor),
+                'bsleep': parseInt(bsleep),
                 'affine_to_cpu': false
             }
         ];
@@ -84,26 +86,34 @@ class CompleteForm extends Component {
 
     onSubmit = (values) => {
 
-        console.log(values);
-
         let numberCores = parseInt(values.numberCores);
 
         let gpu_config = this.buildGPUConfig(values);
-        let config = buildConfiguration(gpu_config, values.walletAddress, values.workerName); 
+        let config = buildConfiguration(gpu_config, values.walletAddress, values.workerName);
 
         this.setState({
             config: config,
             walletAddress: values.walletAddress,
-            numberCores: values.numberCores,
+            threads: values.threads,
+            blocks: values.blocks,
+            bfactor: values.bfactor,
+            bsleep: values.bsleep,
+            name: `config-${this.state.mode}`,
             workerName: values.workerName
         }, () => {
             this
                 .props
-                .updateSettings(this.state);
-
-            console.log('calling upudate settings!');
+                .updateSettings({
+                    config: this.state.config,
+                    walletAddress: this.state.walletAddress,
+                    name: this.state.name,
+                    workerName: this.state.workerName,
+                    threads: this.state.threads,
+                    blocks: this.state.blocks,
+                    bfactor: this.state.bfactor,
+                    bsleep: this.state.bsleep
+                });
         });
-
     }
 
     componentWillMount() {
@@ -120,8 +130,7 @@ class CompleteForm extends Component {
 
         const {handleSubmit, pristine, reset, submitting} = this.props;
 
-        console.log(this.state.gpu);
-
+        let mode = CommandRequest.Miner.XMR_CUDA;
         let gpus;
         if (this.state.gpu !== undefined) {
             gpus = this
@@ -207,7 +216,7 @@ class CompleteForm extends Component {
                             name="workerName"
                             component={renderField}
                             type="text"
-                            placeholder="Worker-1"/>
+                            placeholder=""/>
                     </div>
                 </div>
                 <div
@@ -237,7 +246,7 @@ class CompleteForm extends Component {
                     </div>
                 </div>
 
-                 <div
+                <div
                     style={{
                     marginTop: '10px'
                 }}
@@ -264,7 +273,7 @@ class CompleteForm extends Component {
                     </div>
                 </div>
 
-                 <div
+                <div
                     style={{
                     marginTop: '10px'
                 }}
@@ -291,11 +300,7 @@ class CompleteForm extends Component {
                     </div>
                 </div>
 
-
-                    
-
-
-                 <div
+                <div
                     style={{
                     marginTop: '10px'
                 }}
@@ -322,8 +327,6 @@ class CompleteForm extends Component {
                     </div>
                 </div>
 
-                
-
                 <div
                     style={{
                     marginTop: '10px'
@@ -344,12 +347,13 @@ class CompleteForm extends Component {
 }
 
 export default reduxForm({
-    form: 'MoneroNVIDIACompleteForm', 
+    form: 'MoneroNVIDIACompleteForm',
     validate,
     initialValues: {
         bsleep: 100,
         threads: 5,
         blocks: 60,
         bfactor: 8,
-      }
+        workerName: 'XMR_CUDA_WORKER-1'
+    }
 })(CompleteForm);

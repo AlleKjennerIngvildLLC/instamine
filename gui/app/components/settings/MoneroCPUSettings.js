@@ -1,12 +1,19 @@
 import React, {Component} from 'react';
 import {Heading, Image} from 'rebass';
 
-import SystemInformationCPU from './SystemInformationCPU';
-import CompleteForm from './MoneroCPU/CompleteForm';
+import SystemInformation from './SystemInformation';
+import SettingsForm from './MoneroCPU/Form';
+import CurrentSettings from './MoneroCPU/CurrentSettings';
+
+const {CommandRequest, Config, SystemStatusRequest} = require('../../rpc/command_pb');
 
 class MoneroCPUSettings extends Component {
 
     render() {
+
+        let name = `config-${CommandRequest.Miner.XMR_CPU}`;
+        let settings = this.props.settings[name];
+
         return (
             <div className="pane-group">
                 <div
@@ -47,7 +54,9 @@ class MoneroCPUSettings extends Component {
                             marginLeft: '200px',
                             background: 'rgba(56, 29, 81, 0.36)'
                         }}>
-                            <SystemInformationCPU settings={this.props.settings}/>
+                            <SystemInformation settings={settings}>
+                                <CurrentSettings settings={settings}/>
+                            </SystemInformation>
                         </div>
 
                         <div
@@ -58,8 +67,7 @@ class MoneroCPUSettings extends Component {
                             background: 'rgba(0, 0, 0, 0.36)'
                         }}
                             className="col-xs-4">
-                            <CompleteForm settings={this.props.settings} 
-                            updateSettings={this.props.updateSettings}/>
+                            <SettingsForm settings={settings} updateSettings={this.props.updateSettings}/>
                         </div>
                     </div>
 

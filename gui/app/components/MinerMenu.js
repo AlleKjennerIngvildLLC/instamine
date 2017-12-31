@@ -1,8 +1,10 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {Text, Border, Tooltip, Image} from 'rebass';
 import MinerItem from './MinerItem';
 
-import _ from 'lodash';
+const { CommandRequest, Config, SystemStatusRequest } = require('../rpc/command_pb');
+
 
 export default class MinerMenu extends Component {
 
@@ -11,6 +13,7 @@ export default class MinerMenu extends Component {
     }
 
     render() {
+
 
         return (
             <div className='menu'>
@@ -34,6 +37,7 @@ export default class MinerMenu extends Component {
                     name='Monero (CPU)'
                     settingsRoute='/settings/MoneroCPU'
                     running={this.props.status.running}
+                    mode={CommandRequest.Miner.XMR_CPU}
                     image='./xmr.png'
                     {...this.props}/>
 
@@ -43,6 +47,7 @@ export default class MinerMenu extends Component {
                     name='Monero (NVIDIA)'
                     settingsRoute='/settings/MoneroNVIDIA'
                     running={this.props.status.running}
+                    mode={CommandRequest.Miner.XMR_CUDA}
                     image='./xmr.png'
                     {...this.props}/>
 

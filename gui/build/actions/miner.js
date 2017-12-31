@@ -34,6 +34,11 @@ var _marked = /*#__PURE__*/_regenerator2.default.mark(requestResponse),
 var _require = require('../rpc/messages_pb'),
     Event = _require.Event;
 
+var _require2 = require('../rpc/command_pb'),
+    CommandRequest = _require2.CommandRequest,
+    Config = _require2.Config,
+    SystemStatusRequest = _require2.SystemStatusRequest;
+
 // The connection should be triggered by an action!
 
 
@@ -52,7 +57,8 @@ function send_notification(dispatch, title, message) {
   dispatch(_reactNotificationSystemRedux2.default.info(options));
 }
 
-var startMiner = function startMiner(config, enableGPU) {
+// here the miner has to be specified!
+var startMiner = function startMiner(config, mode) {
   return function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
       var startRequest, startSuccess, startFailure, startEnded, response, date;
@@ -70,7 +76,7 @@ var startMiner = function startMiner(config, enableGPU) {
 
               _context.prev = 5;
               _context.next = 8;
-              return client.startMiner(config, enableGPU);
+              return client.startMiner(config, mode);
 
             case 8:
               response = _context.sent;
@@ -82,7 +88,7 @@ var startMiner = function startMiner(config, enableGPU) {
 
                 send_notification(dispatch, 'Miner started.', 'Started mining XMR [' + date + ']');
 
-                dispatch(startSuccess());
+                dispatch(startSuccess({ mode: mode }));
 
                 console.log(handle);
                 if (handle === undefined) {

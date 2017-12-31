@@ -49,7 +49,10 @@ var MinerItem = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var settings = this.props.settings;
+            var name = 'config-' + this.props.mode;
+            var settings = this.props.settings[name];
+
+            console.log(settings);
 
             var startButton = _react2.default.createElement(
                 _rebass.Button,
@@ -58,18 +61,10 @@ var MinerItem = function (_Component) {
                     color: 'white',
                     disabled: this.props.disabled,
                     onClick: function onClick() {
-                        if (settings.walletAddress === '') {
+                        if (settings === undefined || settings.walletAddress === '') {
                             _this2.props.history.push(_this2.props.settingsRoute);
                         } else {
-
-                            var enableGPU = false;
-                            if (name == 'Monero (NVIDIA)') {
-                                enableGPU = true;
-                            } else {
-                                enableGPU = false;
-                            }
-
-                            _this2.props.startMiner(settings.config, enableGPU);
+                            _this2.props.startMiner(settings.config, _this2.props.mode);
                         }
                     } },
                 'Start'
@@ -95,7 +90,10 @@ var MinerItem = function (_Component) {
 
             var button = startButton;
 
-            if (this.props.running) {
+            console.log('status.mode = ' + this.props.status.mode);
+            console.log('mode = ' + this.props.mode);
+
+            if (this.props.running && this.props.status.mode == this.props.mode) {
                 button = stopButton;
             }
 
