@@ -55,6 +55,9 @@ extern EndDefaultTypeInternal _End_default_instance_;
 class Error;
 class ErrorDefaultTypeInternal;
 extern ErrorDefaultTypeInternal _Error_default_instance_;
+class ErrorTest;
+class ErrorTestDefaultTypeInternal;
+extern ErrorTestDefaultTypeInternal _ErrorTest_default_instance_;
 class Event;
 class EventDefaultTypeInternal;
 extern EventDefaultTypeInternal _Event_default_instance_;
@@ -79,6 +82,9 @@ extern SystemStatusReplyDefaultTypeInternal _SystemStatusReply_default_instance_
 class SystemStatusRequest;
 class SystemStatusRequestDefaultTypeInternal;
 extern SystemStatusRequestDefaultTypeInternal _SystemStatusRequest_default_instance_;
+class TestMessage;
+class TestMessageDefaultTypeInternal;
+extern TestMessageDefaultTypeInternal _TestMessage_default_instance_;
 }  // namespace cauchy
 
 namespace cauchy {

@@ -15,8 +15,6 @@ class MinerItem extends Component {
         let name = `config-${this.props.mode}`;
         let settings = this.props.settings[name];
 
-        console.log(settings);
-
         let startButton = (
             <Button
                 bg='blue'
@@ -55,9 +53,6 @@ class MinerItem extends Component {
         );
 
         let button = startButton;
-
-        console.log(`status.mode = ${this.props.status.mode}`);
-        console.log(`mode = ${this.props.mode}`);
 
         if (this.props.running && this.props.status.mode == this.props.mode) {
             button = stopButton;

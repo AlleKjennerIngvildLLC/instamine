@@ -51,8 +51,6 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {
   },
 
   'START_MINER_SUCCEEDED': function START_MINER_SUCCEEDED(state, action) {
-    console.log(action);
-    console.log('started!');
     return (0, _extends3.default)({}, state, { isStarting: false, status: { mode: action.payload.mode, running: true } });
   },
 
@@ -71,8 +69,6 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {
 
   return newState;
 }), (0, _defineProperty3.default)(_handleActions, _miner2.default.systemStatus.SUCCEEDED, function (state, action) {
-
-  console.log(action.payload.toObject());
   var running = action.payload.getRunning();
   return (0, _extends3.default)({}, state, { status: (0, _extends3.default)({}, state.status, { running: running }) });
   x;
@@ -82,14 +78,17 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {
 
   return (0, _extends3.default)({}, state, { isStarting: false, status: { mode: undefined, running: false } });
 }), (0, _defineProperty3.default)(_handleActions, 'FETCH_STATUS_START', function FETCH_STATUS_START(state, action) {
-  console.log('handling miner fetch action!');
   return (0, _extends3.default)({}, state);
 }), (0, _defineProperty3.default)(_handleActions, 'FETCH_STATUS_SUCCEEDED', function FETCH_STATUS_SUCCEEDED(state, action) {
 
   var event = action.payload;
   var stateUpdate = {};
 
+  //console.log(event.toObject())
+
   if (event.getTimestamp() !== undefined) {
+
+    console.log(event.toObject());
 
     switch (event.getTypeCase()) {
 
@@ -105,17 +104,18 @@ exports.default = (0, _reduxActions.handleActions)((_handleActions = {
         break;
 
       case Event.TypeCase['ERROR']:
+
         break;
 
       case Event.TypeCase['END']:
         break;
 
       case Event.TypeCase['EMPTY']:
-
         console.log('empty');
         break;
 
       case Event.TypeCase['RESULT']:
+
         console.log('on_result');
         break;
 

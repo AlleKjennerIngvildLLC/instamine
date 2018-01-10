@@ -117,8 +117,6 @@ var Settings = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.props.settings);
-
       var nCpus = _os2.default.cpus().length;
 
       var state = this.state;

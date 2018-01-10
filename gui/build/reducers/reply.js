@@ -1,14 +1,18 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
-var _utils = require('../utils');
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _utils = require("../utils");
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -23,14 +27,25 @@ function handleReply(event, state) {
         timestamp: timestamp,
         hashrates: reply.stats.hashrateList.map(function (entry) {
             return entry.hashrate;
+        }).filter(function (entry) {
+            return !isNaN(entry);
         })
     };
 
+    if (newHashrates.hashrates.length === 0) {
+
+        conosle.log("EMPTY!");
+        console.log(newHashrates.hashrates);
+        newHashrates = {};
+    }
+
+    console.log(event.toObject());
+
     return {
 
-        status: {
+        status: (0, _extends3.default)({}, state.status, {
             running: event.getStatus().getRunning()
-        },
+        }),
 
         statistics: {
             n_threads: reply.stats.nThreads,

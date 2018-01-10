@@ -96,7 +96,7 @@ private:
 	void result_report(std::string& out);
 	void connection_report(std::string& out);
 	void multiple_report();
-	void result(cauchy::ResultReport* res);
+	void result(cauchy::Statistics* stats);
 	
 
 	void http_hashrate_report(std::string& out);

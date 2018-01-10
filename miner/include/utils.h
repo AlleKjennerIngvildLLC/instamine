@@ -41,7 +41,8 @@ Event from_report(const Report& report) {
   StatusReply* reply = event.mutable_reply();
   reply->set_miner(cauchy::StatusReply::XMR_CPU);
 
-  Statistics *stats = new Statistics();
+
+  Statistics *stats = reply->mutable_stats();
   stats->set_n_threads(report.n_threads);
 
 
@@ -60,7 +61,9 @@ Event from_report(const Report& report) {
   stats->set_running(report.running);
   stats->set_logged_in(report.logged_in);
 
-  reply->set_allocated_stats(stats);
+  event.mutable_status()->set_miner(
+    static_cast<SystemStatus_Miner>(cauchy::SystemStatus::XMR_CPU));
+  event.mutable_status()->set_running(true);
 
   set_current_timestamp(event);
 
@@ -98,13 +101,14 @@ namespace cauchy {
     return event;
 
   }
-  Event on_error(const std::string& message) {
+  Event on_error(std::string message) {
 
     cout << "on_error" << endl;
+    cout << message <<  endl;
     Event event; 
     set_current_timestamp(event);
     
-    Error* error = event.mutable_error();
+    auto error = event.mutable_error();
     error->set_message(message);
 
     return event;

@@ -59,6 +59,9 @@ extern EndDefaultTypeInternal _End_default_instance_;
 class Error;
 class ErrorDefaultTypeInternal;
 extern ErrorDefaultTypeInternal _Error_default_instance_;
+class ErrorTest;
+class ErrorTestDefaultTypeInternal;
+extern ErrorTestDefaultTypeInternal _ErrorTest_default_instance_;
 class Event;
 class EventDefaultTypeInternal;
 extern EventDefaultTypeInternal _Event_default_instance_;
@@ -92,6 +95,9 @@ extern SystemStatusReplyDefaultTypeInternal _SystemStatusReply_default_instance_
 class SystemStatusRequest;
 class SystemStatusRequestDefaultTypeInternal;
 extern SystemStatusRequestDefaultTypeInternal _SystemStatusRequest_default_instance_;
+class TestMessage;
+class TestMessageDefaultTypeInternal;
+extern TestMessageDefaultTypeInternal _TestMessage_default_instance_;
 }  // namespace cauchy
 namespace google {
 namespace protobuf {
@@ -188,6 +194,192 @@ inline bool SystemStatus_Miner_Parse(
 }
 // ===================================================================
 
+class TestMessage : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:cauchy.TestMessage) */ {
+ public:
+  TestMessage();
+  virtual ~TestMessage();
+
+  TestMessage(const TestMessage& from);
+
+  inline TestMessage& operator=(const TestMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TestMessage& default_instance();
+
+  static inline const TestMessage* internal_default_instance() {
+    return reinterpret_cast<const TestMessage*>(
+               &_TestMessage_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    0;
+
+  void Swap(TestMessage* other);
+
+  // implements Message ----------------------------------------------
+
+  inline TestMessage* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  TestMessage* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const TestMessage& from);
+  void MergeFrom(const TestMessage& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(TestMessage* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string debug = 2;
+  void clear_debug();
+  static const int kDebugFieldNumber = 2;
+  const ::std::string& debug() const;
+  void set_debug(const ::std::string& value);
+  #if LANG_CXX11
+  void set_debug(::std::string&& value);
+  #endif
+  void set_debug(const char* value);
+  void set_debug(const char* value, size_t size);
+  ::std::string* mutable_debug();
+  ::std::string* release_debug();
+  void set_allocated_debug(::std::string* debug);
+
+  // .cauchy.ErrorTest error = 1;
+  bool has_error() const;
+  void clear_error();
+  static const int kErrorFieldNumber = 1;
+  const ::cauchy::ErrorTest& error() const;
+  ::cauchy::ErrorTest* mutable_error();
+  ::cauchy::ErrorTest* release_error();
+  void set_allocated_error(::cauchy::ErrorTest* error);
+
+  // @@protoc_insertion_point(class_scope:cauchy.TestMessage)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr debug_;
+  ::cauchy::ErrorTest* error_;
+  mutable int _cached_size_;
+  friend struct protobuf_messages_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class ErrorTest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:cauchy.ErrorTest) */ {
+ public:
+  ErrorTest();
+  virtual ~ErrorTest();
+
+  ErrorTest(const ErrorTest& from);
+
+  inline ErrorTest& operator=(const ErrorTest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ErrorTest& default_instance();
+
+  static inline const ErrorTest* internal_default_instance() {
+    return reinterpret_cast<const ErrorTest*>(
+               &_ErrorTest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    1;
+
+  void Swap(ErrorTest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline ErrorTest* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  ErrorTest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const ErrorTest& from);
+  void MergeFrom(const ErrorTest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(ErrorTest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string message = 1;
+  void clear_message();
+  static const int kMessageFieldNumber = 1;
+  const ::std::string& message() const;
+  void set_message(const ::std::string& value);
+  #if LANG_CXX11
+  void set_message(::std::string&& value);
+  #endif
+  void set_message(const char* value);
+  void set_message(const char* value, size_t size);
+  ::std::string* mutable_message();
+  ::std::string* release_message();
+  void set_allocated_message(::std::string* message);
+
+  // @@protoc_insertion_point(class_scope:cauchy.ErrorTest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr message_;
+  mutable int _cached_size_;
+  friend struct protobuf_messages_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:cauchy.Event) */ {
  public:
   Event();
@@ -219,7 +411,7 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
                &_Event_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    0;
+    2;
 
   void Swap(Event* other);
 
@@ -262,6 +454,20 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   // nested types ----------------------------------------------------
 
   // accessors -------------------------------------------------------
+
+  // string debug = 10;
+  void clear_debug();
+  static const int kDebugFieldNumber = 10;
+  const ::std::string& debug() const;
+  void set_debug(const ::std::string& value);
+  #if LANG_CXX11
+  void set_debug(::std::string&& value);
+  #endif
+  void set_debug(const char* value);
+  void set_debug(const char* value, size_t size);
+  ::std::string* mutable_debug();
+  ::std::string* release_debug();
+  void set_allocated_debug(::std::string* debug);
 
   // .google.protobuf.Timestamp timestamp = 8;
   bool has_timestamp() const;
@@ -360,6 +566,7 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   inline void clear_has_type();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr debug_;
   ::google::protobuf::Timestamp* timestamp_;
   ::cauchy::SystemStatus* status_;
   union TypeUnion {
@@ -399,7 +606,7 @@ class Connection : public ::google::protobuf::Message /* @@protoc_insertion_poin
                &_Connection_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    1;
+    3;
 
   void Swap(Connection* other);
 
@@ -487,7 +694,7 @@ class MiningResult : public ::google::protobuf::Message /* @@protoc_insertion_po
                &_MiningResult_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    2;
+    4;
 
   void Swap(MiningResult* other);
 
@@ -595,7 +802,7 @@ class Job : public ::google::protobuf::Message /* @@protoc_insertion_point(class
                &_Job_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    3;
+    5;
 
   void Swap(Job* other);
 
@@ -675,7 +882,7 @@ class DifficultyChange : public ::google::protobuf::Message /* @@protoc_insertio
                &_DifficultyChange_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    4;
+    6;
 
   void Swap(DifficultyChange* other);
 
@@ -748,7 +955,7 @@ class Error : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
                &_Error_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    5;
+    7;
 
   void Swap(Error* other);
 
@@ -836,7 +1043,7 @@ class End : public ::google::protobuf::Message /* @@protoc_insertion_point(class
                &_End_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    6;
+    8;
 
   void Swap(End* other);
 
@@ -924,7 +1131,7 @@ class Empty : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
                &_Empty_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    7;
+    9;
 
   void Swap(Empty* other);
 
@@ -1012,7 +1219,7 @@ class StatusRequest : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_StatusRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    8;
+    10;
 
   void Swap(StatusRequest* other);
 
@@ -1100,7 +1307,7 @@ class StatusReply : public ::google::protobuf::Message /* @@protoc_insertion_poi
                &_StatusReply_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    9;
+    11;
 
   void Swap(StatusReply* other);
 
@@ -1220,7 +1427,7 @@ class SystemStatus : public ::google::protobuf::Message /* @@protoc_insertion_po
                &_SystemStatus_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    10;
+    12;
 
   void Swap(SystemStatus* other);
 
@@ -1323,6 +1530,159 @@ class SystemStatus : public ::google::protobuf::Message /* @@protoc_insertion_po
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
+// TestMessage
+
+// .cauchy.ErrorTest error = 1;
+inline bool TestMessage::has_error() const {
+  return this != internal_default_instance() && error_ != NULL;
+}
+inline void TestMessage::clear_error() {
+  if (GetArenaNoVirtual() == NULL && error_ != NULL) delete error_;
+  error_ = NULL;
+}
+inline const ::cauchy::ErrorTest& TestMessage::error() const {
+  // @@protoc_insertion_point(field_get:cauchy.TestMessage.error)
+  return error_ != NULL ? *error_
+                         : *::cauchy::ErrorTest::internal_default_instance();
+}
+inline ::cauchy::ErrorTest* TestMessage::mutable_error() {
+  
+  if (error_ == NULL) {
+    error_ = new ::cauchy::ErrorTest;
+  }
+  // @@protoc_insertion_point(field_mutable:cauchy.TestMessage.error)
+  return error_;
+}
+inline ::cauchy::ErrorTest* TestMessage::release_error() {
+  // @@protoc_insertion_point(field_release:cauchy.TestMessage.error)
+  
+  ::cauchy::ErrorTest* temp = error_;
+  error_ = NULL;
+  return temp;
+}
+inline void TestMessage::set_allocated_error(::cauchy::ErrorTest* error) {
+  delete error_;
+  error_ = error;
+  if (error) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:cauchy.TestMessage.error)
+}
+
+// string debug = 2;
+inline void TestMessage::clear_debug() {
+  debug_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& TestMessage::debug() const {
+  // @@protoc_insertion_point(field_get:cauchy.TestMessage.debug)
+  return debug_.GetNoArena();
+}
+inline void TestMessage::set_debug(const ::std::string& value) {
+  
+  debug_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:cauchy.TestMessage.debug)
+}
+#if LANG_CXX11
+inline void TestMessage::set_debug(::std::string&& value) {
+  
+  debug_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:cauchy.TestMessage.debug)
+}
+#endif
+inline void TestMessage::set_debug(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  debug_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:cauchy.TestMessage.debug)
+}
+inline void TestMessage::set_debug(const char* value, size_t size) {
+  
+  debug_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:cauchy.TestMessage.debug)
+}
+inline ::std::string* TestMessage::mutable_debug() {
+  
+  // @@protoc_insertion_point(field_mutable:cauchy.TestMessage.debug)
+  return debug_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* TestMessage::release_debug() {
+  // @@protoc_insertion_point(field_release:cauchy.TestMessage.debug)
+  
+  return debug_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void TestMessage::set_allocated_debug(::std::string* debug) {
+  if (debug != NULL) {
+    
+  } else {
+    
+  }
+  debug_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), debug);
+  // @@protoc_insertion_point(field_set_allocated:cauchy.TestMessage.debug)
+}
+
+// -------------------------------------------------------------------
+
+// ErrorTest
+
+// string message = 1;
+inline void ErrorTest::clear_message() {
+  message_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ErrorTest::message() const {
+  // @@protoc_insertion_point(field_get:cauchy.ErrorTest.message)
+  return message_.GetNoArena();
+}
+inline void ErrorTest::set_message(const ::std::string& value) {
+  
+  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:cauchy.ErrorTest.message)
+}
+#if LANG_CXX11
+inline void ErrorTest::set_message(::std::string&& value) {
+  
+  message_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:cauchy.ErrorTest.message)
+}
+#endif
+inline void ErrorTest::set_message(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:cauchy.ErrorTest.message)
+}
+inline void ErrorTest::set_message(const char* value, size_t size) {
+  
+  message_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:cauchy.ErrorTest.message)
+}
+inline ::std::string* ErrorTest::mutable_message() {
+  
+  // @@protoc_insertion_point(field_mutable:cauchy.ErrorTest.message)
+  return message_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ErrorTest::release_message() {
+  // @@protoc_insertion_point(field_release:cauchy.ErrorTest.message)
+  
+  return message_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ErrorTest::set_allocated_message(::std::string* message) {
+  if (message != NULL) {
+    
+  } else {
+    
+  }
+  message_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), message);
+  // @@protoc_insertion_point(field_set_allocated:cauchy.ErrorTest.message)
+}
+
+// -------------------------------------------------------------------
+
 // Event
 
 // .cauchy.Connection connection = 1;
@@ -1742,6 +2102,59 @@ inline void Event::set_allocated_status(::cauchy::SystemStatus* status) {
     
   }
   // @@protoc_insertion_point(field_set_allocated:cauchy.Event.status)
+}
+
+// string debug = 10;
+inline void Event::clear_debug() {
+  debug_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& Event::debug() const {
+  // @@protoc_insertion_point(field_get:cauchy.Event.debug)
+  return debug_.GetNoArena();
+}
+inline void Event::set_debug(const ::std::string& value) {
+  
+  debug_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:cauchy.Event.debug)
+}
+#if LANG_CXX11
+inline void Event::set_debug(::std::string&& value) {
+  
+  debug_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:cauchy.Event.debug)
+}
+#endif
+inline void Event::set_debug(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  debug_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:cauchy.Event.debug)
+}
+inline void Event::set_debug(const char* value, size_t size) {
+  
+  debug_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:cauchy.Event.debug)
+}
+inline ::std::string* Event::mutable_debug() {
+  
+  // @@protoc_insertion_point(field_mutable:cauchy.Event.debug)
+  return debug_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* Event::release_debug() {
+  // @@protoc_insertion_point(field_release:cauchy.Event.debug)
+  
+  return debug_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void Event::set_allocated_debug(::std::string* debug) {
+  if (debug != NULL) {
+    
+  } else {
+    
+  }
+  debug_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), debug);
+  // @@protoc_insertion_point(field_set_allocated:cauchy.Event.debug)
 }
 
 inline bool Event::has_type() const {
@@ -2168,6 +2581,10 @@ inline void SystemStatus::set_miner(::cauchy::SystemStatus_Miner value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

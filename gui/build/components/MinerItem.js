@@ -52,8 +52,6 @@ var MinerItem = function (_Component) {
             var name = 'config-' + this.props.mode;
             var settings = this.props.settings[name];
 
-            console.log(settings);
-
             var startButton = _react2.default.createElement(
                 _rebass.Button,
                 {
@@ -89,9 +87,6 @@ var MinerItem = function (_Component) {
             );
 
             var button = startButton;
-
-            console.log('status.mode = ' + this.props.status.mode);
-            console.log('mode = ' + this.props.mode);
 
             if (this.props.running && this.props.status.mode == this.props.mode) {
                 button = stopButton;

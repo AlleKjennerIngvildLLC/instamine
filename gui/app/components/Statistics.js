@@ -102,7 +102,7 @@ export default class Statistics extends Component {
                                 </Text>
                             </div>
 
-                            <div className="row">
+                            {/* <div className="row">
                                 <Text
                                     style={{
                                     marginTop: '0px'
@@ -111,24 +111,9 @@ export default class Statistics extends Component {
                                     fontSize={2}>
                                     {`Latency: ${ping}`}
                                 </Text>
-                            </div>
+                            </div> */}
 
-                            <div className="row">
-                                <Text
-                                    style={{
-                                    marginTop: '0px'
-                                }}
-                                    bold
-                                    fontSize={2}>
-                                    {`Threads: ${n_threads}`}
-                                </Text>
-                            </div>
-
-                            <div className="row">
-                                <Truncate bold fontSize={2}>
-                                    {`Pool: ${poolAddress}`}
-                                </Truncate>
-                            </div>
+                          
                         </div>
 
                         <div className="col-sm-5">

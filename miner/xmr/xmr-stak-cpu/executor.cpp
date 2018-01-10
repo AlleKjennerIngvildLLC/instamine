@@ -236,6 +236,8 @@ void executor::on_sock_error(size_t pool_id, std::string&& sError)
 	}
 
 
+
+	std::cout << "ok hitting tihs levels " << std::endl;
 	ipc_event_queue->push(
 		cauchy::on_error(sError)
 	);
@@ -554,7 +556,7 @@ inline const char* hps_format(double h, char* buf, size_t l)
 		return " (na)";
 }
 
-void executor::result(cauchy::ResultReport* res) {
+void executor::result(cauchy::Statistics* stats) {
 
 	size_t iGoodRes = vMineResults[0].count, iTotalRes = iGoodRes;
 	size_t ln = vMineResults.size();
@@ -563,11 +565,18 @@ void executor::result(cauchy::ResultReport* res) {
 		iTotalRes += vMineResults[i].count;
 	}
 
-	res->set_total_results(iTotalRes);
+
+
 	
 	if (iTotalRes == 0) {
-		return;
+		cout << "nothing to report!" << endl;
+		return; 
+	} else {
+		cout << "ok, set and ready to go!" << endl;
 	}
+
+	auto res = stats->mutable_report();
+
 
 	double dConnSec;
 	{
@@ -575,11 +584,14 @@ void executor::result(cauchy::ResultReport* res) {
 		dConnSec = (double)duration_cast<seconds>(system_clock::now() - tPoolConnTime).count();
 	}
 
+	cout << dConnSec << endl;
+
 	auto num = 100.0 * iGoodRes / iTotalRes;
 
 	res->set_diff(iPoolDiff);
 	res->set_good_results(iGoodRes);
 	res->set_total_results(iTotalRes);
+	res->set_average_result_time(10);
 	res->set_ratio(num);
 
 	// some error reports here?
@@ -632,15 +644,17 @@ void executor::multiple_report() {
 	}
 
 	cauchy::Event event = from_report(*reporter);
+	set_current_timestamp(event);
+
+
+
+	// dette fungerer ikke. add kun dersom report er non empty!
+	//auto report = event.mutable_reply()->mutable_stats()->mutable_report();
 
 	// add ResultReport information
-	result(
-		event.mutable_reply()
-				->mutable_stats()
-				->mutable_report()
-	);
-
-	ipc_event_queue->push(from_report(*reporter));
+	result(event.mutable_reply()->mutable_stats());
+	set_current_timestamp(event);
+	ipc_event_queue->push(event);
 }
 	
 void executor::hashrate_report(std::string& out)

@@ -33,8 +33,6 @@ export default class Home extends Component {
           className="pane"
           style={{
           overflow: 'hidden',
-          
-          
           borderColor: 'rgb(14, 49, 105)',
           color: 'white',
           backgroundSize: 'cover',

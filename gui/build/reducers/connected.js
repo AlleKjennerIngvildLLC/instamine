@@ -11,9 +11,6 @@ var _reactNotificationSystemRedux2 = _interopRequireDefault(_reactNotificationSy
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function on_connect(event, state) {
-
-    console.log('connected!');
-
     return {};
 }
 

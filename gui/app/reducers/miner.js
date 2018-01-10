@@ -18,8 +18,6 @@ export default handleActions({
 
 
   'START_MINER_SUCCEEDED': (state, action) => {
-    console.log(action);
-    console.log('started!')
     return { ...state, isStarting: false, status: { mode: action.payload.mode, running: true } };
   },
 
@@ -44,8 +42,6 @@ export default handleActions({
   },
 
   [actions.systemStatus.SUCCEEDED]: (state, action) => {
-
-    console.log(action.payload.toObject())
     let running = action.payload.getRunning()
     return { ...state, status: {...state.status, running: running } }
     x;
@@ -60,9 +56,7 @@ export default handleActions({
     return { ...state, isStarting: false, status: { mode: undefined, running: false } };
   },
 
-
   'FETCH_STATUS_START': (state, action) => {
-    console.log(`handling miner fetch action!`);
     return { ...state };
   },
 
@@ -72,7 +66,13 @@ export default handleActions({
     let event = action.payload;
     let stateUpdate = {};
 
+
+    //console.log(event.toObject())
+
     if (event.getTimestamp() !== undefined) {
+
+
+      console.log(event.toObject())
 
       switch (event.getTypeCase()) {
 
@@ -94,17 +94,18 @@ export default handleActions({
           break;
 
         case Event.TypeCase['ERROR']:
+
           break;
 
         case Event.TypeCase['END']:
           break;
 
         case Event.TypeCase['EMPTY']:
-
           console.log('empty');
           break;
 
         case Event.TypeCase['RESULT']:
+
           console.log('on_result');
           break;
 

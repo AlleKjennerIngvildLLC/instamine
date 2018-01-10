@@ -174,43 +174,6 @@ var Statistics = function (_Component) {
                                         fontSize: 2 },
                                     'Latest hashrate: ' + lastRate
                                 )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'row' },
-                                _react2.default.createElement(
-                                    _rebass.Text,
-                                    {
-                                        style: {
-                                            marginTop: '0px'
-                                        },
-                                        bold: true,
-                                        fontSize: 2 },
-                                    'Latency: ' + ping
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'row' },
-                                _react2.default.createElement(
-                                    _rebass.Text,
-                                    {
-                                        style: {
-                                            marginTop: '0px'
-                                        },
-                                        bold: true,
-                                        fontSize: 2 },
-                                    'Threads: ' + n_threads
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'row' },
-                                _react2.default.createElement(
-                                    _rebass.Truncate,
-                                    { bold: true, fontSize: 2 },
-                                    'Pool: ' + poolAddress
-                                )
                             )
                         ),
                         _react2.default.createElement(

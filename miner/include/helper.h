@@ -1,69 +1,65 @@
 #pragma once
 
-#include <string>
 #include <boost/interprocess/ipc/message_queue.hpp>
+#include <iostream>
+#include <string>
+#include <cassert>
+
+const size_t MAX_SIZE = 2000;
+
+template <class MessageType> class SharedProtobufMessageQueue {
+
+public:
+  boost::interprocess::message_queue mq;
+
+  static bool remove(std::string name) {
+    return boost::interprocess::message_queue::remove(name.c_str());
+  }
+  SharedProtobufMessageQueue(std::string name = "test!")
+      : mq(boost::interprocess::open_or_create, name.c_str(), 2000, MAX_SIZE) {}
+
+  void push(MessageType &message, unsigned int priority = 0) {
+    auto text = serialize(message);
+
+    mq.send(text.data(), text.size(), priority);
+  }
+
+  MessageType pop() {
+    size_t recvd_size;
+    unsigned int priority;
+    char buffer[MAX_SIZE];
+
+    mq.receive(buffer, MAX_SIZE, recvd_size, priority);
+
+    return deserialize(buffer, recvd_size);
+  }
+
+  size_t size() { return mq.get_num_msg(); }
+
+  bool empty() { return size() == 0; }
+
+  std::string serialize(MessageType &message) {
+    std::string str = message.SerializeAsString();
 
 
-const size_t MAX_SIZE = 200;
+    std::cout << "message size " << str.size() << std::endl;
 
-template <class MessageType>
-class SharedProtobufMessageQueue
-{
-    
-  public:
-    boost::interprocess::message_queue mq;
+    MessageType mm;
+    mm.ParseFromString(str);
 
+    return str;
+  }
 
-    static bool remove(std::string name) {
-        return boost::interprocess::message_queue::remove(name.c_str());
-        
-    }
-    SharedProtobufMessageQueue(std::string name="test")
-        : mq( boost::interprocess::open_or_create, name.c_str(), 2000, MAX_SIZE)
-    {
-    }
+  MessageType deserialize(char *data, size_t size) {
 
-    void push(MessageType &message, unsigned int priority = 0)
-    {
-        auto text = serialize(message);
-        mq.send(text.data(),  text.size(), priority);
-    }
+    cauchy::Event message;
 
-    MessageType pop()
-    {
-        size_t recvd_size;
-        unsigned int priority;
-        char buffer[MAX_SIZE];
+    std::string s(data, size);
 
-        mq.receive(buffer, MAX_SIZE, recvd_size, priority);
+    assert(s.size() == size);
 
-        return deserialize(buffer, recvd_size);
-    }
+    message.ParseFromString(s);
 
-    size_t size() {
-        return mq.get_num_msg();
-    }
-
-    bool empty() {
-        return size() == 0;
-    }
-
-    std::string serialize(MessageType &message)
-    {
-        std::string str;
-        message.SerializeToString(&str);
-
-        return str;
-    }
-
-    MessageType deserialize(char *data, size_t size)
-    {
-
-        cauchy::Event message;
-
-        std::string s(data);
-        message.ParseFromArray(s.data(), size);
-
-        return message;
-    }
+    return message;
+  }
 };

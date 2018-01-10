@@ -28,7 +28,6 @@ message ResultReport {
   uint64 good_results = 2;
   uint64 total_results = 3;
 
-
   double average_result_time = 4;
   double ratio = 5;
 }

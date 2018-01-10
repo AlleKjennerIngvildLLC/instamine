@@ -3,8 +3,7 @@ import React, {Component} from 'react';
 import {Text, Border, Tooltip, Image} from 'rebass';
 import MinerItem from './MinerItem';
 
-const { CommandRequest, Config, SystemStatusRequest } = require('../rpc/command_pb');
-
+const {CommandRequest, Config, SystemStatusRequest} = require('../rpc/command_pb');
 
 export default class MinerMenu extends Component {
 
@@ -13,7 +12,6 @@ export default class MinerMenu extends Component {
     }
 
     render() {
-
 
         return (
             <div className='menu'>

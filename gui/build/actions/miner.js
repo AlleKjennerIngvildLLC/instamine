@@ -90,7 +90,6 @@ var startMiner = function startMiner(config, mode) {
 
                 dispatch(startSuccess({ mode: mode }));
 
-                console.log(handle);
                 if (handle === undefined) {
                   handle = setInterval(function () {
                     return dispatch({ type: 'START_STATUS_REQUEST_SAGA' });
@@ -107,7 +106,7 @@ var startMiner = function startMiner(config, mode) {
               _context.t0 = _context['catch'](5);
 
 
-              console.log(_context.t0);
+              console.error(_context.t0);
               dispatch(startFailure(_context.t0));
 
             case 16:
@@ -159,7 +158,7 @@ var stopMiner = (0, _reduxThunkActions.createActionThunk)('STOP_MINER', (0, _asy
 var requestStatus = function requestStatus() {
   return function () {
     var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch) {
-      var startRequest, startSuccess, startFailure, startEnded, event;
+      var startRequest, startSuccess, startFailure, startEnded, event, options;
       return _regenerator2.default.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
@@ -183,31 +182,47 @@ var requestStatus = function requestStatus() {
               dispatch(startSuccess(event));
 
               _context3.t0 = event.getTypeCase();
-              _context3.next = _context3.t0 === Event.TypeCase['CONNECTION'] ? 13 : 14;
+              _context3.next = _context3.t0 === Event.TypeCase['CONNECTION'] ? 13 : _context3.t0 === Event.TypeCase['ERROR'] ? 14 : 19;
               break;
 
             case 13:
-              return _context3.abrupt('break', 15);
+              return _context3.abrupt('break', 20);
 
             case 14:
-              return _context3.abrupt('break', 15);
+              options = {
+                title: title,
+                message: event.toObject().error.message,
+                position: 'br',
+                autoDismiss: 3
+              };
 
-            case 15:
-              _context3.next = 20;
+
+              dispatch(_reactNotificationSystemRedux2.default.info(options));
+
+              console.log("errorutentuoententoeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+              console.log(event.toObject());
+
+              return _context3.abrupt('break', 20);
+
+            case 19:
+              return _context3.abrupt('break', 20);
+
+            case 20:
+              _context3.next = 25;
               break;
 
-            case 17:
-              _context3.prev = 17;
+            case 22:
+              _context3.prev = 22;
               _context3.t1 = _context3['catch'](5);
 
               dispatch(startFailure(_context3.t1));
 
-            case 20:
+            case 25:
             case 'end':
               return _context3.stop();
           }
         }
-      }, _callee3, undefined, [[5, 17]]);
+      }, _callee3, undefined, [[5, 22]]);
     }));
 
     return function (_x2) {

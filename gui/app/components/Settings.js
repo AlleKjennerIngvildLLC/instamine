@@ -79,8 +79,6 @@ export default class Settings extends Component {
 
   render() {
 
-    console.log(this.props.settings)
-
     let nCpus = os
       .cpus()
       .length;

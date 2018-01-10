@@ -74,8 +74,6 @@ class CompleteForm extends Component {
 
     onSubmit = (values) => {
 
-        console.log(values);
-
         let numberCores = parseInt(values.numberCores);
 
         let cpu_threads_conf = this.buildCpuConfig(numberCores);

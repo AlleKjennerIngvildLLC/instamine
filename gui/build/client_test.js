@@ -30,11 +30,6 @@ var main = function () {
                     case 3:
                         event = _context.sent;
                         timestamp = event.getTimestamp();
-                        // console.log(
-                        //     event.getTypeCase() == Event.TypeCase['REPLY']
-                        // );
-
-                        // console.log(event.toObject());
 
 
                         if (timestamp !== undefined) {

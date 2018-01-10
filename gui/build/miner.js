@@ -45,8 +45,6 @@ var MinerClient = function () {
             var mode = arguments[1];
 
 
-            console.log(config_str);
-
             var request = new CommandRequest();
             request.setMiner(mode);
 

@@ -100,12 +100,19 @@ namespace cauchy {
   }
   Event on_error(const string& message) {
 
-    cout << "on_error" << endl;
+    cout << "on_error: " << message << endl;
     Event event; 
     set_current_timestamp(event);
     
     Error* error = event.mutable_error();
     error->set_message(message);
+
+
+    if (process.started()) {
+      terminate = true;
+      process.terminate();
+    }
+
 
     return event;
   }

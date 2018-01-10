@@ -354,6 +354,6 @@ export default reduxForm({
         threads: 5,
         blocks: 60,
         bfactor: 8,
-        workerName: 'XMR_CUDA_WORKER-1'
+        workerName: 'XMR_CUDA_WORKER'
     }
 })(CompleteForm);

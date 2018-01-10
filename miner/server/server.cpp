@@ -16,7 +16,6 @@
 
 #include "helper.h"
 #include "process_manager.h"
-#include "shared.h"
 
 
 #include "messages.pb.h"
@@ -46,6 +45,8 @@ public:
   process_manager process;
   SharedProtobufMessageQueue<Event> *status_channel;
   bool terminate = false;
+
+  SystemStatus_Miner active_miner_type;
   std::string exec;
 
   MinerStatusServiceImpl(std::string exec)
@@ -84,6 +85,8 @@ public:
     }
 
     auto status = event->mutable_status();
+
+    status->set_miner(active_miner_type);
     status->set_running(miner_running());
 
     return Status::OK;
@@ -92,6 +95,10 @@ public:
   Status SystemStatus(ServerContext *context,
                       const SystemStatusRequest *request,
                       SystemStatusReply *reply) override {
+
+    reply->set_miner(
+      static_cast<SystemStatusReply_Miner>(active_miner_type)
+    );
 
     reply->set_running(miner_running());
 
@@ -116,6 +123,8 @@ public:
     else {
       exit(1);
     }
+
+    active_miner_type = static_cast<SystemStatus_Miner>(miner);
 
     cout << "using miner exec: " << filename << endl;
   

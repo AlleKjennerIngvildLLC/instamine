@@ -18,12 +18,7 @@ async function main() {
         let event = await client.getMiningStatus();
         
         let timestamp = event.getTimestamp();
-        // console.log(
-        //     event.getTypeCase() == Event.TypeCase['REPLY']
-        // );
-
-        // console.log(event.toObject());
-
+     
 
         if (timestamp !== undefined) {
 

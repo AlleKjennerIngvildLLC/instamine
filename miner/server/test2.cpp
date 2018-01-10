@@ -18,7 +18,16 @@ int main()
     {
         cauchy::Event event = mq.pop();
 
-        std::cout << event.has_reply() << std::endl;
+
+        //if (event.has_reply()) {
+
+            std::cout << "timestamp.seconds() = " << event.timestamp().seconds() << std::endl;
+            std::cout << event.has_reply() << std::endl;
+            std::cout << "reply message with" << std::endl;
+            std::cout << event.timestamp().seconds() << std::endl;
+            std::cout << "message = " << event.debug() << std::endl;
+
+        //}
     }
 
     return 0;

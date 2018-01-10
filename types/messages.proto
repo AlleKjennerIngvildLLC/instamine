@@ -9,6 +9,19 @@ import "xmr.proto";
 import "command.proto";
 import "google/protobuf/timestamp.proto";
 
+
+message TestMessage {
+  ErrorTest error = 1;
+  string debug = 3;
+
+}
+
+
+message ErrorTest {
+  string message = 1;
+}
+
+
 message Event {
   oneof type {
     Connection connection = 1;
@@ -20,8 +33,9 @@ message Event {
     Job job = 7;
   };
 
-  google.protobuf.Timestamp timestamp = 8;
+  googl.protobuf.Timestamp timestamp = 8;
   SystemStatus status = 9;
+  string debug = 10;
 }
 
 message Connection {
