@@ -23,7 +23,7 @@
     *      { "low_power_mode" : false, "no_prefetch" : true, "affine_to_cpu" : 1 },
     * ],
     */
-    "cpu_threads_conf" :  [{"low_power_mode":false,"no_prefetch":true,"affine_to_cpu":0}],
+    "cpu_threads_conf" :  [{"low_power_mode":false,"no_prefetch":true,"affine_to_cpu":0},{"low_power_mode":false,"no_prefetch":true,"affine_to_cpu":1},{"low_power_mode":false,"no_prefetch":true,"affine_to_cpu":2}],
     /*
     * LARGE PAGE SUPPORT
     * Lare pages need a properly set up OS. It can be difficult if you are not used to systems administation,
@@ -105,7 +105,7 @@
     *
     * We feature pools up to 1MH/s. For a more complete list see M5M400's pool list at www.moneropools.com
     */
-    "pool_address" : "pool.usxmrpool.com:3333",
+    "pool_address" : "google.com:8080",
     "wallet_address" : "4581HhZkQHgZrZjKeCfCJxZff9E3xCgHGF25zABZz7oR71TnbbgiS7sK9jveE6Dx6uMs2LwszDuvQJgRZQotdpHt1fTdDhk",
     "pool_password" : "XMR_CPU_WORKER",
 

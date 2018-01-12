@@ -4,8 +4,6 @@ export class CurrentSettings extends Component {
 
     render() {
 
-        console.log(this.props.settings);
-
         let settings = this.props.settings;
         let information = <div/>;
 

@@ -42,4 +42,3 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/settings/MoneroCPU', component: _MoneroCPUSettingsPage2.default }),
   _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/settings/MoneroNVIDIA', component: _MoneroNVIDIASettingsPage2.default })
 );
-//# sourceMappingURL=routes.js.map

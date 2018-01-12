@@ -52,12 +52,17 @@ var MinerItem = function (_Component) {
             var name = 'config-' + this.props.mode;
             var settings = this.props.settings[name];
 
+            var disabled = this.props.disabled;
+            var anotherActiveMiner = this.props.status.mode !== undefined && this.props.mode !== this.props.status.mode;
+
+            disabled = disabled || anotherActiveMiner;
+
             var startButton = _react2.default.createElement(
                 _rebass.Button,
                 {
                     bg: 'blue',
                     color: 'white',
-                    disabled: this.props.disabled,
+                    disabled: disabled,
                     onClick: function onClick() {
                         if (settings === undefined || settings.walletAddress === '') {
                             _this2.props.history.push(_this2.props.settingsRoute);
@@ -153,4 +158,3 @@ var MinerItem = function (_Component) {
 }(_react.Component);
 
 exports.default = (0, _reactRouterDom.withRouter)(MinerItem);
-//# sourceMappingURL=MinerItem.js.map

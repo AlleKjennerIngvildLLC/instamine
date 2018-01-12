@@ -41,8 +41,7 @@ public:
   std::string serialize(MessageType &message) {
     std::string str = message.SerializeAsString();
 
-
-    std::cout << "message size " << str.size() << std::endl;
+    assert(str.size() <= MAX_SIZE);
 
     MessageType mm;
     mm.ParseFromString(str);
@@ -53,7 +52,6 @@ public:
   MessageType deserialize(char *data, size_t size) {
 
     cauchy::Event message;
-
     std::string s(data, size);
 
     assert(s.size() == size);

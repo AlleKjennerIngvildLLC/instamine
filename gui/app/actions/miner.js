@@ -12,14 +12,12 @@ let client = new MinerClient();
 let handle;
 
 function send_notification(dispatch, title, message) {
-
   const options = {
     title: title,
     message: message,
     position: 'br',
     autoDismiss: 3
   };
-
   dispatch(Notifications.info(options));
 }
 
@@ -39,13 +37,11 @@ const startMiner = (config, mode) => async(dispatch) => {
     if (response.getMessage() == 'Server started') {
 
       let date = new Date().toLocaleString();
-
       send_notification(dispatch, 'Miner started.', `Started mining XMR [${date}]`);
 
       dispatch(startSuccess({mode: mode}));
-
       if (handle === undefined) {
-        handle = setInterval(() => dispatch({type: 'START_STATUS_REQUEST_SAGA'}), 5000);
+        handle = setInterval(() => dispatch({type: 'START_STATUS_REQUEST_SAGA'}), 500);
       } else {
         console.log('handle is not undefined. should not be possible!');
       }
@@ -80,37 +76,8 @@ const requestStatus = () => async(dispatch) => {
   dispatch(startRequest());
 
   try {
-
     let event = await client.getMiningStatus();
-
     dispatch(startSuccess(event));
-
-    switch (event.getTypeCase()) {
-
-      case Event.TypeCase['CONNECTION']:
-        break;
-
-      case Event.TypeCase['ERROR']:
-        const options = {
-          title: title,
-          message: event
-            .toObject()
-            .error
-            .message,
-          position: 'br',
-          autoDismiss: 3
-        };
-
-        dispatch(Notifications.info(options));
-
-        console.log("errorutentuoententoeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        console.log(event.toObject());
-
-        break;
-
-      default:
-        break;
-    }
   } catch (e) {
     dispatch(startFailure(e));
   }
@@ -132,7 +99,6 @@ function * requestResponse(action) {
   } catch (e) {
     yield put({type: 'START_STATUS_REQUEST_SAGA_FAILED', message: e.message});
   }
-
 }
 
 function * minerSaga() {

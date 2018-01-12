@@ -120,4 +120,3 @@ var MinerStatusService = exports.MinerStatusService = {
 };
 
 exports.MinerStatusClient = grpc.makeGenericClientConstructor(MinerStatusService);
-//# sourceMappingURL=miner_grpc_pb.js.map

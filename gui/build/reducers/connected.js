@@ -15,4 +15,3 @@ function on_connect(event, state) {
 }
 
 exports.default = on_connect;
-//# sourceMappingURL=connected.js.map

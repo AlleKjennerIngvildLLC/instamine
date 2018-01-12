@@ -15,11 +15,16 @@ class MinerItem extends Component {
         let name = `config-${this.props.mode}`;
         let settings = this.props.settings[name];
 
+        let disabled = this.props.disabled;
+        let anotherActiveMiner = (this.props.status.mode !== undefined) && (this.props.mode !== this.props.status.mode);
+
+        disabled = disabled || anotherActiveMiner;
+
         let startButton = (
             <Button
                 bg='blue'
                 color='white'
-                disabled={this.props.disabled}
+                disabled={disabled}
                 onClick={() => {
                 if (settings === undefined || settings.walletAddress === '') {
                     this

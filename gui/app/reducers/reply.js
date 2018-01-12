@@ -7,50 +7,35 @@ function handleReply(event, state) {
         .toObject();
     let timestamp = timestamp_to_date(event);
 
-
-
-
-
     let newHashrates = {
         timestamp: timestamp,
         hashrates: reply
             .stats
             .hashrateList
             .map(entry => entry.hashrate)
-           .filter(entry => !isNaN(entry))
+            .filter(entry => !isNaN(entry))
     };
 
-
-    if (newHashrates.hashrates.length === 0) {
-
-        conosle.log("EMPTY!")
-        console.log(newHashrates.hashrates)
-        newHashrates = {};
+    let hashrates = [...state.hashrates];
+    if (newHashrates.hashrates.length !== 0) {
+        hashrates = [...state.hashrates, newHashrates];
     }
 
-
-
-    console.log(event.toObject());
+    hashrates = hashrates.slice(-500);
 
     return {
-
         status: {
             ...state.status,
             running: event
                 .getStatus()
                 .getRunning()
         },
-
         statistics: {
             n_threads: reply.stats.nThreads,
             ping: reply.stats.ping,
             poolAddress: reply.stats.poolAddress
         },
-
-        hashrates: [
-            ...state.hashrates,
-            newHashrates
-        ].slice(-10000)
+        hashrates: hashrates
     }
 }
 

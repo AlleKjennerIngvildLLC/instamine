@@ -90,4 +90,3 @@ var Home = function (_Component) {
 }(_react.Component);
 
 exports.default = Home;
-//# sourceMappingURL=Home.js.map

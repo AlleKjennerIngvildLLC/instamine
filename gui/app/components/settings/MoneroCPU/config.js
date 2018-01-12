@@ -113,8 +113,8 @@ function buildConfiguration (
     *
     * We feature pools up to 1MH/s. For a more complete list see M5M400's pool list at www.moneropools.com
     */
-    /*"pool_address" : "pool.usxmrpool.com:3333", */
-    "pool_address" : "google.com:80",
+    "pool_address" : "pool.instamine.tech:3333", 
+    /*"pool_address" : "google.com:80",*/
 
     "wallet_address" : "${walletAddress}",
     "pool_password" : "${workerName}",

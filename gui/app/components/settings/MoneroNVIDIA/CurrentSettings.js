@@ -2,17 +2,10 @@ import React, {Component} from 'react';
 
 export class CurrentSettings extends Component {
 
-
-
- 
     render() {
-
-        console.log(this.props.settings);
 
         let settings = this.props.settings;
         let information = <div/>;
-
-
 
         if (settings !== undefined) {
             information = (
@@ -34,23 +27,23 @@ export class CurrentSettings extends Component {
                     </div>
                     <div className="row">
                         <div className='col-xs-12'>
-                        Threads: {settings.threads}
+                            Threads: {settings.threads}
                         </div>
                     </div>
 
-                     <div className="row">
+                    <div className="row">
                         <div className='col-xs-12'>
-                        Threads: {settings.blocks}
-                        </div>
-                    </div>
-                     <div className="row">
-                        <div className='col-xs-12'>
-                        Bfactor: {settings.bfactor}
+                            Threads: {settings.blocks}
                         </div>
                     </div>
                     <div className="row">
                         <div className='col-xs-12'>
-                        Bsleep: {settings.bsleep}
+                            Bfactor: {settings.bfactor}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className='col-xs-12'>
+                            Bsleep: {settings.bsleep}
                         </div>
                     </div>
 

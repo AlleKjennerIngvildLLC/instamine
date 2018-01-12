@@ -243,4 +243,3 @@ _electron.app.on('ready', (0, _asyncToGenerator3.default)( /*#__PURE__*/_regener
     }
   }, _callee2, undefined);
 })));
-//# sourceMappingURL=main.js.map

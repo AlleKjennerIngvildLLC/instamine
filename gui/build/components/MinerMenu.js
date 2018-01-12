@@ -138,4 +138,3 @@ var MinerMenu = function (_Component) {
 }(_react.Component);
 
 exports.default = MinerMenu;
-//# sourceMappingURL=MinerMenu.js.map

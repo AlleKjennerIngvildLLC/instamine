@@ -27,4 +27,3 @@ document.addEventListener('DOMContentLoaded', function () {
     menu.popup(remote.getCurrentWindow());
   });
 });
-//# sourceMappingURL=menu.js.map

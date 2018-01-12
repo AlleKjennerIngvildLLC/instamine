@@ -73,9 +73,10 @@ var Graph = function (_Component) {
                         limit: 50,
                         width: 100,
                         height: 20,
-
-                        style: { marginTop: '30px', marginBottom: '-8px' }
-                    },
+                        style: {
+                            marginTop: '30px',
+                            marginBottom: '-8px'
+                        } },
                     _react2.default.createElement(_reactSparklines.SparklinesReferenceLine, { type: 'median' }),
                     _react2.default.createElement(_reactSparklines.SparklinesLine, {
                         style: {
@@ -91,4 +92,3 @@ var Graph = function (_Component) {
 }(_react.Component);
 
 exports.default = Graph;
-//# sourceMappingURL=Graph.js.map

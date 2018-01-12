@@ -46,14 +46,12 @@ var client = new _miner2.default();
 var handle = void 0;
 
 function send_notification(dispatch, title, message) {
-
   var options = {
     title: title,
     message: message,
     position: 'br',
     autoDismiss: 3
   };
-
   dispatch(_reactNotificationSystemRedux2.default.info(options));
 }
 
@@ -85,15 +83,13 @@ var startMiner = function startMiner(config, mode) {
               if (response.getMessage() == 'Server started') {
                 date = new Date().toLocaleString();
 
-
                 send_notification(dispatch, 'Miner started.', 'Started mining XMR [' + date + ']');
 
                 dispatch(startSuccess({ mode: mode }));
-
                 if (handle === undefined) {
                   handle = setInterval(function () {
                     return dispatch({ type: 'START_STATUS_REQUEST_SAGA' });
-                  }, 5000);
+                  }, 500);
                 } else {
                   console.log('handle is not undefined. should not be possible!');
                 }
@@ -158,7 +154,7 @@ var stopMiner = (0, _reduxThunkActions.createActionThunk)('STOP_MINER', (0, _asy
 var requestStatus = function requestStatus() {
   return function () {
     var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch) {
-      var startRequest, startSuccess, startFailure, startEnded, event, options;
+      var startRequest, startSuccess, startFailure, startEnded, event;
       return _regenerator2.default.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
@@ -178,51 +174,22 @@ var requestStatus = function requestStatus() {
             case 8:
               event = _context3.sent;
 
-
               dispatch(startSuccess(event));
-
-              _context3.t0 = event.getTypeCase();
-              _context3.next = _context3.t0 === Event.TypeCase['CONNECTION'] ? 13 : _context3.t0 === Event.TypeCase['ERROR'] ? 14 : 19;
+              _context3.next = 15;
               break;
 
-            case 13:
-              return _context3.abrupt('break', 20);
+            case 12:
+              _context3.prev = 12;
+              _context3.t0 = _context3['catch'](5);
 
-            case 14:
-              options = {
-                title: title,
-                message: event.toObject().error.message,
-                position: 'br',
-                autoDismiss: 3
-              };
+              dispatch(startFailure(_context3.t0));
 
-
-              dispatch(_reactNotificationSystemRedux2.default.info(options));
-
-              console.log("errorutentuoententoeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-              console.log(event.toObject());
-
-              return _context3.abrupt('break', 20);
-
-            case 19:
-              return _context3.abrupt('break', 20);
-
-            case 20:
-              _context3.next = 25;
-              break;
-
-            case 22:
-              _context3.prev = 22;
-              _context3.t1 = _context3['catch'](5);
-
-              dispatch(startFailure(_context3.t1));
-
-            case 25:
+            case 15:
             case 'end':
               return _context3.stop();
           }
         }
-      }, _callee3, undefined, [[5, 22]]);
+      }, _callee3, undefined, [[5, 12]]);
     }));
 
     return function (_x2) {
@@ -311,4 +278,3 @@ exports.default = {
   updateSettings: updateSettings,
   minerSaga: minerSaga
 };
-//# sourceMappingURL=miner.js.map

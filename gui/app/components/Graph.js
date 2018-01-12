@@ -9,6 +9,7 @@ class Graph extends Component {
     }
     render() {
 
+
         let values = this
             .props
             .hashrates
@@ -20,23 +21,23 @@ class Graph extends Component {
                 border: 'solid',
                 borderColor: 'black',
                 border: 'solid',
-                background: 'white',
+                background: 'white'
             }}>
-                <Sparklines 
-                    data={values} 
-                    limit={50} 
-                    width={100} 
-                    height={20} 
-                    
-                    style={{marginTop: '30px', marginBottom: '-8px'}}
-                    >
+                <Sparklines
+                    data={values}
+                    limit={50}
+                    width={100}
+                    height={20}
+                    style={{
+                    marginTop: '30px',
+                    marginBottom: '-8px'
+                }}>
                     <SparklinesReferenceLine type="median"/>
-                    
-                      
+
                     <SparklinesLine
                         style={{
-                            strokeWidth: '0.5',
-                            marginBottom: '0px',
+                        strokeWidth: '0.5',
+                        marginBottom: '0px'
                     }}
                         color="black"/>
 

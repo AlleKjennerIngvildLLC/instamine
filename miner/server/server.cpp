@@ -195,6 +195,5 @@ int main(int argc, char **argv) {
   std::string exec = argv[1];
   RunServer(exec);
 
-  std::cout << "exiting main " << std::endl;
   return 0;
 }
