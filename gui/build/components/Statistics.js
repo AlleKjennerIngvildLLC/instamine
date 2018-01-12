@@ -235,3 +235,4 @@ var Statistics = function (_Component) {
 }(_react.Component);
 
 exports.default = Statistics;
+//# sourceMappingURL=Statistics.js.map

@@ -158,3 +158,4 @@ var MinerItem = function (_Component) {
 }(_react.Component);
 
 exports.default = (0, _reactRouterDom.withRouter)(MinerItem);
+//# sourceMappingURL=MinerItem.js.map

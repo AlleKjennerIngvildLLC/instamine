@@ -278,3 +278,4 @@ var Settings = function (_Component) {
 }(_react.Component);
 
 exports.default = Settings;
+//# sourceMappingURL=Settings.js.map

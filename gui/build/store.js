@@ -79,3 +79,4 @@ function configureStore(initialState, routerHistory) {
 
   return store;
 }
+//# sourceMappingURL=store.js.map

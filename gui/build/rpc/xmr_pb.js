@@ -749,3 +749,4 @@ proto.cauchy.Hashrate.prototype.setHashrate = function (value) {
 };
 
 goog.object.extend(exports, proto.cauchy);
+//# sourceMappingURL=xmr_pb.js.map

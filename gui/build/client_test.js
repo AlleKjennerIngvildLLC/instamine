@@ -114,3 +114,4 @@ var client = new _miner2.default();
 var state = { hashrates: [] };
 
 test();
+//# sourceMappingURL=client_test.js.map

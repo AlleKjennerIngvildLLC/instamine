@@ -16,3 +16,4 @@ var global = Function('return this')();
 var messages_pb = require('./messages_pb.js');
 var command_pb = require('./command_pb.js');
 goog.object.extend(exports, proto.cauchy);
+//# sourceMappingURL=miner_pb.js.map
