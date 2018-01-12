@@ -1,8 +1,8 @@
-node_modules/
-dist/
+./node_modules/
+./dist/
 
 # Only apps should have lockfiles
 yarn.lock
 package-lock.json
 
-build/
+./build/

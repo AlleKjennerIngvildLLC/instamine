@@ -1,2 +1,7 @@
 *~
 .vscode
+
+gui/node_modules
+gui/dist
+gui/build
+gui/config.txt
