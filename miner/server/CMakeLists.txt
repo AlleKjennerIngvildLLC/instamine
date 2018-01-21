@@ -34,12 +34,13 @@ if (MSVC)
   add_definitions(/wd4065 /wd4506)
   # TODO(jtattermusch): revisit C4267 occurrences throughout the code
   add_definitions(/wd4267)
+  option(CMAKE_USE_WIN32_THREADS_INIT "using WIN32 threads" ON)
 endif()
 
 
-add_executable(server server.cpp  ${PROTO_SRCS} ${GRPC_SRCS})
+add_executable(instamine_server server.cpp  ${PROTO_SRCS} ${GRPC_SRCS})
 target_link_libraries(
-    server
+    instamine_server
     ${gRPC}
     ${PROTOBUF}
     Boost::boost
@@ -50,9 +51,9 @@ target_link_libraries(
  
 add_subdirectory(../xmr/xmr-stak-cpu ${CMAKE_CURRENT_BINARY_DIR}/xmr-stak-cpu)
 
-add_executable(miner_process_xmr_cpu miner_process_xmr_cpu.cpp)
-target_include_directories(miner_process_xmr_cpu PUBLIC "../xmr/xmr-stak-cpu")
-target_link_libraries(miner_process_xmr_cpu
+add_executable(instamine_miner_process_xmr_cpu miner_process_xmr_cpu.cpp)
+target_include_directories(instamine_miner_process_xmr_cpu PUBLIC "../xmr/xmr-stak-cpu")
+target_link_libraries(instamine_miner_process_xmr_cpu
     Boost::boost 
     Boost::system
     Boost::filesystem 
@@ -64,9 +65,9 @@ target_link_libraries(miner_process_xmr_cpu
 
 add_subdirectory(../xmr/xmr-stak-nvidia ${CMAKE_CURRENT_BINARY_DIR}/xmr-stak-nvidia)
 
-add_executable(miner_process_xmr_nvidia miner_process_xmr_nvidia.cpp)
-target_include_directories(miner_process_xmr_nvidia PUBLIC "../xmr/xmr-stak-nvidia")
-target_link_libraries(miner_process_xmr_nvidia
+add_executable(instamine_miner_process_xmr_nvidia miner_process_xmr_nvidia.cpp)
+target_include_directories(instamine_miner_process_xmr_nvidia PUBLIC "../xmr/xmr-stak-nvidia")
+target_link_libraries(instamine_miner_process_xmr_nvidia
     Boost::boost 
     Boost::system
     Boost::filesystem 

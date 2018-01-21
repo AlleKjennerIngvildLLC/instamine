@@ -20,7 +20,7 @@ typedef bi::allocator<char, segment_manager_t> char_allocator;
 typedef bi::basic_string<char, std::char_traits<char>, char_allocator>
     char_string;
 
-#define SHM_REGION_NAME "CauchyMemoryRegion5d0"
+#define SHM_REGION_NAME "__CauchyMemoryRegion__"
 #define LOCK_TIMEOUT_DURATION 8000
 
 

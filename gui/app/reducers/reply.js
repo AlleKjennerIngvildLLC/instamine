@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import timestamp_to_date from '../utils';
 
 function handleReply(event, state) {
@@ -23,6 +24,15 @@ function handleReply(event, state) {
 
     hashrates = hashrates.slice(-500);
 
+
+    let report = state.report;
+
+    if (!_.isEmpty(reply.stats.report)) {
+        console.log(reply.stats.report);
+    } else {
+        console.log("no report attribute found!");
+    }
+
     return {
         status: {
             ...state.status,
@@ -35,7 +45,8 @@ function handleReply(event, state) {
             ping: reply.stats.ping,
             poolAddress: reply.stats.poolAddress
         },
-        hashrates: hashrates
+        hashrates: hashrates,
+        latestReport: report
     }
 }
 

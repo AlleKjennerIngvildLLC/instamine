@@ -5,6 +5,8 @@ import SystemInformation from './SystemInformation';
 import SettingsForm from './MoneroCPU/Form';
 import CurrentSettings from './MoneroCPU/CurrentSettings';
 
+import _ from 'lodash';
+
 const {CommandRequest, Config, SystemStatusRequest} = require('../../rpc/command_pb');
 
 class MoneroCPUSettings extends Component {
@@ -13,6 +15,21 @@ class MoneroCPUSettings extends Component {
 
         let name = `config-${CommandRequest.Miner.XMR_CPU}`;
         let settings = this.props.settings[name];
+
+        let defaultSettings = {
+            workerName: 'XMR_CPU_WORKER',
+            numberCores: 1,
+            email: 'email@example.com',
+            walletAddress: '4581HhZkQHgZrZjKeCfCJxZff9E3xCgHGF25zABZz7oR71TnbbgiS7sK9jveE6Dx6uMs2LwszDuvQJgRZQotdpHt1fTdDhk',
+            pool: {
+                name: 'minexmr', 
+                value: 'minexmr.instamine.tech:7777'
+            }
+        }
+
+        if (_.isEmpty(settings)) {
+            settings = defaultSettings;
+        }
 
         return (
             <div className="pane-group">
@@ -67,7 +84,10 @@ class MoneroCPUSettings extends Component {
                             background: 'rgba(0, 0, 0, 0.36)'
                         }}
                             className="col-xs-4">
-                            <SettingsForm settings={settings} updateSettings={this.props.updateSettings}/>
+                            <SettingsForm
+                                settings={settings}
+                                initialValues={settings}
+                                updateSettings={this.props.updateSettings}/>
                         </div>
                     </div>
 

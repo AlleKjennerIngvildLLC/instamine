@@ -44,6 +44,8 @@ export default handleActions({
 
   [actions.updateSettings]: (state, action) => {
 
+
+
     let newState = {
       ...state
     };
@@ -66,7 +68,7 @@ export default handleActions({
     }
     x;
   },
-
+  
   [actions.stop.START]: (state, action) => {
     return {
       ...state
@@ -96,10 +98,10 @@ export default handleActions({
     let event = action.payload;
     let stateUpdate = {};
 
+
+
     if (event.getTimestamp() !== undefined) {
-
-      //console.log(event.toObject())
-
+      
       switch (event.getTypeCase()) {
 
         case Event.TypeCase['CONNECTION']:
@@ -132,7 +134,6 @@ export default handleActions({
           break;
 
         case Event.TypeCase['RESULT']:
-
           console.log('on_result');
           break;
 
@@ -170,6 +171,7 @@ export default handleActions({
     enableGPU: false,
     nThreads: 1
   },
+  latestReport: {},
   running: false,
   eventHistory: [],
   hashrates: []

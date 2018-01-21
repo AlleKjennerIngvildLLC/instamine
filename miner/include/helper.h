@@ -15,7 +15,7 @@ public:
   static bool remove(std::string name) {
     return boost::interprocess::message_queue::remove(name.c_str());
   }
-  SharedProtobufMessageQueue(std::string name = "test!")
+  SharedProtobufMessageQueue(std::string name = "test")
       : mq(boost::interprocess::open_or_create, name.c_str(), 2000, MAX_SIZE) {}
 
   void push(MessageType &message, unsigned int priority = 0) {

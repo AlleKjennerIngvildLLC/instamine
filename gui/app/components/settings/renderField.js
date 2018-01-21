@@ -1,22 +1,31 @@
-import React from 'react'
+import React from 'react';
 import {Input} from 'rebass';
 
-const renderField = ({ input, label, max, type, min, defaultValue, meta: { touched, error } }) => (
-  <div>
-    <div>
-    <Input
-        {...input}
-        style={{background: 'white'}}
-        defaultValue={defaultValue}
-        type={type}
-        min={min}
-        max={max}
-	    placeholder={label}
-/>
-      {touched && error && <span>{error}</span>}
-    </div>
-  </div>
-)
- 
+const renderField = (field) => {
+
+    let error = (
+        field.meta.touched && field.meta.error && 
+        <span className="error">
+            <b style={{color: '#ce3939'}}>
+                {field.meta.error}
+            </b>
+        </span>
+    );
+
+    return (
+        <div className="input-row">
+            <Input
+                {...field.input}
+                placeholder={field.placeholder}
+                style={{
+                color: 'black',
+                background: 'white'
+            }}
+                min={field.min}
+                max={field.max}
+                type={field.type}/> {error}
+        </div>
+    );
+};
 
 export default renderField;

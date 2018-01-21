@@ -1,6 +1,6 @@
 import {buffers} from 'redux-saga';
 
-function buildConfiguration(gpu_threads_conf, walletAddress, workerName='') {
+function buildConfiguration(gpu_threads_conf, walletAddress, workerName, pool) {
   gpu_threads_conf = JSON.stringify(gpu_threads_conf);
 
   let config = `
@@ -44,9 +44,10 @@ function buildConfiguration(gpu_threads_conf, walletAddress, workerName='') {
  * wallet_address - Your wallet, or pool login.
  * pool_password  - Can be empty in most cases or "x".
  */
-"pool_address" : "pool.usxmrpool.com:3333",
+"pool_address" : "${pool}",
 "wallet_address" : "${walletAddress}",
 "pool_password" : "${workerName}",
+
 
 /*
  * Network timeouts.

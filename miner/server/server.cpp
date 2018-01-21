@@ -47,10 +47,9 @@ public:
   bool terminate = false;
 
   SystemStatus_Miner active_miner_type;
-  std::string exec;
 
-  MinerStatusServiceImpl(std::string exec)
-      : MinerStatus::Service(), exec(exec) {
+  MinerStatusServiceImpl()
+      : MinerStatus::Service() {
     // this needs to be handled better!
     SharedProtobufMessageQueue<Event>::remove("test");
     status_channel = new SharedProtobufMessageQueue<Event>();
@@ -115,10 +114,10 @@ public:
     auto miner = request->miner();
     std::string filename;
     if (miner == CommandRequest::XMR_CPU) {
-      filename = "miner_process_xmr_cpu.exe";
+      filename = "instamine_miner_process_xmr_cpu.exe";
     }
     else if (miner == CommandRequest::XMR_CUDA) {
-      filename = "miner_process_xmr_nvidia.exe";
+      filename = "instamine_miner_process_xmr_nvidia.exe";
     }
     else {
       exit(1);
@@ -165,9 +164,9 @@ public:
   }
 };
 
-void RunServer(std::string exec, std::string address = "0.0.0.0:50051") {
+void RunServer(std::string address = "127.0.0.1:50051") {
   std::string server_address(address);
-  MinerStatusServiceImpl service(exec);
+  MinerStatusServiceImpl service;
 
   ServerBuilder builder;
 
@@ -188,12 +187,7 @@ void RunServer(std::string exec, std::string address = "0.0.0.0:50051") {
 
 int main(int argc, char **argv) {
 
-  if (argc < 2) {
-    return 1;
-  }
-
-  std::string exec = argv[1];
-  RunServer(exec);
+  RunServer();
 
   return 0;
 }

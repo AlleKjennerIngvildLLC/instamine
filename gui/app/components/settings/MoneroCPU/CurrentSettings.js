@@ -7,6 +7,7 @@ export class CurrentSettings extends Component {
         let settings = this.props.settings;
         let information = <div/>;
 
+
         if (settings !== undefined) {
             information = (
                 <div>
@@ -30,6 +31,12 @@ export class CurrentSettings extends Component {
                         Cores: {settings.numberCores}
                         </div>
                     </div>
+                    <div className="row">
+                        <div className='col-xs-12'>
+                        Pool: {settings.pool.name}
+                        </div>
+                    </div>
+
 
                 </div>
             );

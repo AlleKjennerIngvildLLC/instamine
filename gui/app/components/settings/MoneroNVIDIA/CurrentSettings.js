@@ -46,6 +46,11 @@ export class CurrentSettings extends Component {
                             Bsleep: {settings.bsleep}
                         </div>
                     </div>
+                    <div className="row">
+                        <div className='col-xs-12'>
+                            Pool: {settings.pool.name}
+                        </div>
+                    </div>
 
                 </div>
             );

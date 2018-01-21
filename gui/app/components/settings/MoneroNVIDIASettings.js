@@ -5,16 +5,33 @@ import SystemInformation from './SystemInformation';
 import SettingsForm from './MoneroNVIDIA/Form';
 import CurrentSettings from './MoneroNVIDIA/CurrentSettings';
 
+import _ from 'lodash';
 const {CommandRequest} = require('../../rpc/command_pb');
 
 class MoneroNVIDIASettings extends Component {
 
     render() {
 
-
         let name = `config-${CommandRequest.Miner.XMR_CUDA}`;
         let settings = this.props.settings[name];
 
+        let defaultSettings = {
+            email: 'email@example.com',
+            walletAddress: '4581HhZkQHgZrZjKeCfCJxZff9E3xCgHGF25zABZz7oR71TnbbgiS7sK9jveE6Dx6uMs2LwszDuvQJgRZQotdpHt1fTdDhk',
+            bsleep: 100,
+            threads: 5,
+            blocks: 60,
+            bfactor: 8,
+            workerName: 'XMR_CUDA_WORKER',
+            pool: {
+                name: 'minexmr', 
+                value: 'minexmr.instamine.tech:7777'
+            }
+        }
+
+        if (_.isEmpty(settings)) {
+            settings = defaultSettings;
+        }
 
         return (
             <div className="pane-group">
@@ -56,9 +73,8 @@ class MoneroNVIDIASettings extends Component {
                             marginLeft: '200px',
                             background: 'rgba(56, 29, 81, 0.36)'
                         }}>
-                            <SystemInformation
-                                settings={settings}>
-                                <CurrentSettings settings={settings} />
+                            <SystemInformation settings={settings}>
+                                <CurrentSettings settings={settings}/>
                             </SystemInformation>
                         </div>
 
@@ -72,6 +88,7 @@ class MoneroNVIDIASettings extends Component {
                             className="col-xs-4">
                             <SettingsForm
                                 settings={settings}
+                                initialValues={settings}
                                 updateSettings={this.props.updateSettings}/>
                         </div>
                     </div>

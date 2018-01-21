@@ -30,10 +30,10 @@ let child;
 
 // start server!
 if (isDevelopment) {
-  child = cp.spawn('exec\\server.exe', ['exec\\miner_process_xmr_cpu.exe']);
+  child = cp.spawn('exec\\instamine_server.exe');
   
 } else {
-  child = cp.spawn('server.exe', ['miner_process_xmr_cpu.exe']);
+  child = cp.spawn('instamine_server.exe');
 }
 
 child.stdout.on('data', (data) => {

@@ -1,37 +1,34 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {Input, Button} from 'rebass';
-import _ from 'lodash';
+import DropdownList from 'react-widgets/lib/DropdownList'
 
+import renderField from '../renderField';
 import buildConfiguration from './config.js';
 
 const si = require('systeminformation');
 const {CommandRequest, Config, SystemStatusRequest} = require('../../../rpc/command_pb');
 
-const renderField = (field) => {
-    return (
-        <div className="input-row">
-            <Input
-                {...field.input}
-                placeholder={field.placeholder}
-                style={{
-                color: 'black',
-                background: 'white'
-            }}
-                min={field.min}
-                max={field.max}
-                type={field.type}/> {field.meta.touched && field.meta.error && <span
-                style={{
-                color: '#ff4545'
-            }}
-                className="error">
-                <b>
-                    {field.meta.error}</b>
-            </span>
-}
-        </div>
-    );
-};
+const renderDropdownList = ({input, data, valueField, textField}) => <DropdownList
+    {...input}
+    data={data}
+    valueField={valueField}
+    textField={textField}
+    onChange={input.onChange}/>
+
+const minerPools = [
+    {
+        name: 'minexmr',
+        value: 'minexmr.instamine.tech:7777'
+    }, {
+        name: 'supportxmr',
+        value: 'supportxmr.instamine.tech:80'
+    }, {
+        name: 'usxmr',
+        value: 'usxmr.instamine.tech:3333'
+    }
+];
 
 const validate = values => {
 
@@ -44,6 +41,9 @@ const validate = values => {
     }
     if (!values.workerName) {
         errors.workerName = 'Worker name cannot be empty!';
+    }
+    if (!values.email) {
+        errors.email = 'E-mail should not be empty (can be anything).';
     }
 
     return errors;
@@ -74,17 +74,23 @@ class CompleteForm extends Component {
 
     onSubmit = (values) => {
 
+
+        console.log(values);
+
         let numberCores = parseInt(values.numberCores);
 
         let cpu_threads_conf = this.buildCpuConfig(numberCores);
-        let config = buildConfiguration(cpu_threads_conf, values.walletAddress, values.workerName);
+        let config = buildConfiguration(cpu_threads_conf, values.walletAddress, values.workerName, values.pool.value);
+
 
         this.setState({
             config: config,
             walletAddress: values.walletAddress,
             numberCores: values.numberCores,
             name: `config-${this.state.mode}`,
-            workerName: values.workerName
+            email: values.email,
+            workerName: values.workerName,
+            pool: values.pool
         }, () => {
             this
                 .props
@@ -92,8 +98,10 @@ class CompleteForm extends Component {
                     config: this.state.config,
                     walletAddress: this.state.walletAddress,
                     numberCores: this.state.numberCores,
+                    email: this.state.email,
                     name: this.state.name,
-                    workerName: this.state.workerName
+                    workerName: this.state.workerName,
+                    pool: this.state.pool
                 });
         });
     }
@@ -162,6 +170,27 @@ class CompleteForm extends Component {
                             placeholder="Worker-1"/>
                     </div>
                 </div>
+                <div className="row">
+                    <div
+                        style={{
+                        marginTop: '5px'
+                    }}
+                        className="col-xs-4">
+                        <label
+                            style={{
+                            marginLeft: '10px'
+                        }}>
+                            E-email
+                        </label>
+                    </div>
+                    <div className="col-xs-8">
+                        <Field
+                            name="email"
+                            component={renderField}
+                            type="text"
+                            placeholder="e-mail address"/>
+                    </div>
+                </div>
                 <div
                     style={{
                     marginTop: '10px'
@@ -195,6 +224,33 @@ class CompleteForm extends Component {
                     marginTop: '10px'
                 }}
                     className="row">
+                    <div
+                        style={{
+                        marginTop: '5px'
+                    }}
+                        className="col-xs-4">
+                        <label
+                            style={{
+                            marginLeft: '10px'
+                        }}>
+                            Pool
+                        </label>
+                    </div>
+                    <div className="col-xs-offset-2 col-xs-6">
+                        <Field
+                            name="pool"
+                            component={renderDropdownList}
+                            data={minerPools}
+                            valueField="value"
+                            textField="name"/>
+                    </div>
+                </div>
+
+                <div
+                    style={{
+                    marginTop: '10px'
+                }}
+                    className="row">
                     <div className="col-xs-offset-9 col-xs-3">
                         <Button type="submit" disabled={pristine && submitting}>
                             Save
@@ -208,12 +264,4 @@ class CompleteForm extends Component {
     }
 }
 
-export default reduxForm({form: 'MoneroCPUCompleteForm', validate,
-
-   initialValues: {
-        workerName: 'XMR_CPU_WORKER',
-        numberCores: 1,
-
-    }
-
-})(CompleteForm);
+export default reduxForm({form: 'MoneroCPUCompleteForm', validate})(CompleteForm);

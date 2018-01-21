@@ -1,7 +1,8 @@
 function buildConfiguration (
     cpu_threads_conf,
     walletAddress,
-    workerName
+    workerName,
+    pool
 ) {
 
     cpu_threads_conf = JSON.stringify(cpu_threads_conf);
@@ -113,12 +114,9 @@ function buildConfiguration (
     *
     * We feature pools up to 1MH/s. For a more complete list see M5M400's pool list at www.moneropools.com
     */
-    "pool_address" : "pool.instamine.tech:3333", 
-    /*"pool_address" : "google.com:80",*/
-
+    "pool_address" : "${pool}", 
     "wallet_address" : "${walletAddress}",
     "pool_password" : "${workerName}",
-
     /*
     * Network timeouts.
     * Because of the way this client is written it doesn't need to constantly talk (keep-alive) to the server to make 
@@ -150,7 +148,7 @@ function buildConfiguration (
     *                 3 - All of level 1, and new job (block) event in all cases, result submission event.
     *                 4 - All of level 3, and automatic hashrate report printing 
     */
-    "verbose_level" : 3,
+    "verbose_level" : 4,
 
     /*
     * Automatic hashrate report

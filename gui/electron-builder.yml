@@ -15,12 +15,15 @@ files:
   - node_modules/
 
 extraResources:
-  - from: exec/server.exe
-    to: ../server.exe
-  - from: exec/miner_process_xmr_cpu.exe
-    to: ../miner_process_xmr_cpu.exe  
-  - from: exec/miner_process_xmr_nvidia.exe
-    to: ../miner_process_xmr_nvidia.exe 
+  - from: exec/instamine_server.exe
+    to: ../instamine_server.exe
+  - from: exec/instamine_miner_process_xmr_cpu.exe
+    to: ../instamine_miner_process_xmr_cpu.exe  
+  - from: exec/instamine_miner_process_xmr_nvidia.exe
+    to: ../instamine_miner_process_xmr_nvidia.exe 
+  - from: fonts
+    to: ../fonts
+   
 dmg:
   contents:
     - type: link

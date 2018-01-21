@@ -1,39 +1,36 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
-import {Input, Button} from 'rebass';
-import _ from 'lodash';
-
-import buildConfiguration from './config.js';
+import {Button} from 'rebass';
 import {buffers} from 'redux-saga';
+import DropdownList from 'react-widgets/lib/DropdownList'
+
+import renderField from '../renderField';
+import buildConfiguration from './config.js';
 
 const si = require('systeminformation');
 const gpuInfo = require('gpu-info');
 const {CommandRequest, Config, SystemStatusRequest} = require('../../../rpc/command_pb');
 
-const renderField = (field) => {
-    return (
-        <div className="input-row">
-            <Input
-                {...field.input}
-                placeholder={field.placeholder}
-                style={{
-                color: 'black',
-                background: 'white'
-            }}
-                min={field.min}
-                max={field.max}
-                type={field.type}/> {field.meta.touched && field.meta.error && <span
-                style={{
-                color: '#ff4545'
-            }}
-                className="error">
-                <b>
-                    {field.meta.error}</b>
-            </span>
-}
-        </div>
-    );
-};
+const renderDropdownList = ({input, data, valueField, textField}) => <DropdownList
+    {...input}
+    data={data}
+    valueField={valueField}
+    textField={textField}
+    onChange={input.onChange}/>
+
+const minerPools = [
+    {
+        name: 'minexmr',
+        value: 'minexmr.instamine.tech:7777'
+    }, {
+        name: 'supportxmr',
+        value: 'supportxmr.instamine.tech:80'
+    }, {
+        name: 'usxmr',
+        value: 'usxmr.instamine.tech:3333'
+    }
+];
 
 const validate = values => {
 
@@ -89,7 +86,7 @@ class CompleteForm extends Component {
         let numberCores = parseInt(values.numberCores);
 
         let gpu_config = this.buildGPUConfig(values);
-        let config = buildConfiguration(gpu_config, values.walletAddress, values.workerName);
+        let config = buildConfiguration(gpu_config, values.walletAddress, values.workerName, values.pool.value);
 
         this.setState({
             config: config,
@@ -98,8 +95,10 @@ class CompleteForm extends Component {
             blocks: values.blocks,
             bfactor: values.bfactor,
             bsleep: values.bsleep,
+            email: values.email,
             name: `config-${this.state.mode}`,
-            workerName: values.workerName
+            workerName: values.workerName,
+            pool: values.pool
         }, () => {
             this
                 .props
@@ -111,7 +110,9 @@ class CompleteForm extends Component {
                     threads: this.state.threads,
                     blocks: this.state.blocks,
                     bfactor: this.state.bfactor,
-                    bsleep: this.state.bsleep
+                    bsleep: this.state.bsleep,
+                    email: this.state.email,
+                    pool: this.state.pool
                 });
         });
     }
@@ -212,11 +213,7 @@ class CompleteForm extends Component {
                         </label>
                     </div>
                     <div className="col-xs-8">
-                        <Field
-                            name="workerName"
-                            component={renderField}
-                            type="text"
-                            placeholder=""/>
+                        <Field name="workerName" component={renderField} type="text" placeholder=""/>
                     </div>
                 </div>
                 <div
@@ -327,6 +324,49 @@ class CompleteForm extends Component {
                     </div>
                 </div>
 
+
+                
+                <div
+                    style={{
+                    marginTop: '10px'
+                }}
+                    className="row">
+                    <div
+                        style={{
+                        marginTop: '5px'
+                    }}
+                        className="col-xs-4">
+                        <label
+                            style={{
+                            marginLeft: '10px'
+                        }}>
+                            Pool
+                        </label>
+                    </div>
+                    <div className="col-xs-offset-2 col-xs-6">
+                        <Field
+                            name="pool"
+                            component={renderDropdownList}
+                            data={minerPools}
+                            valueField="value"
+                            textField="name"/>
+                    </div>
+                </div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <div
                     style={{
                     marginTop: '10px'
@@ -346,14 +386,4 @@ class CompleteForm extends Component {
     }
 }
 
-export default reduxForm({
-    form: 'MoneroNVIDIACompleteForm',
-    validate,
-    initialValues: {
-        bsleep: 100,
-        threads: 5,
-        blocks: 60,
-        bfactor: 8,
-        workerName: 'XMR_CUDA_WORKER'
-    }
-})(CompleteForm);
+export default reduxForm({form: 'MoneroNVIDIACompleteForm', validate})(CompleteForm);

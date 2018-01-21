@@ -54,7 +54,8 @@ export default class SystemInformation extends Component {
         return (
             <div
                 style={{
-                color: 'white'
+                color: 'white',
+                minHeight: '400px',
             }}
                 className="cpuInformation">
 
