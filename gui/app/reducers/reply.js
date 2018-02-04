@@ -25,9 +25,10 @@ function handleReply(event, state) {
     hashrates = hashrates.slice(-500);
 
 
-    let report = state.report;
+    let report = state.latestReport;
 
     if (!_.isEmpty(reply.stats.report)) {
+        report = reply.stats.report;
         console.log(reply.stats.report);
     } else {
         console.log("no report attribute found!");

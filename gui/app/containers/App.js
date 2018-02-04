@@ -36,6 +36,11 @@ class App extends Component {
     this.state = {
       isMaximized: false
     };
+    
+    // // The listener
+    // this.props.history.listen((location, action) => {
+    //   rg4js('trackEvent', { type: 'pageView', path: location.pathname });
+    // });
   }
 
   componentDidMount() {

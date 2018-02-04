@@ -21,7 +21,7 @@ export default class Statistics extends Component {
         let totalHashrate = 'N/A';
         let lastRate = 'N/A';
 
-        console.log(this.props.miner.latestReport);
+        //console.log(this.props.miner);
 
         if (statistics !== undefined && !_.isEmpty(this.props.miner.hashrates)) {
 
