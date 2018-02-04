@@ -320,7 +320,7 @@ void AddDescriptorsImpl() {
       "\n\016messages.proto\022\006cauchy\032\txmr.proto\032\rcom"
       "mand.proto\032\037google/protobuf/timestamp.pr"
       "oto\">\n\013TestMessage\022 \n\005error\030\001 \001(\0132\021.cauc"
-      "hy.ErrorTest\022\r\n\005debug\030\002 \001(\t\"\034\n\tErrorTest"
+      "hy.ErrorTest\022\r\n\005debug\030\003 \001(\t\"\034\n\tErrorTest"
       "\022\017\n\007message\030\001 \001(\t\"\343\002\n\005Event\022(\n\nconnectio"
       "n\030\001 \001(\0132\022.cauchy.ConnectionH\000\022$\n\005reply\030\002"
       " \001(\0132\023.cauchy.StatusReplyH\000\022\036\n\005error\030\003 \001"
@@ -551,10 +551,10 @@ bool TestMessage::MergePartialFromCodedStream(
         break;
       }
 
-      // string debug = 2;
-      case 2: {
+      // string debug = 3;
+      case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u)) {
+            static_cast< ::google::protobuf::uint8>(26u)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_debug()));
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -600,14 +600,14 @@ void TestMessage::SerializeWithCachedSizes(
       1, *this->error_, output);
   }
 
-  // string debug = 2;
+  // string debug = 3;
   if (this->debug().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->debug().data(), this->debug().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "cauchy.TestMessage.debug");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->debug(), output);
+      3, this->debug(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:cauchy.TestMessage)
@@ -626,7 +626,7 @@ void TestMessage::SerializeWithCachedSizes(
         1, *this->error_, deterministic, target);
   }
 
-  // string debug = 2;
+  // string debug = 3;
   if (this->debug().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->debug().data(), this->debug().length(),
@@ -634,7 +634,7 @@ void TestMessage::SerializeWithCachedSizes(
       "cauchy.TestMessage.debug");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->debug(), target);
+        3, this->debug(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:cauchy.TestMessage)
@@ -645,7 +645,7 @@ size_t TestMessage::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:cauchy.TestMessage)
   size_t total_size = 0;
 
-  // string debug = 2;
+  // string debug = 3;
   if (this->debug().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -772,7 +772,7 @@ void TestMessage::set_allocated_error(::cauchy::ErrorTest* error) {
   // @@protoc_insertion_point(field_set_allocated:cauchy.TestMessage.error)
 }
 
-// string debug = 2;
+// string debug = 3;
 void TestMessage::clear_debug() {
   debug_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }

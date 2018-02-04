@@ -29,9 +29,9 @@ function handleReply(event, state) {
 
     if (!_.isEmpty(reply.stats.report)) {
         report = reply.stats.report;
-        console.log(reply.stats.report);
+        //console.log(reply.stats.report);
     } else {
-        console.log("no report attribute found!");
+        //console.log("no report attribute found!");
     }
 
     return {

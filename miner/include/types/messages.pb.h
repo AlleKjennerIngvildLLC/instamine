@@ -258,9 +258,9 @@ class TestMessage : public ::google::protobuf::Message /* @@protoc_insertion_poi
 
   // accessors -------------------------------------------------------
 
-  // string debug = 2;
+  // string debug = 3;
   void clear_debug();
-  static const int kDebugFieldNumber = 2;
+  static const int kDebugFieldNumber = 3;
   const ::std::string& debug() const;
   void set_debug(const ::std::string& value);
   #if LANG_CXX11
@@ -1571,7 +1571,7 @@ inline void TestMessage::set_allocated_error(::cauchy::ErrorTest* error) {
   // @@protoc_insertion_point(field_set_allocated:cauchy.TestMessage.error)
 }
 
-// string debug = 2;
+// string debug = 3;
 inline void TestMessage::clear_debug() {
   debug_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
