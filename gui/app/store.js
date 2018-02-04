@@ -39,13 +39,13 @@ export default function configureStore(initialState, routerHistory) {
   })();
   
 
-  var storageName = 'instamine-production-main-storage---';
+  var storageName = 'instamine-production-main-storage---0.0.3';
   if (process.env.NODE_ENV === 'development') {
-    storageName = 'instamine-development-main-storage---';
+    storageName = 'instamine-development-main-storage---0.0.3';
   }
 
   const enhancer = composeEnhancers(applyMiddleware(...middlewares), 
-  persistState());
+  persistState(['miner']));
   const rootReducer = combineReducers(reducers);
 
   const store = createStore(rootReducer, initialState, enhancer);
